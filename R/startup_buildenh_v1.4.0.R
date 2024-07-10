@@ -23,7 +23,7 @@ cat("name of first program/script:",paste("startup_buildenh_v",v_nr,".R", sep=""
 #depends: R 4.4.0; BiocManager 1.78.0-0 (EBImage); spatstat 2.3-4; tiff 01-11; rpart 4.1.19; nlme 3.1-162;
 #Copyright(C) 2022 Joachim Höhle
 #GNU General Public License (GPL)
-
+#test with ISPRS Semantic Labeling Contest-results
 ###################################################################################
 #save your home directory
 old_dir <- setwd("./")
