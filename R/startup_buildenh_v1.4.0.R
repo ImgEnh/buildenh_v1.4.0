@@ -33,11 +33,13 @@ getwd()
 #home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.3/buildenh_v1.3/R"
 #home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/clone8_1.3/buildenh_v1.3"
 #home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/clone8_1.3/buildenh_v1.3/R"
-home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0"
-home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0/R"
-###################################################################################
+#home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0"
+#home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0/R"
+home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0_new/buildenh_v1.4.0"
+home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0_new/buildenh_v1.4.0/R"
+###############################################################################################
 ## title of project (manual input of characteristics)
-prj_title <- "ISPRS1_LCM2" #example#2
+#prj_title <- "ISPRS1_LCM2" #example#2
 #orthoimage ISPRS1 
 #classification method: DT/LCM2 by 5 attributes
 #training by orthoimage #26
@@ -51,33 +53,33 @@ prj_title <- "ISPRS1_LCM2" #example#2
 #enhancement of buildings
 #
 
-#prj_title <- "X" (your project)
-#orthoimage NN 
-#classification method: ?
+prj_title <- "ISPRS Semantic Labeling benchmark_results" #(your project)
+#orthoimage  ISPRS4
+#classification method: SVL_5, S
 #training by orthoimage: ?
 #enhancement of buildings
+#pixel size=0.283m
 #
-
 ##########################################
 
 cat("project title is = ", prj_title,"\n")
 setwd(home_dir)
 
 #select orthoimage (activate manually)
-Img_name <- "ISPRS1" #name of orthoimage to be processed (example2)
+#Img_name <- "ISPRS1" #name of orthoimage to be processed (example2)
 #Img_name <- readline("type name of orthoimage: ") #line can be avoided when Img_name is selected
 #Img_name <- "ISPRS7" #name of orthoimage to be processed (example1)
-#Img_name <- "NN" #name of orthoimage to be processed (orthoimage of your project)
+Img_name <- "ISPRS4" #name of orthoimage to be processed (orthoimage of your project)
 
 if (Img_name == "ISPRS1") { #example2
   ##setting of path- & file-name for original data:
   setwd(home_dir)
   OrgClassResPathname <- paste(home_dir,"/data",sep = "")
-  OrgClassResFilename <- "ISPRS_#1_b.tiff" #extracted buildings
+  OrgClassResFilename <- "ISPRS_#1_b.tiff" #extracted buildings, pixel size=0.283m
   OrgImgPathname <- paste(home_dir,"/data",sep = "")
-  OrgImgFilename <- "top_mosaic_09cm_area1.tif" #GSD=0.09m
+  OrgImgFilename <- "top_mosaic_09cm_area1.tif" #pixel size=0.09m
   OrgGtsPathname <- paste(home_dir,"/data",sep = "") 
-  OrgGtsFilename <- "gts_top_mosaic_09cm_area1.tif" #GSD=0.09m
+  OrgGtsFilename <- "gts_top_mosaic_09cm_area1.tif" #pixel size=0.09m
   #GSD=Ground Sampling Distance
 } #end of image1
 
@@ -92,14 +94,26 @@ if (Img_name == "ISPRS7") { #example1
   #GSD=Ground Sampling Distance
 } #end of image7
 
-if (Img_name == "NN") { #your orthoimage
+if (Img_name == "ISPRS4") { #your orthoimage
   ##setting of path- & file-name for original data:
-  OrgClassResFilename <- "NN" #extracted buildings
-  OrgClassResPathname <- paste(home_dir,"/data",sep = "")
-  OrgImgPathname <- paste(home_dir,"/data",sep = "")
-  OrgImgFilename <- "NN"  #GSD=?m
+  #OrgClassResFilename <- "ISPRS_labelling_contest_results_Gerke__top_mosaic_09cm_area4_class.tif_resized.jpg" #extracted buildings
+  #OrgClassResFilename <- "ISPRS_result_Gerke.tif" #ISPRS_labelling_contest_results_Gerke__top_mosaic_09cm_area4_class.tif_resized.jpg
+  #OrgClassResFilename <- "extracted_object_new5.tif"
+  OrgClassResFilename <- "Resultat_G4_ISPRS_Benchmark_building.tif" #extracted class 'building', #pixel size=0.28305m
+  #OrgClassResFilename <- "Result_G4_extr_building_neg.tif" #extracted class 'building'
+  #OrgClassResFilename <- "ISPRS_result_Gerke.jpg"#
+  #ISPRS_labelling_contest_results_Gerke__top_mosaic_09cm_area4_class.tif_resized
+  OrgClassResPathname <- paste(home_dir,"/data/ISPRS4/Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4/",sep = "") #pixel size=0.283m
+  OrgClassResPathname
+  #Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4
+  #Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4
+  #OrgImgPathname <- paste(home_dir,"/data",sep = "")
+  OrgImgPathname <- paste(home_dir,"/data/ISPRS4/Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4/",sep = "")
+  OrgImgFilename <- "ortho_top_mosaic_09cm_area4.tif_resized.jpg"  #pixel size=0.09m
   OrgGtsPathname <- paste(home_dir,"/data",sep = "")
-  OrgGtsFilename <- "NN" #GSD=?m
+  #OrgGtsFilename <- "NN" #GSD=?m
+  #OrgGtsFilename <- "GTS_top_mosaic_09cm_area4.tif" #pixel size=0.09m
+  OrgGtsFilename <- "GTS_top_mosaic_09cm_area4_600x813.tif" #pixel size=0.28305m
   #GSD=Ground Sampling Distance
 } #end of image7
 
@@ -136,6 +150,10 @@ if (Img_name == "ISPRS7") {
   y_auto <- c(20,22,23) #objects for automatic processing (orthoimage #7)  
 }
 
+if (Img_name == "ISPRS4") {
+  y_auto <- c(2,3,4) #objects for automatic processing (orthoimage #7)  
+}
+
 n_y_auto <- length(y_auto)
 k_y_auto <- 1
 
@@ -149,7 +167,7 @@ cat("end of 'startup_buildenh.R' - continue with 'enhance_image.R' ", "\n")
 
 ##start the next program ("enhance_image.R")
 setwd(home_dir2)
-#stop("test")
+#stop("stop")
 source(paste("enhance_image_v",v_nr,".R",sep=""))
 #
 
