@@ -1,11 +1,10 @@
 #name of program (script): extract_single_building.R
 cat("version_number= ",v_nr,"\n")
-#description: extraction of one building  
+#description: extraction of one object (building)  
 #from image "building"-theme of generated land cover map
 #orthoimage: ISPRS data "Vaihingen" of areas: #1, #7, (#26)
-#instruction: use plot of building numbers 
+#instruction: use 'plot of building numbers' 
 #producible in 'support_extract_single_building'
-#support script to be used for selecting of object 
 #author: Joachim Höhle
 #GNU General Public License (GPL)
 cat("###########################################################################","\n")
@@ -15,7 +14,10 @@ setwd(home_dir)
 
 ##selection of processing mode
 cat("select mode of processing? - demo: 1, obj_wise: 2, auto: 3","\n") 
+
+
 answ <- readline("mode of processing? - type 1, 2, or 3: ") #processing mode
+answ
 
 if (answ == "1" && Img_name == "ISPRS7") { #processing of one example
   proc_mode <- "demo" #object b18 (ISPRS7)
@@ -27,6 +29,13 @@ if (answ == "1" && Img_name == "ISPRS7") { #processing of one example
 if (answ == "1" && Img_name == "ISPRS1") { #processing of one example
   proc_mode <- "demo" 
   bnr2 <- 11
+  part = "no_part"
+  k_part = "0"
+}
+
+if (answ == "1" && Img_name == "ISPRS4") { #processing of one example #new
+  proc_mode <- "demo"
+  bnr2 <- 3
   part = "no_part"
   k_part = "0"
 }
@@ -77,7 +86,8 @@ cat("label of building to be extracted=", bnr2,"\n") #check if new number is nec
 setwd(home_dir)
 LCM_enh_b=readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3_scaled_2.jpg",sep = "")) #classification by method JH, scaled affine
 display(LCM_enh_b, method="browser") #use for checking of image
-#display(LCM_enh_b, method="raster") #optional
+display(LCM_enh_b, method="raster") #optional
+#LCM_enh_b <- 1 - LCM_enh_b #new: change to negative 
 
 ##enhancement of raster image
 LCM_enh_b_t <- thresh(LCM_enh_b,2,2,0.01) #thresholding -> white outlines
@@ -93,8 +103,8 @@ LCM_label <- bwlabel(LCM_enh_b_t_f_t2) #labeling for perimeter
 display(LCM_label)
 
 ##display as negative
-LCM_enh_b_t_neg <- (1-LCM_enh_b_t)
-#display(LCM_enh_b_t_neg, method="browser") #optional
+LCM_enh_b_t_neg <- (1 - LCM_enh_b_t)
+display(LCM_enh_b_t_neg, method="browser") #optional
 display(LCM_enh_b_t_neg, method="raster")
 
 ##extraction of features (area,radius)
@@ -120,7 +130,8 @@ shap1_A[,1] <- y
 shap1_A<-data.frame(shap1_A)
 shap1_A[,8:9] <- coor[,1:2]
 shap1_A[,10] <- coor[,5]
-shap2_A <- subset(shap1_A,shap1_A[,2] >= 3086) #removes buildings of area < 5mx5m (3086 pixels) or adapt to your case
+#shap2_A <- subset(shap1_A,shap1_A[,2] >= 3086) #removes buildings of area < 5mx5m (3086 pixels) or adapt to your case
+shap2_A <- subset(shap1_A,shap1_A[,2] >= area_threshold) #new:removes buildings of area < 5mx5m (312 pixels) or adapt to your case
 n8 <- nrow(shap2_A)
 cat('number of buildings after area-thresh-holding=',n8,'\n')
 rownames(shap2_A) <- 1:n8
@@ -198,7 +209,7 @@ coords <- coords[coords$is_bnr == 1,] #removal of pixels which do not have the l
 
 #plot of PC and checkpoints
 r_max2 <- round(1.1*r_max)
-plot(coords$x,coords$y,pch=16,cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2,yc-r_max2),xlab=NULL,ylab=NULL,ann=FALSE,main=paste("b",bnr2),axes=TRUE)
+plot(coords$x,coords$y,pch=16,cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2,yc-r_max2),xlab=NULL,ylab=NULL,ann=T,main=paste("b",bnr2),axes=TRUE)
 #plot(coords$x,coords$y,pch=16,cex=0.2,col="black",asp=1,xlim=c(1,1887),ylim=c(2557,1),xlab=NULL,ylab=NULL,ann=FALSE,main=paste("b",bnr2),axes=TRUE) #small scale
 points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
 points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
@@ -206,12 +217,12 @@ points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scali
 points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
 points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
 #
-
+plotPar[5] <- abs(par("usr")[4] - par("usr")[3])
 ##output as tiff-image
 file1 <- paste('./data/',Img_name,'/images/b',bnr2,'_new8.tif',sep = "")
 tiff(file1, width=578, height=578, units="px", bg = "white")
 r_max2 <- round(1.1*r_max)
-plot(coords$x, coords$y, pch=16, cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2, yc-r_max2), xlab = NULL, ylab=NULL, ann= FALSE, main=paste("b", bnr2), axes=TRUE)
+plot(coords$x, coords$y, pch=16, cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2, yc-r_max2), xlab = NULL, ylab=NULL, ann= T, main=paste("b", bnr2), axes=TRUE)
 points(xc, yc, pch = 16, cex=1.5, col = "black", asp=1) #centre of PC
 points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
 points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
@@ -279,6 +290,7 @@ if(part != "no_part" && p_pos == "cor_sep") {
 }
 
 ##output of file with PC-coordinates (required in program 'line_detection.R')
+coords
 coords2 <- subset(coords, select=c(x,y))
 head(coords2)
 N1 <- length(coords$x)
@@ -293,6 +305,7 @@ rownames(idxy) <- 1 : N1
 head(idxy)
 nrow(idxy)
 setwd(home_dir)
+bnr2
 fname2 <- paste("./data/",Img_name,"/idxy_LCM_b",bnr2,".csv", sep="") #image
 write.table(idxy, fname2,  sep= " ", row.names=T) ##output of pixel cluster for one building
 #end of output
@@ -300,7 +313,7 @@ write.table(idxy, fname2,  sep= " ", row.names=T) ##output of pixel cluster for 
 cat("end of program 'extract_single_building.R' ","\n") 
 cat("continue with 'line_detection.R' ","\n")
 setwd(home_dir2)
-#stop("test")
+#stop("stop")
 source(paste("line_detection_v",v_nr,".R", sep=""))
 ###################################################################################
 
