@@ -113,7 +113,7 @@ for (i9 in z) {
 
 b0
 
-#output of approximate coordinates of corners (vertices)
+#output of approximate coordinates of polygon corners (vertices)
 setwd(home_dir)
 fname12 <- paste("./data/",Img_name,"/b",bnr2,"_coord_appr.txt",sep="")
 write.table(b0,fname12,sep="  ")
@@ -531,6 +531,7 @@ if (cas == "100_all+nonortho") {
 
 cat("end of program 'intersect_corner_points.R' - continue with program 'adjustment_of_corner_coordinates.R'","\n")
 setwd(home_dir2)
+#stop("Stop")
 source(paste("adjustment_of_corner_coordinates_v",v_nr,".R",sep=""))
 ##########################################################################
 
