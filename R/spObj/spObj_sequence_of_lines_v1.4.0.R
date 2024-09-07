@@ -3,7 +3,7 @@
 #correction of position of line-centers, angle of line and sequence of lines 
 #instruction: if corrections in the positions are required -> use interactive 
 #             detection of lines in 'support_line_detection.R' 
-#data: ISPRS orthoimages #1, #7
+#data: ISPRS orthoimages #1, #7, #4
 #author: Joachim Höhle
 #GNU General Public License (GPL)
 
@@ -369,6 +369,49 @@ if (Img_name == "ISPRS1") {
   
   
 } #end of ISPRS1
+
+
+##orthoimage ISPRS4
+
+if (Img_name == "ISPRS4") {
+  
+  #b61
+  if (bnr2 == 61 && p_pos == "cor_pos") {  
+    #determine new position by 'support_line_detection.R', #6
+    #or with angle by 'support_sequence_of_lines.R', #9
+    b13_angle_df
+    b13_angle_df[2,1:4] <- c(19,NA,382,108) #lnr=19,midpoint is manually changed
+    b13_angle_df[10,1:4] <- c(2,NA,440,190) #lnr=2,midpoint is manually derived
+    #b13_angle_df[10,1:4] <- c(57,NA,454,189) #lnr=57,midpoint is manually derived
+    b13_angle_df2 <- b13_angle_df
+    b13_angle_df2 
+  } #end b61 "cor_pos"
+  
+  if (bnr2 == 61 && p_pos == "cor_sek") {
+    sequence_seg2 <- sequence_seg
+    sequence_seg2 <- c(1,415,19,60,2,155,162,75,2,42)
+    sequence_seg2
+  } #end b61
+  
+  #b62
+  
+  if (bnr2 == 62 && p_pos == "cor_pos") {  
+    #determine new position by 'support_line_detection.R', #6 or ('support_sequence_of_lines.R, #1)
+    #or for angle by 'support_sequence_of_lines.R', #9
+    
+    b13_angle_df2[3,1:4] <- c(145,NA,467,212) #lnr=4b,midpoint coordinates are manually derived
+    b13_angle_df2[2,1:4] <- c(4,NA,477,180) #lnr=4a,midpoint coordinates are manually derived
+    b13_angle_df2
+  } #end b62 "cor_pos"
+  
+  if (bnr2 == 62 && p_pos == "cor_sek") {
+    sequence_seg2 <- sequence_seg
+    sequence_seg2 <- c(118,34,16,4,126,145,27,4)
+    sequence_seg2
+  } #end b62
+  
+} #end of ISPRS4
+  
 
 ##end of script 'spObj_sequence_of_lines_v1.4.0.R'
 ################################################################################
