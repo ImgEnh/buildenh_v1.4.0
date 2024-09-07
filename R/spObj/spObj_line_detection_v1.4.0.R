@@ -426,6 +426,43 @@ if (Img_name == "ISPRS1") {
   
 } #end of orthoimage "ISPRS1"
 
+
+##ISPRS4
+
+if (Img_name == "ISPRS4") { 
+  
+  #b6
+  
+  #b61
+  #cas='100_all'
+  
+  if (bnr2 == 61 && p_pos == "cor_det") { 
+    B5_6
+    B5_6[10,] <- B5_4_ord[7,]
+    B5_6[1:10,8] <- 1
+    B5_6 <- B5_6[-3,]
+    B5_6R4 <- B5_6
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+  } #end b61
+  
+  #b62
+  #cas='100_all'
+  
+  if (bnr2 == 62 && p_pos == "cor_det") { 
+    B5_6
+    B5_7 <- B5_6
+    B5_6R4 <- B5_7[-6,] #417
+    row.names(B5_6R4) <- 1 : nrow(B5_6R4)
+    B5_6R4
+    B5_6R4[7,] <- B5_4_ord[8,] #4
+    B5_6R4[8,] <- B5_4_ord[16,] #126
+    B5_6R4[7:8,8] <- 1
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+  } #end b62
+} #end of orthoimage "ISPRS4"
+
 ##end of script 'spObj_line_detection_v1.4.0.R'
 
 
