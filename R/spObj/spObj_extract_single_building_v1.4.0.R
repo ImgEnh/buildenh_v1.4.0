@@ -958,7 +958,351 @@ if (Img_name == "ISPRS1") {
 } #end ISPRS1
 ################################################################################
 
+if (Img_name == "ISPRS4") {
+ 
+  #b4
+   
+  if (bnr2 == 4 && p_pos == "cor_sep") {
+    cat("start of spObj_extract_single_building.R -first part",sep = "")
+    n_bnr2 = 0
+    display(is_bnr)
+    is_bnr2 <- is_bnr
+    x_sep=473;y_sep=47 #manual input
+    imageData(is_bnr2)[(x_sep-2):(x_sep+2), (y_sep-2):(y_sep+2)] = FALSE #first cut
+    #imageData(is_bnr2)[282:286, 96:100] = FALSE #second cut
+    display(is_bnr2)
+    is_bnr2_label <- bwlabel(is_bnr2)
+    cat("Number of objects= ",max(is_bnr2_label),"\n")
+    coor_part<-computeFeatures.moment(is_bnr2_label) #geometric features (moment)
+    shap_part<-computeFeatures.shape(is_bnr2_label) #geometric features (shape)
+    #
+    #first part
+    is_label_1 <- is_bnr2_label@.Data == 1 
+    imageData(is_label_1)[x_sep, y_sep]
+    display(is_label_1)
+    #
+    #second part
+    is_label_2 <- is_bnr2_label@.Data == 2 
+    display(is_label_2)
+    
+    #save original values
+    xc_orig <- xc
+    yc_orig <- yc
+    #
+    
+    if (proc_mode == "obj_wise" && part == "2parts_1") {
+      bnr2 <- (bnr2)*10+1  #change of number 
+      bnr2_part <- bnr2 
+    }
+    
+    if (proc_mode == "obj_wise" && part == "2parts_2") {
+      bnr2 <- (bnr2)*10+2 #?
+      bnr2
+    }
+    
+    #first part
+    if (bnr2 == 41) { 
+      is_label_1
+      display(is_label_1)
+      setwd(home_dir)
+      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+      save(plotPar, file=f1) #parameter xc, yc, r_max, alpha
+      coords <- data.frame(x=as.numeric(row(is_label_1)),y=as.numeric(col(is_label_1)), is_label_1=as.numeric(is_label_1))
+      coords <- coords[coords$is_label_1 == 1,] #removal of pixels which do not have the label of the building
+      
+      #calculation of new centre of object from connected components
+      xc <- coor_part[1,1]
+      yc <- coor_part[1,2]
+      alpha <- coor_part[1,5]*omega
+      r_max <- shap_part[1,6]
+      
+      #storage of plot parameter of separated object
+      setwd(home_dir)
+      plotPar <- c(xc,yc,r_max,alpha,dy_window_plot)
+      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+      save(plotPar,file=f1) #parameter xc, yc, r_max, alpha
+      
+      #plot of PC and checkpoints (large scale)
+      dev.set(2)
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),
+           ylim=c(yc+r_max2, yc-r_max2), xlab = NULL, ylab=NULL, ann=T, main=paste("b", bnr2,
+                                                                                   " - left",sep = ""), axes=TRUE)
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
+      #
+      
+      #generation of image
+      setwd(home_dir)
+      f <- paste("./data/",Img_name,"/b_nr",sep = "")
+      save(bnr2,file=f)
+      file1 <- paste('./data/',Img_name,'/images/b',bnr2,'_new8.tif',sep = "")
+      tiff(file1, width=578, height=578, units="px", bg = "white")
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2, yc-r_max2), xlab = NULL, ylab=NULL, ann= FALSE, main=paste("b", bnr2), axes=TRUE)
+      points(xc, yc, pch = 16, cex=1.5, col = "black", asp=1) #centre of PC
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      dev.off()
+      cat("end of spObj_extract_single_building.R -first part",sep = "")
+    } #end b41 (first part)
+    
+    #second part 
+    if (bnr2 == 42) { 
+      cat("start of spObj_extract_single_building.R - second part",sep = "", "\n")
+      part <-  "2parts_2"
+      bnr2_part <- bnr2 
+      is_label_2 <- is_bnr2_label@.Data == 2 #right part
+      display(is_label_2)
+      is_label_2
+      coords <- data.frame(x=as.numeric(row(is_label_2)),y=as.numeric(col(is_label_2)), is_label_2=as.numeric(is_label_2))
+      coords <- coords[coords$is_label_2 == 1,] #removal of pixels which do not have the label of the building
+      xc <- coor_part[2,1] #generate xc,yc,r_max,alpha and store with bnr2=342
+      yc <- coor_part[2,2]
+      alpha <- coor_part[2,5]*omega
+      r_max <- shap_part[2,6]
+      dy_window_plot
+      
+      #output plot parameter
+      plotPar <- c(xc,yc,r_max,alpha,dy_window_plot)
+      setwd(home_dir)
+      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+      save(plotPar, file=f1) #parameter xc, yc, r_max, alpha
+      f <- paste("./data/",Img_name,"/b_nr",sep = "")
+      save(bnr2,file=f)
+      
+      #plot of PC and checkpoints (large scale)
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",
+           asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2, 
+                                                    yc-r_max2), xlab = NULL, ylab=NULL, ann=T, 
+           main=paste("b", bnr2,sep = ""), axes=TRUE)
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
+      
+      #generation of image
+      file1 <- paste('./data/',Img_name,'/images/b',bnr2,'_new8.tif',sep = "")
+      tiff(file1, width=578, height=578, units="px", bg = "white")
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),
+           ylim=c(yc+r_max2, yc-r_max2), xlab = NULL, ylab=NULL, ann=T, main=paste("b", bnr2,
+                                                                                   sep = ""), axes=TRUE)
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
+      dev.off()
+      #windows() #if necessary
+      cat("end of spObj_extract_single_building.R - second part", sep = "","\n")
+    } #end of b42
+      n_bnr2 <- n_bnr2 + 1
+  } #end b4
+  ####
+  
+  #b6
+  if (bnr2 == 6 && p_pos == "cor_sep") {
+    cat("start of spObj_extract_single_building.R -first part",sep = "")
+    n_bnr2 = 1
+    display(is_bnr)
+    is_bnr2 <- is_bnr
+    x_sep=461;y_sep=187 #manual input of coordinates for point of separation
+    imageData(is_bnr2)[(x_sep-2):(x_sep+2), (y_sep-2):(y_sep+2)] = FALSE #first cut
+    #imageData(is_bnr2)[282:286, 96:100] = FALSE #second cut
+    display(is_bnr2)
+    is_bnr2_label <- bwlabel(is_bnr2)
+    cat("Number of objects= ",max(is_bnr2_label),"\n")
+    coor_part<-computeFeatures.moment(is_bnr2_label) #geometric features (moment)
+    shap_part<-computeFeatures.shape(is_bnr2_label) #geometric features (shape)
+    #
+    #first part
+    is_label_1 <- is_bnr2_label@.Data == 1 
+    #new: close gap
+    x_close=458
+    y_close=185
+    imageData(is_label_1)[(x_close-2):(x_close+2), (y_close-2):(y_close+2)] = 1 #close gap
+    display(is_label_1)
+    #
+    #second part
+    is_label_2 <- is_bnr2_label@.Data == 2 
+    display(is_label_2)
+    
+    #save original values
+    xc_orig <- xc
+    yc_orig <- yc
+    #
+    
+    if (proc_mode == "obj_wise" && part == "2parts_1") {
+      bnr2 <- (bnr2)*10+1  #change of number to 61
+      bnr2_part <- bnr2
+    }
+    
+    # 
+    if (proc_mode == "obj_wise" && part == "2parts_2") {
+      bnr2 <- (bnr2)*10+2 #62
+      bnr2
+    }
+    
+    #first part
+    if (bnr2 == 61) { 
+      is_label_1
+      display(is_label_1)
+      setwd(home_dir)
+      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+      save(plotPar, file=f1) #parameter xc, yc, r_max, alpha
+      coords <- data.frame(x=as.numeric(row(is_label_1)),y=as.numeric(col(is_label_1)), is_label_1=as.numeric(is_label_1))
+      coords <- coords[coords$is_label_1 == 1,] #removal of pixels which do not have the label of the building
+      
+      #calculation of new centre of object from connected components
+      xc <- coor_part[1,1]
+      yc <- coor_part[1,2]
+      alpha <- coor_part[1,5]*omega
+      r_max <- shap_part[1,6]
+      
+      #storage of plot parameter of separated object
+      setwd(home_dir)
+      plotPar <- c(xc,yc,r_max,alpha,dy_window_plot)
+      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="") #
+      save(plotPar,file=f1) #parameter xc, yc, r_max, alpha
+      load(f1)
+      plotPar
+      #plot of PC and checkpoints (large scale)
+      dev.set(2)
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),
+           ylim=c(yc+r_max2, yc-r_max2), xlab = NULL, ylab=NULL, ann=T, main=paste("b", bnr2,
+                                                                                   " - left",sep = ""), axes=TRUE)
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
+      #
+      
+      #generation of image
+      setwd(home_dir)
+      f <- paste("./data/",Img_name,"/b_nr",sep = "")
+      save(bnr2,file=f)
+      file1 <- paste('./data/',Img_name,'/images/b',bnr2,'_new8.tif',sep = "")
+      tiff(file1, width=578, height=578, units="px", bg = "white")
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2, yc-r_max2), xlab = NULL, ylab=NULL, ann= FALSE, main=paste("b", bnr2), axes=TRUE)
+      points(xc, yc, pch = 16, cex=1.5, col = "black", asp=1) #centre of PC
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      dev.off()
+      cat("end of spObj_extract_single_building.R -first part",sep = "")
+    } #end b61 (first part)
+    
+    #second part 
+    if (bnr2 == 62) { 
+      cat("start of spObj_extract_single_building.R - second part",sep = "", "\n")
+      part <-  "2parts_2"
+      bnr2_part <- bnr2 
+      is_label_2 <- is_bnr2_label@.Data == 2 #right part
+      display(is_label_2)
+      #new: close gap
+      x_close=463; y_close=188
+      imageData(is_label_2)[(x_close-2):(x_close+2),(y_close-2):(y_close+2)] = 2
+      display(is_label_2)
+      
+      #new: separation
+      x_sep=539;y_sep=202 #manual input
+      imageData(is_label_2)[(x_sep-2):(x_sep+2), (y_sep-2):(y_sep+2)] = FALSE #cut
+      display(is_label_2)
+      
+      #new: close gap
+      imageData(is_label_2)[534:539,199:203] = 2
+      display(is_label_2)
+      
+      #
+      is_bnr2_label3 <- bwlabel(is_label_2)
+      str(is_bnr2_label3)
+      cat("Number of objects= ",max(is_bnr2_label3),"\n")
+      coor_part<-computeFeatures.moment(is_bnr2_label3) #geometric features (moment)
+      shap_part<-computeFeatures.shape(is_bnr2_label3) #geometric features (shape)
+      #
+      coords <- data.frame(x=as.numeric(row(is_bnr2_label3)),y=as.numeric(col(is_bnr2_label3)), is_bnr2_label3=as.numeric(is_bnr2_label3))
+      coords <- coords[coords$is_bnr2_label3 == 1,] #removal of pixels which do not have the label of the building
+      length(coords$x)
+      xc <- coor_part[1,1] #generate xc,yc,r_max,alpha and store with bnr2=62
+      yc <- coor_part[1,2]
+      alpha <- coor_part[1,5]*omega
+      r_max <- shap_part[1,6]
+      dy_window_plot
+      
+      #output plot parameter
+      plotPar <- c(xc,yc,r_max,alpha,dy_window_plot)
+      setwd(home_dir)
+      f1 <- paste("./data/",Img_name,"/param_b",bnr2,sep="")
+      save(plotPar, file=f1) #parameter xc, yc, r_max, alpha
+      f <- paste("./data/",Img_name,"/b_nr",sep = "")
+      save(bnr2,file=f)
+      
+      #plot of PC and checkpoints (large scale)
+      plotPar
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",
+           asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2, 
+                                                    yc-r_max2), xlab = NULL, ylab=NULL, ann=T, 
+           main=paste("b", bnr2,sep = ""), axes=TRUE)
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
+      #
+      #generation of image
+      #file1 <- paste('./data/',Img_name,'/images/b',bnr2,'_new10.tif',sep = "")
+      file1 <- paste('./data/',Img_name,'/images/b',bnr2,'_new9.tif',sep = "")
+      tiff(file1, width=578, height=578, units="px", bg = "white")
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),
+           ylim=c(yc+r_max2,yc-r_max2),xlab=NULL,ylab=NULL,ann=T,main=paste("b",bnr2,sep=""),axes=TRUE)
+      
+      #checkpoints
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
+      dev.off()
+      #windows() #if necessary
+      
+      #new: plot with plotPar of b61
+      setwd(home_dir)
+      bnr2=61
+      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+      load(f1)
+      plotPar
+      bnr2=62
+      r_max2 <- round(1.1*r_max)
+      plot(coords$x, coords$y, pch=16, cex=0.2,col="black",
+           asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2, 
+                                                    yc-r_max2), xlab = NULL, ylab=NULL, ann=T, 
+           main=paste("b", bnr2," - plotPar of b61",sep = ""), axes=TRUE)
+      points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc-r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
+      points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #center of PC
+      #
+      cat("end of spObj_extract_single_building.R - second part", sep = "","\n")
+    } #end of b62
+    n_bnr2 <- n_bnr2 + 1
+  } #end b6
+} #end ISPRS4 
 cat("end of program 'spObj_extract_single_building_v1.4.0.R' ",sep = "","\n")
-
-##
+################################################################################
+      
 
