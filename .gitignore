@@ -57,6 +57,11 @@ data/.Rhistory
 !results/ISPRS7/b_all.txt
 !data/tt_prior_sek.RData
 !results/ISPRS7/dummy.txt
+#
+#!data/table_ISPRS4.pdf
+!results/ISPRS4/b_all.txt
+!results/ISPRS4/dummy.txt
+#
 data/ISPRS1
 data/ISPRS1/images/
 data/ISPRS7
