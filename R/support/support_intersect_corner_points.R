@@ -12,9 +12,8 @@ cat("version_number= ",v_nr,"\n")
 #3: automated solution for theta average
 #4: manual generation of theta average
 #5: intersection of two lines
-#6: calculation of line segment lengths
+#6: calculation of line-segment lengths
 ################################################################################
-
 
 #1: test of theta average
 setwd(home_dir)
