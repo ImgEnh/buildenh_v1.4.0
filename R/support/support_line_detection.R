@@ -1,6 +1,6 @@
 ## name of script: support_line_detection.R
 ##purpose: detection of lines for special cases
-##ISPRS data (areas #1,#7), DT classification, training by ISPRS orthoimage #26
+##ISPRS data (areas #1 and #7 with DT classification training by ISPRS orthoimage #26; #4)
 ##instruction: please activate function 'locator' where it is needed
 ##author: Joachim Höhle
 ##GNU General Public License (GPL)
@@ -256,10 +256,13 @@ for (i in vec) {
 # by measurement of one pixel in enlarged orthoimage 
 
 #display enlarged ortho_image and PC of building outline
-img_uds <- img_ref[orig_x : wind_x, orig_y:wind_y,1:3]
+# if (orig_y < 0) {
+#   orig_y = 0
+# }
+img_uds <- img_ref[orig_x : wind_x, abs(orig_y) : wind_y,1:3]
 display(img_uds, method = "raster")
 #display(img_uds,method = "browser") #display enables zooming
-points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="red")
+points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="yellow")
 points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), 
        pch=20, asp=1, cex=0.3, col="green")
 
@@ -287,7 +290,7 @@ detect_meas1()
 
 #plot of detected line into enlarged orthoimage
 B5_4_ord #use of ref-line (lnr_ref)
-i=41 #index in B5_4_ord (value for i has to be changed!)
+i=16 #index in B5_4_ord (value for i has to be changed!)
 B5_4_ord[i,]
 cat("PC_nr=", B5_4_ord$lnr[i], "\n")
 y <- (-y) #adapt to math_system #img_system
