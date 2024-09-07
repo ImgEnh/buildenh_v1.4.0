@@ -3,7 +3,9 @@ cat("version_number= ",v_nr,"\n")
 ## purpose: adjustment for one line or several lines
 ## author: Joachim Höhle
 ## GNU General Public License (GPL)
+
 ## contents:
+
 # 1.adjustment of all lines stored in matrix 'B6_seq' 
 # 2.adjustment of four calculated lines with theta_ref and alpha_ref + weighted mean
 # 3.adjustment of selected reference line
