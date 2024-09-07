@@ -1,11 +1,11 @@
 ##name of script: support_sequence_of_lines.R
 cat("version_number= ",v_nr,"\n") 
-##purpose: correction of center of line, plot of lines
+##purpose: correction of center of line & plot of lines
 ##author: Joachim Höhle
 ## GNU General Public License (GPL)
 
 ##contents:
-## 1.digitize and plot center of line 
+## 1.digitize center of line 
 ## 2.plot a pixel cluster (PC) which represents a line-segment
 ## 3.plot of all pixel clusters (PC) on orthoimage in small scale
 ## 4.histograms of line-length (n_pixel)
@@ -52,7 +52,7 @@ tr_lat <- c(a0,b0)
 kf2 <- L1[[3]]
 #
 
-## measurement of one new pixel which represents tje center of line
+## measurement of one new pixel which represents the center of line
 #results: x,y in image-system of orthoimage
 locator2() #measurement and marking of one pixel's position
 
@@ -93,7 +93,7 @@ hist_lin_len() #call of function
 #    and approximate line-orientation (theta_appr)
 
 #data (subject of change)
-theta_appr <- 15 # [degrees]
+theta_appr <- 15 # [degrees], adapt to your case
 X <- 624 # [pixel] img-system
 Y <- 1775 # [pixel] img-system
 
@@ -109,7 +109,7 @@ ro3 #[pixel]
 
 #data (to be changed)
 Img_name
-lnr <- 2 
+lnr <- 2 #to be adapted
 
 #plot
 PC_seg_P_nP <- plot_PC_2scales(lnr) #call of function
