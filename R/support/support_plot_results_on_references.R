@@ -206,6 +206,10 @@ print(intsec_linepair_vertex_coord2)
 #objects/buildings: 4,5,7,8,9,10,11,13,15,17,18,20,21,22,23,25,271,272,26,28,29,32,35,36,26,341,342,371,372,38,39,41,42,43,45,46
 #dimension of orthoimage/GTS: 1919x2569 (WxH)
 
+#example 3: orthoimage #ISPRS4
+#Img_name ="ISPRS4"
+#objects/buildings: 3,4,61,62
+
 ##plot of all buildings onto graph
 setwd(home_dir)
 x=0
@@ -314,7 +318,52 @@ for (k in b_all_nr) {
   names(b) <- c("nr","Points_x","Points_y")
   lines(b$Points_x, -b$Points_y, col="red", asp=1, type="l", lwd=2, lty=1)
 } #end loop
-#
+
+
+##plot of all processed buildings on classified orthoimage_extracted buildings
+OrgClassResPathname <- paste(home_dir,"/data",sep = "")
+OrgClassResFilename <- "ISPRS_#1_b.tiff" #extracted buildings, pixel size=0.283m
+
+setwd(OrgClassResPathname)
+img_Class_b <- readImage(OrgClassResFilename)
+display(img_Class_b, method="raster")
+b_all_nr
+
+#loop
+for (k in b_all_nr) {
+  cat("k=", k, "\n")
+  bnr2 <- k
+  fname12 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_plot.txt",sep="")
+  setwd(home_dir)
+  b <- read.table(fname12, header=T)
+  b
+  k1 <- nrow(b)
+  names(b) <- c("nr","Points_x","Points_y")
+  lines(b$Points_x, -b$Points_y, col="red", asp=1, type="l", lwd=2, lty=1)
+} #end loop
+
+####plot of all processed buildings on classified orthoimage_all classes
+OrgClassResPathname <- paste(home_dir,"/data",sep = "")
+OrgClassResFilename <- "ISPRS_result_Gerke.tif" #ISPRS_labelling_contest_results_Gerke__top_mosaic_09cm_area4_class.tif_resized.jpg
+setwd(OrgClassResPathname)
+img_Class_all <- readImage(OrgClassResFilename)
+display(img_Class_all, method="raster")
+b_all_nr
+#loop
+for (k in b_all_nr) {
+  cat("k=", k, "\n")
+  bnr2 <- k
+  fname12 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_plot.txt",sep="")
+  setwd(home_dir)
+  b <- read.table(fname12, header=T)
+  b
+  k1 <- nrow(b)
+  names(b) <- c("nr","Points_x","Points_y")
+  lines(b$Points_x, -b$Points_y, col="red", asp=1, type="l", lwd=2, lty=1)
+} #end loop
+
+
+#plot of all processed buildings on classification result (OrgClassRes)
 
 ##end of script 5 
 ################################################################################
