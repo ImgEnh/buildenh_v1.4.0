@@ -1,9 +1,9 @@
 ## name of script: support_enhance_image.R
 cat("version_number= ",v_nr,"\n")
 ## purpose: scaling of ortho-images
-## required for images "ISPRS1" and "ISPRS7" (examples for learning)
-## author: Joachim Höhle
+## required for images "ISPRS1", "ISPRS7", "ISPRS4" (examples for learning)
 ## instruction: run all programs in "demo" mode before using 'support_enhance_image.R'
+## author: Joachim Höhle
 ## GNU General Public License (GPL)
 
 ##contents:
@@ -48,7 +48,7 @@ if (abs(round(dcol - img_x_max)) < 3 && abs(round(drow - img_y_max)) < 3) { #ort
 #ISPRS7
 
 #measurement in raster image
-LCM_b=readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3.jpg",sep=""))  #unscaled image
+LCM_b=readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3.jpg",sep=""))  #non-scaled image
 #display(LCM_b, method="browser") #find coordinates of corners
 display(LCM_b, method="raster") #find coordinates of corners
 co_xy <- locator(4) #digitize of corners
