@@ -5,8 +5,8 @@ cat("version_number= ",v_nr,"\n")
 # method 2: weighted average of the main direction (theta_av) 
 # ro-values are calculated by least-squares adjustment (all line types)
 # quality control by standard deviation of residuals
-## author: Joachim Höhle
 ## instructions: use supplementing scripts in case of problems
+## author: Joachim Höhle
 ## GNU General Public License (GPL)
 cat("##################################################################","\n")
 
@@ -100,10 +100,8 @@ if (cas == "100_all+nonortho") { #solution for orthogonal lines
     fname11 <- paste("./data/",Img_name,"/theta_av2_b", bnr2,".txt",sep="")
     theta_av2 <- as.numeric(read.table(fname11))
     cat("theta angle2 (weighted average) = ", theta_av2, "[degrees]", "\n")
-  #} # end if
-  
-    z1 <- 1 : nrow(B8S)
     
+    z1 <- 1 : nrow(B8S)
     for (i in z1) {
       
       if (B8S$ortho[i] == 0 && n_parallel_nonortholines2 != 0) {
@@ -400,10 +398,12 @@ if (cas == "100_all" || cas == "extr_wd" || cas == "4_long") {
   write.table(XY_adj_ncorners_1,file=fname13)
 }
 
-cat("end of 'adjustment_of_corner_coordinates.R'-continue with 'plot results_on_references.R'","\n")
+cat("end of 'adjustment_of_corner_coordinates.R'-
+continue with 'plot results_on_references.R'","\n")
 setwd(home_dir2)
+#stop("Stop")
 source(paste("plot_results_on_references_v",v_nr,".R",sep=""))
-#############################################################################################
+################################################################################
 
 
 
