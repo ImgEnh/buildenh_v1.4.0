@@ -3,9 +3,9 @@ cat("version_number= ",v_nr,"\n")
 #description: separation of pixel clusters (PC) representing line segments 
 #detecting of lines representing the selected object
 #author: Joachim Höhle
-#examples: ISPRS dataset 'Vaihingen', orthoimages #1, #7
+#examples: ISPRS dataset 'Vaihingen', orthoimages #1, #7, #4
 #instructions: check the ro-range and the main direction of object
-#the minimum lengths of the lines to be detected are defined by a default value (n_pix) 
+#the minimum lengths of the lines are defined by a default value (n_pix) 
 #the default value (n_pix) may be adapted to the existing objects of the orthoimage
 #use 'Zoom' for evaluation of position
 #change eventually the default value for each object type ("extr_wd", "4_long", "100_all", "100_all+nonortho")
@@ -14,17 +14,17 @@ cat("version_number= ",v_nr,"\n")
 #GNU General Public License (GPL)
 cat("#########################################################################","\n")
 
-#stop("manual processing")
 cat("start of program 'line_detection.R'","\n")
 setwd(home_dir)
 
 ##parameter
 omega=180/pi #factor to convert from radiant to degree
-k=1.64 #approximate scale factor for length of line segment (empirically determined)
+k=1.64 #approximate scale factor for length of line segment (empirically determined for ISPRS7 and ISPRS4)
 options(digits=8)
 
 ##input
 setwd(home_dir)
+bnr2
 f1=paste("./data/",Img_name,"/idxy_LCM_b",bnr2,".csv",sep="")
 pc2<-read.table(f1, header=TRUE) #land cover map
 head(pc2)
@@ -62,6 +62,11 @@ if (Img_name == "ISPRS7") {
 if (Img_name == "ISPRS1") {
   plot(x,-y, pch=3, cex=2, col="black", asp=1, xlim=c(0,1919), 
   ylim=c(-2569, 1000))
+}  
+
+if (Img_name == "ISPRS4") {
+  plot(x,-y, pch=3, cex=2, col="black", asp=1, xlim=c(0,600), 
+       ylim=c(-813, 318))
 }  
 
 points(xc,-yc, pch=3, cex=1.5, col="red", asp=1) #centre of PC
@@ -113,19 +118,28 @@ ro_rg=2: range calculated with angle between main axis of ellipse and x-axis (ma
 ro_rg=3: range with -Dis_max...Dis_max (default ISPRS1) ")
 
 #setting of ro_range
-if (Img_name == "ISPRS1" & proc_mode == "demo") {
+if (Img_name == "ISPRS1" && proc_mode == "demo") {
   ro_rg = 3
 } else {
-  if (Img_name == "ISPRS1" & proc_mode == "demo") {
+  if (Img_name == "ISPRS1") {
     ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
     ro_rg <- as.integer(ro_rg)
   }  
 }
 
-if (Img_name == "ISPRS7" & proc_mode == "demo") {
+if (Img_name == "ISPRS7" && proc_mode == "demo") {
   ro_rg = 1
 } else {
-  if (Img_name == "ISPRS7" & proc_mode == "demo") {
+  if (Img_name == "ISPRS7") {
+    ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
+    ro_rg <- as.integer(ro_rg)
+  }  
+}
+
+if (Img_name == "ISPRS4" && proc_mode == "demo") {
+  ro_rg = 3
+} else {
+  if (Img_name == "ISPRS4") {
     ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
     ro_rg <- as.integer(ro_rg)
   }  
@@ -144,7 +158,7 @@ if(ro_rg == 0) {
 } #end ro_rg=0
 #
 
-if (ro_rg == 1) { # 1 is default value for ro_rg
+if (ro_rg == 1) { # 1 
   ro <- seq(0, Dis_max, by=ro_step) 
   n_ro <- length(ro)
   ro_1 <- ro[1]
@@ -220,7 +234,7 @@ if(ro_rg == 2) {
 } #end ro_rg=2 incl. plot
 
 #
-if (ro_rg == 3) { 
+if (ro_rg == 3) { #default value
   Dis_min2 <- 2*(-Dis_max)
   Dis_max2 <- 2*Dis_max
   ro <- seq(Dis_min2, Dis_max2, by=ro_step) 
@@ -306,7 +320,7 @@ while (i < n_theta) {
   } #end loop j
   
 } #end loop i
-#end generation of point cloud (PC)
+#end generation of pixel cluster (PC)
 
 A <- pointcloud
 B <- A[order(A[,3],decreasing = TRUE),] #ordered point cloud
@@ -318,7 +332,7 @@ B[1:10,]
 f1 <- paste("./data/",Img_name,"/parameter_space_b",bnr2,".txt",sep="")
 write.table(B,f1)
 
-##test for main direction
+##test of main direction
 #does first (longest) line have an orthogonal line 
 #(theta_ind + 90 or theta_ind -90) ?
 B1 <- B
@@ -340,7 +354,7 @@ ind_max <- max(B2[,1],na.rm = FALSE) #theta_index
 ind_min <- min(B2[,1],na.rm = FALSE) #theta_index
 dim(B2)
 cat("dimB2= ",dim(B2),"\n")
-##loop for check plot of extracted point clusters (optional)
+##loop for check plot of extracted pixel clusters (optional)
 #instruction: change to 'Plots' and '<-'
 
 #plot of longest point cluster (PC) representing a line
@@ -415,8 +429,8 @@ if (kf < 1) {
 }
 
 #end of calculation of the scale factor 'kf'
-
-wd <- 10 #width of building [pixel] (alternative: 15)
+#n_pix = 5 #new select minimum lenght of line segment n_pixel = n_meter/pixel size
+wd <- 10 #width of building [pixels] (alternative: 15) #changed from 10 to n_pix
 B22 <- subset(B0, round(B0[,4]/kf) >= wd) # minimum length of side, assumed with 15 pixel (=1.4m for ISPRS data)
 n1 <- length(B22[,1])
 B3 <- matrix(nrow=n1,ncol=7)
@@ -492,16 +506,26 @@ if (Img_name == "ISPRS7" & proc_mode == "demo") {
   #cat("if demo -> type 1", "\n")
   lnr=1
 } else {
-  if (Img_name == "ISPRS7" & proc_mode == "demo") {
+  if (Img_name == "ISPRS7" && proc_mode != "demo") {
     lnr <- readline("type reference line number: ") 
     lnr <- as.integer(lnr)
   }  
 }
 
-if (Img_name == "ISPRS1" & proc_mode == "demo") { 
+if (Img_name == "ISPRS1" && proc_mode == "demo") { 
   lnr=2
 } else {
-  if (Img_name == "ISPRS1" & proc_mode == "demo") { 
+  if (Img_name == "ISPRS1" && proc_mode != "demo") { 
+    lnr <- readline("type reference line number: ") 
+    lnr <- as.integer(lnr)
+  }  
+}
+
+if (Img_name == "ISPRS4" && proc_mode == "demo") {
+  
+  lnr=1
+} else {
+  if (Img_name == "ISPRS4" && proc_mode != "demo") {
     lnr <- readline("type reference line number: ") 
     lnr <- as.integer(lnr)
   }  
@@ -920,7 +944,7 @@ cat("case= ", cas, "\n")
 
 if (cas == "extr_wd") {
   k14 <- length(B5_4$lnr)
-  n_pix <- 15
+  n_pix <- 5 #alternative: 15 [pixel] - new: select minimum length of line segment n_pixel = n_meter/pixel size
   wd <- n_pix #length of shortest line segment [pixel] or 15*0.09 = 1.4m (search for small lines)
   B5_4b <- B5_4
   B5_4b[,1:7] <- 0
@@ -1080,7 +1104,7 @@ display(img_uds, method = "raster")
 points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="red")
 points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), pch=20, asp=1, cex=0.2, col="green")
 
-if (cas == "4_long") { 
+if (cas == "4_long") {  
   B5_4[1:8,]
   
   #n_pix must be changed according to available PCs in B5_4$n_pixel
@@ -1093,7 +1117,7 @@ if (cas == "4_long") {
   
   cat("define minimum size of line segment: 35 pixel (recommended) 
       or 35, 56, 25, 78, 94 (alternatives)","\n")
-  n_pix <- readline("type minimum size of line - if demo - type 35: ") #manual input
+  n_pix <- readline("type minimum size of line - if demo - type 35: ") #manual input (n_pix = n_pixel[m]/pixelsize[m])
   n_pix <- as.integer(n_pix)
   cat("n_pix=",n_pix,"pixels","\n")
   wd <- n_pix
@@ -1282,10 +1306,10 @@ if (cas == "4_long") {
   vec2 <- 1 : (n_B5_4e_4_long - 1)
   
   for (i in vec2) {
-    if (B5_4e_4long$lnr[i] == B5_4e_4long$lnr[i+1])
+    if (B5_4e_4long$lnr[i] == B5_4e_4long$lnr[i+1]) {     
       stop("double line number - use cas = 'extr_wd' !")
-  }
-  
+    }
+  } #changed
   print(B5_4e_4long)
   
   cat("correct lines?","\n") 
@@ -1314,17 +1338,17 @@ if (cas == "4_long") {
 } #end cas="4_long"
 #########################################################
 
-##more than 4 orthogonal line segments at the object (cas="100_all")?
+##more than 4 orthogonal line segments at the object (cas="100_all")
 #automated solution of outline with more than 4 line segments
 #with removal of "shorter_line"
 
 if (cas == "100_all") {
   print(B5_4)
-  cat("minimum length of line: 15 pixel (recommended), 10, 35 (alternative)")
-  n_pix <- readline("type minimum length of line= ") #manual input 15 (recommended) or 35 (alternativ)
+  cat("minimum length of line: 15 pixel (recommended), 10, 35 (alternative)")   #n_pix <- n_meter/pixel_size[m]
+  n_pix <- readline("type minimum length of line [pixel]= ") #manual input 15 (recommended) or 35 (alternativ)
   n_pix <- as.integer(n_pix)
   wd <- n_pix
-  thr <- 10 #threshold at search of line (default value: 10 pixel)
+  thr <- 10 #threshold at search of line (default value: n_pix) new
   cat("n_pix=",n_pix,"pixels","\n")
   cat("thr=",thr,"pixels","\n")
   theta_ref
@@ -1382,8 +1406,8 @@ if (cas == "100_all") {
 
   #loop for approximate lines
   for (n1 in vec3) {
-    cat("PC_nr=", B5_6$lnr[n1], "\n")
     browser()
+    cat("PC_nr=", B5_6$lnr[n1], "\n")
     theta_angle <- B5_6$theta_angle[n1]
     theta_math <- (180 - theta_angle) #theta of oriented line
     x <- centers_PC[n1,2]
@@ -1404,7 +1428,7 @@ if (cas == "100_all") {
     coef2 <- c(b2_img,a_img)
     
     if (is.finite(a_img)) {
-      abline(coef2, col="red", lty=1, lwd=2, asp=1)
+      abline(coef2, col="blue", lty=1, lwd=2, asp=1)
     }  else {
       ro_l1 <- B4$ro_pixel[lnr]
       ro_l2 <- ro_l1 + ro_1
@@ -1414,14 +1438,16 @@ if (cas == "100_all") {
 
     cat("#","\n")
   } #end for-loop (large scale)
-
+  #stop("check data")
   cat("Detected lines are correct?" , "\n") #case: "100_all"
   answ <- readline("type Y or N: ")
+  answ
   
   if (answ == "N") {
     p_pos <- "cor_det" #correction of detected lines for cas = "100_all" 
     setwd(home_dir2) 
     source(paste("./spObj/spObj_line_detection_v",v_nr,".R",sep = "")) #special object: correction of detected lines
+    B5_6R4
   } else {
     B5_6R4 <- B5_6
   } #end if-else
@@ -1458,7 +1484,7 @@ if (cas == "100_all") {
 
 if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
   cat("define minimum size of line segment: 15 pixel (recommended) or 35 (alternativ)","\n")
-  n_pix <- readline("type minimm size of line - if demo - type 35: ") #manual input
+  n_pix <- readline("type minimm size of line - if demo - type 35: ") #manual input (n_pix=n_pix[m]/pixelsize[m])
   n_pix <- as.integer(n_pix)
   wd <- n_pix
   thr <- 10 #default value for difference in ro
@@ -1778,6 +1804,7 @@ if (cas == "100_all") {
   B5_6 <- B5_6[-c((n_B5_6R4+1):n_B5_6),]
   B5_6[1 : n_B5_6R4,] <- B5_6R4
 }
+B5_6
 
 if (cas == "100_all+nonortho") {
   B5_6 <- B5_6 #dummy line
@@ -1950,8 +1977,8 @@ points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), pch=20, asp=1, ce
 # loop
 len
 for (n1 in len) {
+  browser()
   cat("PC_nr=", B5_6$lnr[n1], "\n")
-  #browser()
   theta_angle <- B5_6$theta_angle[n1]
   theta_math <- (180 - theta_angle) #theta of oriented line
   x <- centers_PC[n1,2]
@@ -2102,7 +2129,7 @@ all_PC
 cat("end of program 'line-detection.R' - continue with 'sequence_of_lines.R' ","\n")
 
 setwd(home_dir2)
-#stop("test")
+#stop("stop")
 source(paste("sequence_of_lines_v",v_nr,".R",sep=""))
 ######################################################################################
 
