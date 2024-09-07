@@ -151,7 +151,8 @@ for (i in y2) {
   cat("ro_adj= ", ro_adj, "\n")
   
  
-  #two solutions are possible due to tangens-function
+  #two solutions are possible due to tangents-function
+  
   #solution 1 
   #calculation of th1_img
   th1_img <- 90 - phi_deg #th1_img in img-system (adjusted)
@@ -369,7 +370,7 @@ cat("end of 'adjustment_of_line.r'","\n")
 
 cat("continue with 'intersect_corner_points.R'","\n")
 setwd(home_dir2)
-#stop("test")
+#stop("stop")
 source(paste("intersect_corner_points_v",v_nr,".R",sep=""))
 ################################################################################
 
