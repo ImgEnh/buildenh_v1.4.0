@@ -2,7 +2,7 @@
 cat("version_number= ",v_nr,"\n")
 #description: extraction of one object (building)  
 #from image "building"-theme of generated land cover map
-#orthoimage: ISPRS data "Vaihingen" of areas: #1, #7, (#26)
+#orthoimage: ISPRS data "Vaihingen" of areas: #1, #7+#26, #4
 #instruction: use 'plot of building numbers' 
 #producible in 'support_extract_single_building'
 #author: Joachim Höhle
