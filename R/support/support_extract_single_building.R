@@ -33,7 +33,7 @@ for (i in y1) {
 } #end for loop
 
 #plot numbers (labels) of objects (buildings) after applying the threshold 
-#    for minimum size of area (ISPRS data: 3086 pixels)
+#    for minimum size of area (ISPRS1,ISPRS7: 3086 pixels, ISPRS4: 312 pixels)
 
 #input of enhanced image
 LCM_enh_b <- readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3_scaled_2.jpg",sep="")) #classification by JH, scaled affine
