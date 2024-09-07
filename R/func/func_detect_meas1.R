@@ -12,7 +12,6 @@ detect_meas1 <- function() {
   pos1 <- list(x=NA,y=NA)
   pos1$x <- x #value of locator2 measurement
   pos1$y <- (-y) #conversion to math-system
-  pos1
   
   #lines parallel to ref-line
   theta_ref
@@ -20,18 +19,18 @@ detect_meas1 <- function() {
   theta_math #approximate reference angle
   theta_math_arc <- theta_math/omega
   ro_meas <- cos(theta_math_arc) * pos1$x + sin(theta_math_arc) * pos1$y
-  ro_meas <- abs(ro_meas)
   ro_meas <- round(ro_meas)
-  cat("ro_meas_ref= ", ro_meas, " [pixel]","\n")
+  cat("ro_meas_ref= ", ro_meas, " [pixel]","\n") #ro_meas in math-system
   
   B5_4_ord
+  ro_meas <- (-ro_meas) #return to img-system (check with B5_4)
   k30 <- nrow(B5_4_ord)
   i=1
   n_line=0
   while (i <= k30) {
     dif_ref <- abs(ro_meas - B5_4_ord$ro_pixel[i])
     if (dif_ref < thr) { #threshold at line search
-      cat("line number=", B5_4_ord$lnr[i],"\n")
+      cat("line number=", B5_4_ord$lnr[i], ",difference_ref= ", dif_ref, "\n")
       k31 <- i
       print(B5_4_ord[k31,])
       n_line <- n_line+1
@@ -59,7 +58,7 @@ detect_meas1 <- function() {
     dif_orth <- abs(ro_meas - B5_4_ord$ro_pixel[i])
     
     if (dif_orth < thr)  { #threshold at line search
-      cat("line number=", B5_4_ord$lnr[i],"\n")
+      cat("line number=", B5_4_ord$lnr[i], ",difference_orth= ", dif_orth,"\n")
       k31 <- i
       print(B5_4_ord[k31,])
       n_line <- n_line + 1
