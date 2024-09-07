@@ -1,6 +1,6 @@
 ## name of program: spObj_enhance_image_v1.4.0.R
 # purpose: scaling of image 
-# ISPRS data "Vaihingen", area#7, area#1
+# ISPRS data "Vaihingen", area#7, area#1, area#4
 # author: Joachim Höhle
 # GNU General Public License (GPL)
 
@@ -45,6 +45,37 @@ if (Img_name == "ISPRS1") {
   setwd(home_dir)
   writeImage(LCM_b_2,paste("./data/",Img_name,"/images/LCM_cart_enh_b3_scaled_2.jpg",sep = "")) #scaled affine
 } #end of scaling orthoimage ISPRS_#1
+
+
+## ISPRS_#4 #new
+
+if (Img_name == "ISPRS4") { 
+  
+  #plot of final results onto orthoimage (small scale)
+  setwd(OrgImgPathname)
+  img_ref <- readImage(OrgImgFilename)
+  display(img_ref, method = "raster")
+  #display(img_ref, method = "browser")
+  #
+  setwd(OrgClassResPathname)
+  #LCM_b_1 <- readImage(ClassResFilename)
+  setwd(OrgClassResPathname)
+  LCM_b <-readImage(OrgClassResFilename)
+  #LCM_img <-readImage(OrgClassResFilename) 
+  display(LCM_b) #display 
+  #par("mai") #margins in inches
+  #par("usr") #users plotting region (default: x1=0, x2=1, y1=0, y2=1)
+  setwd(home_dir)
+  LCM_b_1 <- readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3.jpg",sep = ""))
+  display(LCM_b_1) 
+  #checking of size
+  #is scaling necessary? 
+  #No
+  LCM_b_2 <- LCM_b_1
+  setwd(home_dir)
+  writeImage(LCM_b_2,paste("./data/",Img_name,"/images/LCM_cart_enh_b3_scaled_2.jpg",sep = "")) #scaled affine
+} #end of scaling orthoimage ISPRS_#4
+
 
 #end of script 'spObj_enhance_image.R'
 
