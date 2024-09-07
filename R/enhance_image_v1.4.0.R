@@ -10,22 +10,27 @@ cat("start of program 'enhance_image.R' ", "\n")
 cat("Image name: ",Img_name,"\n")
 
 ##parameters: size of brush [pixels]
+pixel_size2=0.283 # pixelsize in [m]
 size <- 5 #used in makeBrush
 shape <- 'diamond' #used in makeBrush
 w <- 2; h <- 2 #half width and height of the moving rectangular window (used in func 'thresh')
 offset <- 0.01 #thesholding offset from the average value (used in thresh)
-area_threshold <- 3086 #threshold for area of tolerated building (pixel)
-#calculation of area_threshold 
+#area_threshold <- 3086 #threshold for area of tolerated building (pixel) = 25qm at GSD 0.09m
+area_threshold = 312 #new
+#instruction: calculation of area_threshold 
 #area_threshold[qm]=area_threshold[pixel]*GSD^2
 #area_threshold[pixel]=area_threshold[qm]/GSD^2
 
 ##input of orthoimage with extracted buildings
 setwd(OrgClassResPathname)
 LCM_b <-readImage(OrgClassResFilename)
-display(LCM_b) #display by "Viewer"
-
+#LCM_img <-readImage(OrgClassResFilename) #new
+display(LCM_b) #display 
+str(LCM_b) #new
+LCM_b@.Data
+#display(LCM_b) #display by "Viewer"
 ##input of other classes
-#change OrgClassResFilename
+##instruction:change OrgClassResFilename
 #succeed in a similar way as for buildings
 
 ##Generation of enhanced image 'LCM_b' (class building)
@@ -47,7 +52,7 @@ nrow(sh_area)
 n_rem <- as.integer(row.names(sh_area))
 LCM_cart_enh_building <- rmObjects(LCMdilaterode_t_f_lab,n_rem)
 reenumerate(LCM_cart_enh_building)
-#display(LCM_cart_enh_building)
+display(LCM_cart_enh_building)
 
 #calculation of parameters of fitting ellipse
 sh2 <- computeFeatures.shape(LCM_cart_enh_building) 
@@ -79,7 +84,8 @@ display(LCM_b, "browser")
 #cat("Is scaling necessary? type Y or N","\n") 
 #answ <- readline("Is scaling necessary? ") #activate if required
 
-answ = "Y" #remove this line for other projects as "ISPRS1" and "ISPRS7"
+answ = "Y" #do not use for other projects as "ISPRS1" and "ISPRS7" 
+answ
 
 if (answ == "Y") {
   setwd(home_dir2)
@@ -92,7 +98,7 @@ display(LCM_b_2)
 
 cat("end of 'enhance_image.R' - continue with 'extract_single_building.R' ","\n")
 setwd(home_dir2)
-#stop("test")
+#stop("stop")
 source(paste("extract_single_building_v",v_nr,".R",sep=""))
 #end of 'enhance_image'
 #########################################################################################
