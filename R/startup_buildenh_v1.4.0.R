@@ -3,24 +3,24 @@ v_nr = "1.4.0" #version number of the program package
 cat("name of first program/script:",paste("startup_buildenh_v",v_nr,".R", sep=""),"\n")
 #description: program(script) starts the package 'buildenh'
 #examples: extracted buildings from land cover maps derived by classification programs
-#data: ISPRS test "Vaihingen": orthoimage of areas #1, #7 
+#data: ISPRS test "Vaihingen": orthoimage of areas #1, #7, #4
 #author: Joachim Höhle
 #publication: Automated mapping of buildings through classification of DSM-based
 #ortho-images and cartographic enhancement, International Journal of Applied Earth
 #Observations and Geoinformation 95(2021) 102237; https://doi.org/10.1016/j.jag.2020.102237
-#instructions: use given example for getting acquainted with the programs/scripts
+#instructions: use given examples for getting acquainted with the programs/scripts
 #instructions: change directories for input 
 #instructions: input project title 
 #instructions: save your home directory
-#instructions: select orthoimage (line #66)
+#instructions: select orthoimage (line #68)
 #instructions: select the OrgClassResFilename,OrgImgPathname,OrgImgFilename,OrgGtsPathname,OrgGtsFilename   
 #instructions: type 'Ctrl+A'(select all) and 'Source'
 #instructions: display all 4 panes
 #instructions: new users may start by examples (processing mode = demo)
-#instructions: The parameters (bnr, p_m_md, part, ro_rg, ref_l, cas, n_pix, c_ld, sek, c_pos, c_sek, 
-#c_adj_l) must be selected. The used parameters in the example can be found in a table stored at './data'.
+#instructions: The parameters (bnr2, p_m_md, part, ro_rg, ref_l, cas, n_pix, c_ld, sek, c_pos, c_sek, 
+#c_adj_l) must be selected in course of the 9 main programs. The used parameters in the example can be found in a table stored at './data'.
 #instructions: find supporting software at './R/support'
-#depends: R 4.4.0; BiocManager 1.78.0-0 (EBImage); spatstat 2.3-4; tiff 01-11; rpart 4.1.19; nlme 3.1-162;
+#depends: R 4.2.1; BiocManager 1.30.18 (EBImage); spatstat 2.1-3; tiff 01-11; rpart 4.1.19; nlme 3.1-164;
 #Copyright(C) 2022 Joachim Höhle
 #GNU General Public License (GPL)
 #test with ISPRS Semantic Labeling Contest-results
@@ -106,7 +106,6 @@ if (Img_name == "ISPRS4") { #your orthoimage
   OrgClassResPathname <- paste(home_dir,"/data/ISPRS4/Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4/",sep = "") #pixel size=0.283m
   OrgClassResPathname
   #Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4
-  #Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4
   #OrgImgPathname <- paste(home_dir,"/data",sep = "")
   OrgImgPathname <- paste(home_dir,"/data/ISPRS4/Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4/",sep = "")
   OrgImgFilename <- "ortho_top_mosaic_09cm_area4.tif_resized.jpg"  #pixel size=0.09m
@@ -151,7 +150,7 @@ if (Img_name == "ISPRS7") {
 }
 
 if (Img_name == "ISPRS4") {
-  y_auto <- c(2,3,4) #objects for automatic processing (orthoimage #7)  
+  y_auto <- c(3,4,6) #objects for automatic processing (orthoimage #4)  
 }
 
 n_y_auto <- length(y_auto)
