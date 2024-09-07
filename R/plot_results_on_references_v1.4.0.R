@@ -1,9 +1,9 @@
 ##plot of results on references (orthoimage,ground truth)
 ##name of script: plot_results_on_references.R
 cat("version_number= ",v_nr,"\n")
-##author: Joachim Höhle
-##examples: ISPRS data: image ISPRS7/LCM1, ISPRS1/LCM2
+##examples: ISPRS data: image ISPRS7/LCM1, ISPRS1/LCM2, ISPRS4/SVL_5
 ##instructions: use supplementing scripts if necessary 
+##author: Joachim Höhle
 #GNU General Public License (GPL)
 cat("####################################################################","\n")
 cat("start of program 'plot_results_on_references.R'","\n")
@@ -19,10 +19,11 @@ print(intsec_linepair_vertex_coord2)
 
 ##plotting of results onto orthoimage 
 #large scale
-#case=1,2,3,4
+#cases=1,2,3,4
 
 if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+nonortho") { 
-  ##input of table with line-pair, vertex-number and final coordinates (x,y)
+  
+  #input of table with line-pair, vertex-number and final coordinates (x,y)
   setwd(home_dir)
   f5 <- paste("./results/",Img_name,"/b",bnr2,"_intsec_linepair_vertex_coord.txt",sep="")
   intsec_linepair_vertex_coord2 <- read.table(f5)
@@ -35,7 +36,17 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
   names(xy_5pts) <- c("x","y")
   xy_5pts
   
-  #plot of outline with vertices & line-numbers onto enlarged orthoimage
+  ##plot of outline with vertices & line-numbers onto enlarged orthoimage
+  n_x1 <- length(b13_angle_df2$nr_center)
+  centers_PC <- matrix(nrow=n_x1,ncol=3) #new
+  vec <- 1:n_x1
+  for (i in vec) { 
+    centers_PC[i,1] <- b13_angle_df2$nr_center[i]
+    centers_PC[i,2] <- b13_angle_df2$x_centre[i]
+    centers_PC[i,3] <- (-b13_angle_df2$y_centre[i])
+  }
+  centers_PC
+  
   display(img_uds,method = "raster")
   n_x <- length(PC_nr)
   vec_y <- 1 : (n_x + 1)
@@ -162,7 +173,7 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
     setwd(OrgGtsPathname)
     img_GTS <- readImage(OrgGtsFilename)
     display(img_GTS, method="raster")
-    #display(img_GTS)
+    display(img_GTS)
     
     #loop
     i <- 0
@@ -173,13 +184,14 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
   
   } #end if answ="Y")
   
-  #cat("does the result agree with the Ground Truth?","\n")
+  cat("Does the result agree with the Ground Truth? type Y or N: ","\n")
   
   if (proc_mode == "demo") {
     cat("if demo - type Y ","\n")
   }
 
   answ <- readline("does the result agree with the Ground Truth? type Y or N: ")
+  
 
   if (answ == "Y") { 
   
@@ -226,7 +238,6 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
   } #end if-else
   
   #store bnr2 in a file containing all processed buildings
-  bnr2
   setwd(home_dir)
   fname15 <- paste("./results/",Img_name,"/b_all.txt",sep="")
   write.table(bnr2, file= fname15, row.names = F, col.names = F, append=TRUE)
@@ -267,16 +278,15 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
       fname15 <- paste("./results/",Img_name,"/",sep="")
       setwd(fname15)
       file.remove("b_all.txt") #removal of files with numbers of processed objects (buildings)
-    }
+    } #end if (answ5 = "Y)
     
-    cat("end of program 'plot_results_on_references.R'","\n")
-    stop("end of program package 'buildenh' ","\n")
-  } #end if answ2="N"
+  } #end if answ2 = "N"
   
-} #end of cas=1,2,3,4
+  cat("end of program 'plot_results_on_references.R'","\n")
+  cat("end of program package 'buildenh' ","\n")  
+} #end of cases=1,2,3,4
 
-##end of program 'plot_results_on_references.R'
-
+#end of program 'plot_results_on_references.R'
 ##end of package 'buildenh'
 ################################################################################
 
