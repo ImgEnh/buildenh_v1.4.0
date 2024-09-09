@@ -96,6 +96,7 @@ if (Img_name == "ISPRS4") { #your orthoimage
   OrgImgFilename <- "ortho_top_mosaic_09cm_area4.tif_resized.jpg"  #pixel size=0.28305m
   OrgGtsPathname <- paste(home_dir,"/data",sep = "")
   OrgGtsFilename <- "GTS_top_mosaic_09cm_area4_600x813.tif" #pixel size=0.28305m
+  
 } #end of image7
 
 proc_mode <- "NA" #mode of processing
