@@ -930,12 +930,20 @@ if (ty == 0) {
   cat("suggestion is 4", "\n") 
 }
 
-if (proc_mode == "demo") { 
+if (proc_mode == "demo" && Img_name == "ISPRS4") { 
+  ty=2
+}   
+
+if (proc_mode == "demo" && Img_name == "ISPRS1" || 
+    proc_mode == "demo" && Img_name == "ISPRS7") { 
   ty=4
-} else {
+} 
+
+if (proc_mode != "demo") {
   ty <- readline("type object type= ") #manual input
   ty <- as.integer(ty)
 }
+
 cas <- switch(ty,"extr_wd", "4_long", "100_all", "100_all+nonortho")
 cat("case= ", cas, "\n")
 ###############################################################
