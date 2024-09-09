@@ -81,14 +81,18 @@ cat("suggested (predicted) method (meth) for determination of line-sequence_DT= 
 cat("1: Mpts(midpoints+angle), 2: Mpts+dist(midpoints+distance), 3: bdr_follow (boundry following)","\n")
 
 if (Img_name == "ISPRS1" && proc_mode == "demo" ||
-    Img_name == "ISPRS7" && proc_mode == "demo" || 
-    Img_name == "ISPRS4" && proc_mode == "demo") { 
+    Img_name == "ISPRS7" && proc_mode == "demo") { 
       meth <- 3
-} else {
+} 
+
+if (Img_name == "ISPRS4" && proc_mode == "demo") {
+   meth <- 1
+}
+
+if (proc_mode != "demo") {
   meth <- readline("type number for method for determination of line-sequence: ") #manual input of method
   meth <- as.numeric(meth)
 }
-
 
 sek <- switch(meth,"Mpts","Mpts+dist","bdr_follow") 
 sek #selected method for determination of line-sequence
@@ -150,7 +154,7 @@ if (sek == "Mpts") {
     b13_angle_df2[lnum,4] <- par_midp[[4]]
   } #end for-loop
   
-  b13_angle_df2
+  print(b13_angle_df2) #check of angles
 
   ##plot of midpoints in graph
   r_max2 <- 1.1*r_max
@@ -161,7 +165,7 @@ if (sek == "Mpts") {
   #
   
   #correction of midpoints which represent a line-segment
-  cat("is the position of all midpoints correct?","\n")
+  cat("are the position of all midpoints and derived angles (alpha) correct?","\n")
   #
   
   answ <- readline("type Y or N: ") #interaction required
