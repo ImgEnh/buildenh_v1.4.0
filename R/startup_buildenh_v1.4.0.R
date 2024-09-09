@@ -29,15 +29,10 @@ cat("name of first program/script:",paste("startup_buildenh_v",v_nr,".R", sep=""
 old_dir <- setwd("./")
 getwd()
 #
-#home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.3/buildenh_v1.3"
-#home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.3/buildenh_v1.3/R"
-#home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/clone8_1.3/buildenh_v1.3"
-#home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/clone8_1.3/buildenh_v1.3/R"
-#home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0"
-#home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0/R"
 home_dir <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0_new/buildenh_v1.4.0"
 home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0_new/buildenh_v1.4.0/R"
 ###############################################################################################
+
 ## title of project (manual input of characteristics)
 #prj_title <- "ISPRS1_LCM2" #example#2
 #orthoimage ISPRS1 
@@ -53,10 +48,9 @@ home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0_new/b
 #enhancement of buildings
 #
 
-prj_title <- "ISPRS Semantic Labeling benchmark_results" #(your project)
+prj_title <- "ISPRS Semantic Labeling benchmark_results" 
 #orthoimage  ISPRS4
 #classification method: SVL_5, S
-#training by orthoimage: ?
 #enhancement of buildings
 #pixel size=0.283m
 #
@@ -96,24 +90,12 @@ if (Img_name == "ISPRS7") { #example1
 
 if (Img_name == "ISPRS4") { #your orthoimage
   ##setting of path- & file-name for original data:
-  #OrgClassResFilename <- "ISPRS_labelling_contest_results_Gerke__top_mosaic_09cm_area4_class.tif_resized.jpg" #extracted buildings
-  #OrgClassResFilename <- "ISPRS_result_Gerke.tif" #ISPRS_labelling_contest_results_Gerke__top_mosaic_09cm_area4_class.tif_resized.jpg
-  #OrgClassResFilename <- "extracted_object_new5.tif"
-  OrgClassResFilename <- "Resultat_G4_ISPRS_Benchmark_building.tif" #extracted class 'building', #pixel size=0.28305m
-  #OrgClassResFilename <- "Result_G4_extr_building_neg.tif" #extracted class 'building'
-  #OrgClassResFilename <- "ISPRS_result_Gerke.jpg"#
-  #ISPRS_labelling_contest_results_Gerke__top_mosaic_09cm_area4_class.tif_resized
-  OrgClassResPathname <- paste(home_dir,"/data/ISPRS4/Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4/",sep = "") #pixel size=0.283m
-  OrgClassResPathname
-  #Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4
-  #OrgImgPathname <- paste(home_dir,"/data",sep = "")
-  OrgImgPathname <- paste(home_dir,"/data/ISPRS4/Data_ISPRS Working Group III_4 - Participant_ M. Gerke (SVL_full_chessboard_seg_noCRF)_files_area 4/",sep = "")
-  OrgImgFilename <- "ortho_top_mosaic_09cm_area4.tif_resized.jpg"  #pixel size=0.09m
+  OrgClassResFilename <- "Resultat_G4_ISPRS_Benchmark_building.tif" #extracted class 'building', gray, #pixel size=0.28305m
+  OrgClassResPathname <- paste(home_dir,"/data/",sep = "") #pixel size=0.283m
+  OrgImgPathname <- paste(home_dir,"/data/",sep = "")
+  OrgImgFilename <- "ortho_top_mosaic_09cm_area4.tif_resized.jpg"  #pixel size=0.28305m
   OrgGtsPathname <- paste(home_dir,"/data",sep = "")
-  #OrgGtsFilename <- "NN" #GSD=?m
-  #OrgGtsFilename <- "GTS_top_mosaic_09cm_area4.tif" #pixel size=0.09m
   OrgGtsFilename <- "GTS_top_mosaic_09cm_area4_600x813.tif" #pixel size=0.28305m
-  #GSD=Ground Sampling Distance
 } #end of image7
 
 proc_mode <- "NA" #mode of processing
