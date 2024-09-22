@@ -2,7 +2,11 @@
 cat("version_number= ",v_nr,"\n")
 #description: cartographic enhancement of extracted class "building"
 #author: Joachim Höhle
-#instructions: scale of image has to be checked and eventually to be corrected
+#instruction: scale of image has to be checked and eventually to be corrected
+#instruction: define pixel size on ground (pixel_size2)
+#instruction: define area_threshold (at line 24)
+#instruction: define structuring element (size, shape))
+#instruction: define parameters of adaptive thresholding (w, h, offset)
 #GNU General Public License (GPL)
 ##############################################################################
 
@@ -10,13 +14,14 @@ cat("start of program 'enhance_image.R' ", "\n")
 cat("Image name: ",Img_name,"\n")
 
 ##parameters: size of brush [pixels]
-pixel_size2=0.283 # pixelsize in [m]
+#pixel_size2=0.09 # pixel size on the ground in [m] #orthoimage #1, #7
+pixel_size2=0.283 # pixel size on the ground in [m] #orthoimage #4
 size <- 5 #used in makeBrush
 shape <- 'diamond' #used in makeBrush
 w <- 2; h <- 2 #half width and height of the moving rectangular window (used in func 'thresh')
-offset <- 0.01 #thesholding offset from the average value (used in thresh)
-#area_threshold <- 3086 #threshold for area of tolerated building (pixel) = 25qm at GSD 0.09m
-area_threshold = 312 #new
+offset <- 0.01 #thresholding offset from the average value (used in thresh)
+#area_threshold <- 3086 #orthoimages #1, #7, removes buildings of area < 5mx5m (3086 pixels)
+area_threshold = 312 #orthoimage #4, removes buildings of area < 5mx5m (312 pixels)
 #instruction: calculation of area_threshold 
 #area_threshold[qm]=area_threshold[pixel]*GSD^2
 #area_threshold[pixel]=area_threshold[qm]/GSD^2
@@ -83,9 +88,7 @@ display(LCM_b, "browser")
 ##scaling of image
 #cat("Is scaling necessary? type Y or N","\n") 
 #answ <- readline("Is scaling necessary? ") #activate if required
-
-answ = "Y" #do not use for other projects as "ISPRS1" and "ISPRS7" 
-answ
+answ = "Y" #do not use for other projects than "ISPRS1", "ISPRS7", and "ISPRS4" 
 
 if (answ == "Y") {
   setwd(home_dir2)
