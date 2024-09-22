@@ -31,9 +31,9 @@ if (Img_name == "ISPRS1") {
   #affine transformation without measuring 
   setwd(home_dir)
   LCM_b_1 <- readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3.jpg",sep = ""))
+  display(LCM_b_1)
   #par("mai") #margins in inches
   #par("usr") #users plotting region (default: x1=0, x2=1, y1=0, y2=1)
-  display(LCM_b_1)
   LCM_b_netto <- LCM_b_1[130:1819,147:2408]  #cut out of net-image
   display(LCM_b_netto)
   mx <- 1.136175 #determined by manual measurements 
@@ -47,7 +47,7 @@ if (Img_name == "ISPRS1") {
 } #end of scaling orthoimage ISPRS_#1
 
 
-## ISPRS_#4 #new
+## ISPRS_#4 
 
 if (Img_name == "ISPRS4") { 
   
@@ -56,26 +56,18 @@ if (Img_name == "ISPRS4") {
   img_ref <- readImage(OrgImgFilename)
   display(img_ref, method = "raster")
   #display(img_ref, method = "browser")
-  #
   setwd(OrgClassResPathname)
-  #LCM_b_1 <- readImage(ClassResFilename)
   setwd(OrgClassResPathname)
   LCM_b <-readImage(OrgClassResFilename)
-  #LCM_img <-readImage(OrgClassResFilename) 
-  display(LCM_b) #display 
-  #par("mai") #margins in inches
-  #par("usr") #users plotting region (default: x1=0, x2=1, y1=0, y2=1)
+  display(LCM_b)  
   setwd(home_dir)
   LCM_b_1 <- readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3.jpg",sep = ""))
   display(LCM_b_1) 
-  #checking of size
-  #is scaling necessary? 
-  #No
+  #checking of size -> no scaling
   LCM_b_2 <- LCM_b_1
   setwd(home_dir)
   writeImage(LCM_b_2,paste("./data/",Img_name,"/images/LCM_cart_enh_b3_scaled_2.jpg",sep = "")) #scaled affine
 } #end of scaling orthoimage ISPRS_#4
 
-
-#end of script 'spObj_enhance_image.R'
+#end of script 'spObj_enhance_image_v1.4.0.R'
 
