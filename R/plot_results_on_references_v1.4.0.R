@@ -1,8 +1,9 @@
 ##plot of results on references (orthoimage,ground truth)
+##plot of results on graph
 ##name of script: plot_results_on_references.R
 cat("version_number= ",v_nr,"\n")
 ##examples: ISPRS data: image ISPRS7/LCM1, ISPRS1/LCM2, ISPRS4/SVL_5
-##instructions: use supplementing scripts if necessary 
+##instruction: use supplementing scripts if necessary 
 ##author: Joachim Höhle
 #GNU General Public License (GPL)
 cat("####################################################################","\n")
@@ -61,11 +62,12 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
     
   #loop
   i=1
+  
   while(i <= n_x) {
     text(centers_PC[i,2]-orig_x,(-centers_PC[i,3]-orig_y), labels=centers_PC[(i),1],
          pos=2, offset = 0.5, cex = 1, col = "red") 
     i=i+1
-  }
+  } #end while-loop
 
   for (i in vec_y) {
     cat("i=",i,"\n") 
@@ -177,14 +179,15 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
     
     #loop
     i <- 0
+    
     while(i < k1) {
       i <- i + 1
       lines(b2,col="red", asp=1, type="l", lwd=2, lty=1)
-    } #end while
+    } #end loop while
   
   } #end if answ="Y")
   
-  cat("Does the result agree with the Ground Truth? type Y or N: ","\n")
+  cat("Test on agreement with the Ground Truth","\n")
   
   if (proc_mode == "demo") {
     cat("if demo - type Y ","\n")
@@ -204,32 +207,33 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
     plot(x,-y, pch=3, cex=1.5,  cex.axis = 1.2, cex.lab=1.5, col="red", asp=1, xlim=c(1,1887), ylim=c(-2557,-1), 
          axes = TRUE, ann = T, frame.plot = TRUE, main = paste("building #", bnr2," of image '",Img_name,"'",sep = ""))
     
-  } #end image "ISPRS7"
+    } #end image "ISPRS7"
   
-  if (Img_name == "ISPRS1") { 
-    #plot object onto map (Ground Truth, map_ISPRS7)
-    par(mai = c(1.02,0.82,0.82,0.42)) #setup of margins/plot region [inches]
-    x=0
-    y=0
-    plot(x,-y, pch=3, cex=1.5,  cex.axis = 1.2, cex.lab=1.5, col="red", asp=1, xlim=c(1,1919), ylim=c(-2569,-1), 
-         axes = TRUE, ann = T, frame.plot = TRUE, main = paste("building #", bnr2," of image '",Img_name,"'",sep = ""))
-  } #end plot on image ISPRS1
+    if (Img_name == "ISPRS1") { 
+      #plot object onto map (Ground Truth, map_ISPRS7)
+      par(mai = c(1.02,0.82,0.82,0.42)) #setup of margins/plot region [inches]
+      x=0
+      y=0
+      plot(x,-y, pch=3, cex=1.5,  cex.axis = 1.2, cex.lab=1.5, col="red", asp=1, xlim=c(1,1919), ylim=c(-2569,-1), 
+           axes = TRUE, ann = T, frame.plot = TRUE, main = paste("building #", bnr2," of image '",Img_name,"'",sep = ""))
+    } #end plot on image ISPRS1
   
-  fname12 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_plot.txt",sep="")
-  setwd(home_dir)
-  b <- read.table(fname12,header=T)
-  k1 <- nrow(b)
-  names(b) <- c("Points_nr","Points_x","Points_y")
-  b3 <- b[,2:3]
-  print(b3)
-  cat("plot of building-outline","\n")
+    fname12 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_plot.txt",sep="")
+    setwd(home_dir)
+    b <- read.table(fname12,header=T)
+    k1 <- nrow(b)
+    names(b) <- c("Points_nr","Points_x","Points_y")
+    b3 <- b[,2:3]
+    print(b3)
+    cat("plot of building-outline","\n")
 
-  #loop
-  i <- 0
-  while(i < k1) {
-    i <- i + 1
-    lines(b3, col="black", asp=1, type="l", lwd=1, lty=1)
-  } #end while
+    #loop
+    i <- 0
+    
+    while(i < k1) {
+      i <- i + 1
+      lines(b3, col="black", asp=1, type="l", lwd=1, lty=1)
+    } #end loop while
     
   } else { #poor agreement
     cat ("start again with this object and select other values for 'cas' and/or 'sek' ","\n")
@@ -278,12 +282,13 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
       fname15 <- paste("./results/",Img_name,"/",sep="")
       setwd(fname15)
       file.remove("b_all.txt") #removal of files with numbers of processed objects (buildings)
+      cat("end of program 'plot_results_on_references.R'","\n")
+      break
     } #end if (answ5 = "Y)
-    
   } #end if answ2 = "N"
-  
-  cat("end of program 'plot_results_on_references.R'","\n")
-  cat("end of program package 'buildenh' ","\n")  
+
+  cat("end of program package 'buildenh' ","\n") 
+  break
 } #end of cases=1,2,3,4
 
 #end of program 'plot_results_on_references.R'
