@@ -40,7 +40,6 @@ home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0_new/b
 #training by orthoimage #26
 #enhancement of buildings
 #
-
 #prj_title <- "ISPRS7_LCM1" #(example1)
 #orthoimage: ISPRS7
 #classification method: DT/LCM1 by 17 attributes
@@ -48,22 +47,21 @@ home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0_new/b
 #enhancement of buildings
 #
 
-prj_title <- "ISPRS Semantic Labeling benchmark_results" 
+prj_title <- "ISPRS Semantic Labeling benchmark_result" 
 #orthoimage  ISPRS4
 #classification method: SVL_5, S
 #enhancement of buildings
-#pixel size=0.283m
-#
+#pixel size on ground=0.283m
 ##########################################
 
 cat("project title is = ", prj_title,"\n")
 setwd(home_dir)
 
 #select orthoimage (activate manually)
-#Img_name <- "ISPRS1" #name of orthoimage to be processed (example2)
 #Img_name <- readline("type name of orthoimage: ") #line can be avoided when Img_name is selected
+#Img_name <- "ISPRS1" #name of orthoimage to be processed (example2)
 #Img_name <- "ISPRS7" #name of orthoimage to be processed (example1)
-Img_name <- "ISPRS4" #name of orthoimage to be processed (orthoimage of your project)
+Img_name <- "ISPRS4" #name of orthoimage to be processed (example3)
 
 if (Img_name == "ISPRS1") { #example2
   ##setting of path- & file-name for original data:
@@ -73,8 +71,7 @@ if (Img_name == "ISPRS1") { #example2
   OrgImgPathname <- paste(home_dir,"/data",sep = "")
   OrgImgFilename <- "top_mosaic_09cm_area1.tif" #pixel size=0.09m
   OrgGtsPathname <- paste(home_dir,"/data",sep = "") 
-  OrgGtsFilename <- "gts_top_mosaic_09cm_area1.tif" #pixel size=0.09m
-  #GSD=Ground Sampling Distance
+  OrgGtsFilename <- "gts_top_mosaic_09cm_area1.tif" #pixel size on ground=0.09m
 } #end of image1
 
 if (Img_name == "ISPRS7") { #example1
@@ -82,9 +79,9 @@ if (Img_name == "ISPRS7") { #example1
   OrgClassResFilename <- "ISPRS_#7_b.tiff" #extracted buildings
   OrgClassResPathname <- paste(home_dir,"/data",sep = "")
   OrgImgPathname <- paste(home_dir,"/data",sep = "")
-  OrgImgFilename <- "top_mosaic_09cm_area7.tif"  #GSD=0.09m
+  OrgImgFilename <- "top_mosaic_09cm_area7.tif"  #pixel size=0.09m
   OrgGtsPathname <- paste(home_dir,"/data",sep = "")
-  OrgGtsFilename <- "gts_top_mosaic_09cm_area7.tif" #GSD=0.09m
+  OrgGtsFilename <- "gts_top_mosaic_09cm_area7.tif" #pixel size on ground=0.09m
   #GSD=Ground Sampling Distance
 } #end of image7
 
@@ -95,9 +92,8 @@ if (Img_name == "ISPRS4") { #your orthoimage
   OrgImgPathname <- paste(home_dir,"/data/",sep = "")
   OrgImgFilename <- "ortho_top_mosaic_09cm_area4.tif_resized.jpg"  #pixel size=0.28305m
   OrgGtsPathname <- paste(home_dir,"/data",sep = "")
-  OrgGtsFilename <- "GTS_top_mosaic_09cm_area4_600x813.tif" #pixel size=0.28305m
-  
-} #end of image7
+  OrgGtsFilename <- "GTS_top_mosaic_09cm_area4_600x813.tif" #pixel size on ground=0.28305m
+} #end of orthoimage "ISPRS4"
 
 proc_mode <- "NA" #mode of processing
 
@@ -125,7 +121,7 @@ display = function(...) if (interactive()) EBImage::display(...)
 #setup for processing mode "auto"
 
 if (Img_name == "ISPRS1") {
-  y_auto <- c(4,5,7,18) #objects for automatic processing (orthoimage #1)  
+  y_auto <- c(4,5,7) #objects for automatic processing (orthoimage #1)  
 }
 
 if (Img_name == "ISPRS7") {
