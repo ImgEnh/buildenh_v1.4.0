@@ -5,7 +5,7 @@ cat("version_number= ",v_nr,"\n")
 # method 2: weighted average of the main direction (theta_av) 
 # ro-values are calculated by least-squares adjustment (all line types)
 # quality control by standard deviation of residuals
-## instructions: use supplementing scripts in case of problems
+## instructions: use script 'support_adjustment_of_corner_coordinates.R' in case of problems
 ## author: Joachim Höhle
 ## GNU General Public License (GPL)
 cat("##################################################################","\n")
@@ -71,7 +71,7 @@ if (cas == "100_all+nonortho") {
   
   } # end for-loop
 
-} #end if (cas == "100_all+nonortho")
+} #end if (case "100_all+nonortho")
  
 B8S
 
