@@ -52,17 +52,23 @@ R/.Rhistory
 data/.Rhistory
 !data/table_ISPRS1.pdf
 !results/ISPRS1/dummy.txt
+#
 !data/table_ISPRS7.pdf
 !data/tt_prior_sek.RData
 !results/ISPRS7/dummy.txt
 #
 !data/table_ISPRS4.pdf
 !results/ISPRS4/dummy.txt
+#
 #to be removed
 data/ISPRS1
 data/ISPRS1/images/
+results/ISPRS1/
+#
 data/ISPRS7
 data/ISPRS7/images/
+results/ISPRS7/
+#
 data/ISPRS4
 data/ISPRS4/images/
 results/ISPRS4/
