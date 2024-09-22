@@ -23,7 +23,7 @@ if (part == "2parts_1" || part == "2parts_2") {
 }
 
 ##load of plot parameter
-f <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+f <- paste("./data/",Img_name,"/param_b",bnr2,sep="")
 load(f)
 xc <- plotPar[1]
 yc <- plotPar[2]
@@ -78,7 +78,7 @@ B6 <- subset(B6,select=c(lnr,theta_angle,ro_pixel,n_pixel))
 B6[,5:6] <- 0
 names(B6) <- c("PC_nr","theta_ang","ro_pixel","n_pixel", "theta_adj", "ro_adj")
 
-## storage of B6 for correct sequence
+##storage of B6 for correct sequence
 B6_seq <- B6
 B6_seq <- B6_seq[1:length(x),]
 B6_seq$PC_nr <- x
@@ -132,7 +132,7 @@ for (i in y2) {
   
   x_dat <- all_PC[[i]]$x
   y_dat <- (-all_PC[[i]]$y) #change to math-system
-  xs <- sum(x_dat)/k4 #math-system
+  xs <- sum(x_dat)/k4 
   ys <- sum(y_dat)/k4
   xs_all[i] <- xs
   ys_all[i] <- ys
