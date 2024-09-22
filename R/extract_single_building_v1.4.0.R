@@ -1,12 +1,12 @@
-#name of program (script): extract_single_building.R
+##name of program (script): extract_single_building.R
 cat("version_number= ",v_nr,"\n")
-#description: extraction of one object (building)  
+##description: extraction of one object (building)  
 #from image "building"-theme of generated land cover map
-#orthoimage: ISPRS data "Vaihingen" of areas: #1, #7+#26, #4
-#instruction: use 'plot of building numbers' 
+#orthoimage: ISPRS data "Vaihingen" of areas: #1, #7, #4
+##instruction: use 'plot of building numbers' 
 #producible in 'support_extract_single_building'
-#author: Joachim Höhle
-#GNU General Public License (GPL)
+##author: Joachim Höhle
+##GNU General Public License (GPL)
 cat("###########################################################################","\n")
 
 cat("start of program 'extract_single_building'","\n")
@@ -14,10 +14,7 @@ setwd(home_dir)
 
 ##selection of processing mode
 cat("select mode of processing? - demo: 1, obj_wise: 2, auto: 3","\n") 
-
-
 answ <- readline("mode of processing? - type 1, 2, or 3: ") #processing mode
-answ
 
 if (answ == "1" && Img_name == "ISPRS7") { #processing of one example
   proc_mode <- "demo" #object b18 (ISPRS7)
@@ -45,7 +42,7 @@ if (answ == "2") {
 }
 
 if (answ == "3") { 
-  proc_mode <- "auto" #automatic processing of several orthoimages
+  proc_mode <- "auto" #automatic processing of several objects (buildings)
 }
 
 if (proc_mode == "obj_wise") {   
@@ -71,7 +68,7 @@ if (substr(bnr2,3,3) == "1" || substr(bnr2,3,3) == "2") {
 
 cat("label of building to be extracted= ", bnr2,"\n")
 
-if (part == "2parts_1" || part == "2parts_2") { #repeated? see line 51
+if (part == "2parts_1" || part == "2parts_2") { 
   bnr2 <- as.numeric(substr(bnr2,1,2))
   bnr2_orig <- bnr2
 } #end if
@@ -82,12 +79,12 @@ if (part == "no_part") {
 
 cat("label of building to be extracted=", bnr2,"\n") #check if new number is necessary
 
-##input of enhanced billede
+##input of enhanced orthoimage
 setwd(home_dir)
-LCM_enh_b=readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3_scaled_2.jpg",sep = "")) #classification by method JH, scaled affine
+LCM_enh_b=readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3_scaled_2.jpg",sep = "")) #classification by DT, scaled affine
 display(LCM_enh_b, method="browser") #use for checking of image
 display(LCM_enh_b, method="raster") #optional
-#LCM_enh_b <- 1 - LCM_enh_b #new: change to negative 
+#LCM_enh_b <- 1 - LCM_enh_b #change to negative 
 
 ##enhancement of raster image
 LCM_enh_b_t <- thresh(LCM_enh_b,2,2,0.01) #thresholding -> white outlines
@@ -104,7 +101,7 @@ display(LCM_label)
 
 ##display as negative
 LCM_enh_b_t_neg <- (1 - LCM_enh_b_t)
-display(LCM_enh_b_t_neg, method="browser") #optional
+#display(LCM_enh_b_t_neg, method="browser") #optional
 display(LCM_enh_b_t_neg, method="raster")
 
 ##extraction of features (area,radius)
@@ -121,31 +118,28 @@ shap_A
 n7 <- nrow(shap_A)
 shap1_A <- matrix(nrow=n7,ncol=10)
 y <- 1 : n7
-#
 
 for (n in y){
   shap1_A[,2:7]<-shap_A[,1:6]
 }
+
 shap1_A[,1] <- y
 shap1_A<-data.frame(shap1_A)
 shap1_A[,8:9] <- coor[,1:2]
 shap1_A[,10] <- coor[,5]
-#shap2_A <- subset(shap1_A,shap1_A[,2] >= 3086) #removes buildings of area < 5mx5m (3086 pixels) or adapt to your case
-shap2_A <- subset(shap1_A,shap1_A[,2] >= area_threshold) #new:removes buildings of area < 5mx5m (312 pixels) or adapt to your case
+shap2_A <- subset(shap1_A,shap1_A[,2] >= area_threshold) #removal of buildings < area-threshold
 n8 <- nrow(shap2_A)
-cat('number of buildings after area-thresh-holding=',n8,'\n')
+cat('number of buildings after area-thresholding=',n8,'\n')
 rownames(shap2_A) <- 1:n8
 names(shap2_A) <- c("bnr","area", "perimeter", "radius.mean", "radius.sd", "radius.min","radius.max","cx","cy","alpha_arc")
 shap2_A
 y3 <- nrow(shap2_A)
 shap2_A_red3 <- shap2_A #if no points are removed
 shap2_A_red3
-#
 
-#output of shape-data
+##output of shape-data
 f2=paste("./data/",Img_name,"/shap2_A_red3.csv",sep = "")
 write.table(shap2_A_red3,f2)
-#
 
 ##extraction of one building
 cas <- "NA" #case "NA" 
@@ -160,6 +154,7 @@ r_max <- shap2_A_red3[bnr2,7]
 ##write.table plot-parameters of building
 plotPar <- c(xc,yc,r_max,alpha)
 plotPar_orig <- plotPar
+plotPar_orig
 
 ##generation of table (bnr/bnr2)
 names(shap2_A_red3) <- c("bnr2","area", "perimeter", "radius.mean", "radius.sd", "radius.min",
@@ -218,7 +213,9 @@ points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scali
 points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
 #
 plotPar[5] <- abs(par("usr")[4] - par("usr")[3])
+
 ##output as tiff-image
+plotPar #check
 file1 <- paste('./data/',Img_name,'/images/b',bnr2,'_new8.tif',sep = "")
 tiff(file1, width=578, height=578, units="px", bg = "white")
 r_max2 <- round(1.1*r_max)
@@ -243,9 +240,9 @@ dy_window_plot <- abs(par("usr")[3] - par("usr")[4]) #range of window
 setwd(home_dir)
 plotPar[5] <- dy_window_plot
 plorPar_orig <- plotPar
-f1 <- paste("./data/",Img_name,"/param_b_",bnr2,".txt",sep="")
+f1 <- paste("./data/",Img_name,"/param_b",bnr2,".txt",sep="") #change
 write.table(plotPar,file=f1)
-f2 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+f2 <- paste("./data/",Img_name,"/param_b",bnr2,sep="")
 save(plotPar, file=f2) #parameter xc, yc, r_max, alpha, dy_window_plot
 #
 
