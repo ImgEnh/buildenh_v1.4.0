@@ -15,7 +15,7 @@ setwd(home_dir)
 
 ##input of parameters
 options(digits=10)
-f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+f1 <- paste("./data/",Img_name,"/param_b",bnr2,sep="")
 load(f1) #plot parameter
 xc <- plotPar[1]
 yc <- plotPar[2]
@@ -80,8 +80,8 @@ for (n in y4) {
  P_orig <- read.table(fname, col.names=c("idx","x","y")) #point cloud
  P_red <- reduce_pointset(P_orig)
  cat("point cluster nr=", n,"\n")
- #points(P_orig[,2],-P_orig[,3], pch=20, asp=3, cex=0.5, col="blue")
- points(P_red[,2],-P_red[,3], pch=20, asp=3, cex=0.5, col="red") #corrected pixel cluster (PC)
+ #points(P_orig[,2],-P_orig[,3], pch=20, asp=3, cex=0.5, col="blue") #original pixel cluster (PC)
+ points(P_red[,2],-P_red[,3], pch=20, asp=3, cex=0.5, col="red") #corrected PC
 } #end of loop
 
 ## intersection of lines
@@ -101,6 +101,7 @@ b0 #approximate coordinates
 
 #correction of coordinates due to tan(90)
 z <- 1 : m
+
 for (i9 in z) {
   
   if (B8$theta_adj[i9] == 90) {
@@ -277,7 +278,7 @@ B6_seq
 fname9 <- paste("./data/",Img_name,"/param_adj_b",bnr2,".txt",sep="")
 write.table(B6_seq, fname9)
 #
-#########################################################################
+################################################################################
 
 if (cas != "100_all+nonortho") {
 
@@ -351,6 +352,7 @@ if (cas != "100_all+nonortho") {
   cat("theta_average= ",theta_average, "\n")
   theta_av <- theta_average
   theta_av
+  
   #output of weighted average of angle
   setwd(home_dir)
   #f <- paste("./data/",Img_name,"/theta_av_", bnr2,"_ref.txt",sep="")
