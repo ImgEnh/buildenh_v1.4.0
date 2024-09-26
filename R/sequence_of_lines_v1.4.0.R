@@ -642,20 +642,18 @@ if (sek == "bdr_follow") {
   plot(b_im)
   Z18 <- connected(b_im, background = 0, method="C") #connect=8 (default)
   nc <- length(levels(Z18)) #nc=number of levels
-  cat("nc= ", nc, "\n")
-  if (nc > 2) { stop("select data manually at script-line 657 in script 'sequence_of_line.R'")}
-  ###manual operation
   W <- tiles(tess(image=Z18)) #separation of components
-  #plot(W$'1', col="white")  #black building
-  #plot(W$'2', col="black")  #white building
-  plot(W$'2', col="white")  #black building
-  plot(W$'3', col="white") #black building
-  #plot(W$'4', col="white") #black building
-  #plot(W$'5', col="white") #black building
-  #plot(W$'6', col="white") #black building
-  ###
-  w <- W$'3' #change number according to filled object in black (W$'x')
-  ### end of manual operation
+  cat("nc= ", nc, "\n")
+  
+  if (nc == 2) { #stop("select data manually at script-line 647 in script 'sequence_of_line.R'")}
+    plot(W$'2', col="white")  #black building
+    w = W$'2'
+  } else {
+    p_pos = "cor_img"
+    setwd(home_dir2)
+    source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) #selection of W$x
+  } #end if-else
+  
   out_poly <- as.polygonal(w) #conversion to polygons
   #out_poly2 <- simplify.owin(w,0.5) #changes number of line segments
   #out_poly <- out_poly2
