@@ -89,6 +89,11 @@ if (Img_name == "ISPRS4") {
     b13_angle_df2 
   } #end b61 "cor_pos"
   
+  if (bnr2 == 61 && p_pos == "cor_img") {
+    plot(W$'2', col="white")  #black building
+    w = W$'2'
+  } #end b62 - "cor_img"
+  
   #b62
   
   if (bnr2 == 62 && p_pos == "cor_pos") {  
@@ -99,8 +104,14 @@ if (Img_name == "ISPRS4") {
     b13_angle_df2[2,1:4] <- c(4,NA,509,200) #lnr=4b,midpoint coordinates are manually derived
     b13_angle_df2[8,1:4] <- c(126,NA,463,188) #midpoint coordinates are manually derived
     b13_angle_df2
-  } #end b62 "cor_pos"
+  } #end b62 - "cor_pos"
   
+  if (bnr2 == 62 && p_pos == "cor_img") {
+    plot(W$'3', col="white")  #black building
+    w = W$'3'
+  } #end b62 - "cor_img"
+  
+  #end b62
 } #end of ISPRS4
   
 
