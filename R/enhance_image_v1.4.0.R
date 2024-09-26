@@ -3,7 +3,7 @@ cat("version_number= ",v_nr,"\n")
 #description: cartographic enhancement of extracted class "building"
 #author: Joachim Höhle
 #instruction: scale of image has to be checked and eventually to be corrected
-#instruction: define pixel size on ground (pixel_size2)
+#instruction: define pixel size2 on ground (at line 18)
 #instruction: define area_threshold (at line 24)
 #instruction: define structuring element (size, shape))
 #instruction: define parameters of adaptive thresholding (w, h, offset)
