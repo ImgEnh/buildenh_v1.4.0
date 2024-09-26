@@ -288,7 +288,7 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
   } #end if answ2 = "N"
 
   cat("end of program package 'buildenh' ","\n") 
-  break
+  #break
 } #end of cases=1,2,3,4
 
 #end of program 'plot_results_on_references.R'
