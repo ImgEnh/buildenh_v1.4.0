@@ -66,7 +66,7 @@ if (Img_name == "ISPRS4") {
       is_label_1
       display(is_label_1)
       setwd(home_dir)
-      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+      f1 <- paste("./data/",Img_name,"/param_b",bnr2,sep="") 
       save(plotPar, file=f1) #parameter xc, yc, r_max, alpha
       coords <- data.frame(x=as.numeric(row(is_label_1)),y=as.numeric(col(is_label_1)), is_label_1=as.numeric(is_label_1))
       coords <- coords[coords$is_label_1 == 1,] #removal of pixels which do not have the label of the building
@@ -80,7 +80,7 @@ if (Img_name == "ISPRS4") {
       #storage of plot parameter of separated object
       setwd(home_dir)
       plotPar <- c(xc,yc,r_max,alpha,dy_window_plot)
-      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+      f1 <- paste("./data/",Img_name,"/param_b",bnr2,sep="") 
       save(plotPar,file=f1) #parameter xc, yc, r_max, alpha
       
       #plot of PC and checkpoints (large scale)
@@ -132,7 +132,7 @@ if (Img_name == "ISPRS4") {
       #output plot parameter
       plotPar <- c(xc,yc,r_max,alpha,dy_window_plot)
       setwd(home_dir)
-      f1 <- paste("./data/",Img_name,"/param_b_",bnr2,sep="")
+      f1 <- paste("./data/",Img_name,"/param_b",bnr2,sep="") 
       save(plotPar, file=f1) #parameter xc, yc, r_max, alpha
       f <- paste("./data/",Img_name,"/b_nr",sep = "")
       save(bnr2,file=f)
