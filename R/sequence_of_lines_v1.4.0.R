@@ -84,7 +84,7 @@ if (Img_name == "ISPRS1" && proc_mode == "demo" ||
 } 
 
 if (Img_name == "ISPRS4" && proc_mode == "demo") {
-   meth <- 1
+   meth <- 3
 }
 
 if (proc_mode != "demo") {
@@ -93,7 +93,6 @@ if (proc_mode != "demo") {
 }
 
 sek <- switch(meth,"Mpts","Mpts+dist","bdr_follow") 
-sek #selected method for determination of line-sequence
 
 #set up of matrix 'b13_angle_df' with corner point number,angle and coordinates
 PC_nr <- B5_6$lnr
@@ -615,14 +614,8 @@ if (sek == "bdr_follow") {
   bnr2_orig  <- as.integer(bnr2_orig)
   bnr2 <- bnr2_orig
   b_new <- readImage(paste("./data/",Img_name,"/images/b",bnr2,"_new8.tif",sep = "")) 
-  #display(b_new,"browser")
-  display(b_new, "raster")
   colorMode(b_new) <- Grayscale
-  display(b_new, "raster")
-  print(b_new)
   plot(b_new[,,1])
-  plot(b_new[,,2])
-  plot(b_new[,,3])
   b_bin <- b_new[,,1]
   print(b_bin)
   display(b_bin, "raster")
@@ -652,6 +645,7 @@ if (sek == "bdr_follow") {
     p_pos = "cor_img"
     setwd(home_dir2)
     source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) #selection of W$x
+    plot(w)
   } #end if-else
   
   out_poly <- as.polygonal(w) #conversion to polygons
@@ -782,11 +776,12 @@ if (sek == "bdr_follow") {
   if (Img_name == "ISPRS1" && proc_mode == "demo" ||
       Img_name == "ISPRS7" && proc_mode == "demo" ||
       Img_name == "ISPRS4" && proc_mode == "demo" ) {
-      cat("if demo -> answer is: N", "\n")
+      #cat("if demo -> answer is: N", "\n")
       answ = "N"
   } else {
-    if (Img_name == "ISPRS1" || Img_name == "ISPRS7" || Img_name == "ISPRS4") { 
-      answ <- readline("are the positions of all midpoints correct? type Y or N:  ") #manual input
+    if (Img_name == "ISPRS1" && proc_mode != "demo" || Img_name == "ISPRS7" && proc_mode != "demo" ||
+        Img_name == "ISPRS4" && proc_mode != "demo" ) { 
+       answ <- readline("are the positions of all midpoints correct? type Y or N:  ") #manual input
     } 
   } #end if-else
   
@@ -822,6 +817,17 @@ if (sek == "bdr_follow") {
       sequence_seg2 <- b13_angle_df2$nr_center #new
       sequence_seg2 #new
     }
+    
+    if (part == "no_part" && proc_mode == "demo") { #new
+      bnr2_part <- bnr2
+      p_pos <- "cor_pos" #correction of position
+      setwd(home_dir2)
+      source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) 
+      b13_angle_df2
+      sequence_seg2 <- b13_angle_df2$nr_center 
+      sequence_seg2 #new
+    }
+    
     
   } else { #if answ=Y
     b13_angle_df2 <- b13_angle_df
