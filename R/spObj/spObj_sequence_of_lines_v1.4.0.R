@@ -14,6 +14,12 @@ if (Img_name == "ISPRS7") {
    
   #b18 
   #demo
+  
+  if (bnr2 == 18 && p_pos == "cor_img") {
+    plot(W$'3', col="white")  
+    w = W$'3'
+  } #end b18 - "cor_img"
+  
   if (bnr2 == 18 && p_pos == "cor_pos") {  
     b13_angle_df[10,1:4] <- c(5,NA,789.8,1144.4) #line 5b
     b13_angle_df[8,1:4] <- c(3,NA,1017,1084)
@@ -21,6 +27,8 @@ if (Img_name == "ISPRS7") {
     b13_angle_df[6,1:4] <- c(5,NA,953.2,921.5) #line 5a
     b13_angle_df2 <- b13_angle_df
   } #end of b18
+  
+  #end b18
 
     
   #b23
@@ -62,6 +70,11 @@ if (Img_name == "ISPRS7") {
 if (Img_name == "ISPRS1") {
   #b11
   #demo
+  
+  if (bnr2 == 11 && p_pos == "cor_img") {
+    plot(W$'3', col="white")  
+    w = W$'3'
+  } #end b18 - "cor_img"
   
   if (bnr2 == 11 && p_pos == "cor_pos") {  
     #determine new position by 'support_line_detection.R', #6
