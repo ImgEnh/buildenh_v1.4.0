@@ -2127,7 +2127,7 @@ for (i in vec_y) {
 
 all_PC
 cat("end of program 'line-detection.R' - continue with 'sequence_of_lines.R' ","\n")
-
+cat("####################################################################","\n")
 setwd(home_dir2)
 #stop("stop")
 source(paste("sequence_of_lines_v",v_nr,".R",sep=""))
