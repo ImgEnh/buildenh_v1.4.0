@@ -142,13 +142,13 @@ for (i in y2) {
   phi_2 <- (2*t(x_dat_v) %*% y_dat_v)/N
   phi_2_deg <- omega*atan(phi_2) #two solutions are possible for phi_2  
   phi_deg <- 0.5*(phi_2_deg) #calculation of angle phi (slope angle)
-  cat("i= ", i, "phi_deg= ", phi_deg, "\n") #calculation of unknown 1
+  #cat("i= ", i, "phi_deg= ", phi_deg, "\n") #calculation of unknown 1
   phi_all[i] <- phi_deg
   a_adj <- ys - xs*tan(phi_deg/omega)
-  cat("a_adj= ", a_adj, "\n")
+  #cat("a_adj= ", a_adj, "\n")
   a_adj_all[i] <- a_adj
   ro_adj <- (a_adj*cos(phi_deg/omega))
-  cat("ro_adj= ", ro_adj, "\n")
+  #cat("ro_adj= ", ro_adj, "\n")
   
  
   #two solutions are possible due to tangents-function
@@ -174,8 +174,8 @@ for (i in y2) {
     ys_img <- (-ys)
     ro_test_img <- cos(B6[i,5]/omega)*xs + sin(B6[i,5]/omega)*(ys_img)
     #
-    cat("i= ",i,"\n")
-    cat("ro_test_img= ", ro_test_img,"\n")
+    #cat("i= ",i,"\n")
+    #cat("ro_test_img= ", ro_test_img,"\n")
     
     #update of table B6
     B6[i,6] <- ro_test_img 
@@ -219,8 +219,8 @@ for (i in y2) {
     #calculation of ro
     ys_img <- (-ys)
     ro_test_img <- cos(B6[i,5]/omega) * xs + sin(B6[i,5]/omega) * ys_img #img-system
-    cat("i= ",i,"\n")
-    cat("ro_test_img= ", ro_test_img,"\n")
+    #cat("i= ",i,"\n")
+    #cat("ro_test_img= ", ro_test_img,"\n")
     
     #update of table B6
     #B6[i,6] <- ro_test_img
@@ -282,13 +282,13 @@ for (i in y2) {
     phi3 <- 90 - B6$theta_adj[i]
   } 
    
-  cat("phi3= ",phi3,"\n")
+  #cat("phi3= ",phi3,"\n")
   phi3_arc <- phi3/omega
   a_adj3 <- ys - xs*tan(phi3_arc) #calculation of unknown
   ro_adj <- (a_adj3*cos(phi3_arc))
-  cat("ro_adj= ", ro_adj, "\n")
+  #cat("ro_adj= ", ro_adj, "\n")
   k4 <- nrow(all_PC[[i]])
-  cat("k4= ", k4,"\n")
+  #cat("k4= ", k4,"\n")
   res <- rep(0,k4)
   all_PC[[i]][1 : k4,]
   row.names(all_PC[[i]]) <- 1 : k4 
