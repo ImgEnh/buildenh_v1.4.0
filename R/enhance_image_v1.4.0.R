@@ -14,14 +14,14 @@ cat("start of program 'enhance_image.R' ", "\n")
 cat("Image name: ",Img_name,"\n")
 
 ##parameters: size of brush [pixels]
-pixel_size2=0.09 # pixel size on the ground in [m] #orthoimage #1, #7
-#pixel_size2=0.283 # pixel size on the ground in [m] #orthoimage #4
+#pixel_size2=0.09 # pixel size on the ground in [m] #orthoimage #1, #7
+pixel_size2=0.283 # pixel size on the ground in [m] #orthoimage #4
 size <- 5 #used in makeBrush
 shape <- 'diamond' #used in makeBrush
 w <- 2; h <- 2 #half width and height of the moving rectangular window (used in func 'thresh')
 offset <- 0.01 #thresholding offset from the average value (used in thresh)
-area_threshold <- 3086 #orthoimages #1, #7, removes buildings of area < 5mx5m (3086 pixels)
-#area_threshold = 312 #orthoimage #4, removes buildings of area < 5mx5m (312 pixels)
+#area_threshold <- 3086 #orthoimages #1, #7, removes buildings of area < 5mx5m (3086 pixels)
+area_threshold = 312 #orthoimage #4, removes buildings of area < 5mx5m (312 pixels)
 #instruction: calculation of area_threshold 
 #area_threshold[qm]=area_threshold[pixel]*GSD^2
 #area_threshold[pixel]=area_threshold[qm]/GSD^2
