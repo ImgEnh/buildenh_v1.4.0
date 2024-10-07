@@ -34,7 +34,7 @@ home_dir2 <- "C:/Users/Joachim/R_programs/buildenh_jh/v1.4/buildenh_v1.4.0_new/b
 ###############################################################################################
 
 ## title of project (manual input of characteristics)
-prj_title <- "ISPRS1_LCM2" #example#2
+#prj_title <- "ISPRS1_LCM2" #example#2
 #orthoimage ISPRS1 
 #classification method: DT/LCM2 by 5 attributes
 #training by orthoimage #26
@@ -47,7 +47,7 @@ prj_title <- "ISPRS1_LCM2" #example#2
 #enhancement of buildings
 #
 
-#prj_title <- "ISPRS Semantic Labeling benchmark_result" 
+prj_title <- "ISPRS Semantic Labeling benchmark_result" 
 #orthoimage  ISPRS4
 #classification method: SVL_5, S
 #enhancement of buildings
