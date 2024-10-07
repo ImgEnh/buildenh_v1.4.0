@@ -283,12 +283,15 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
       setwd(fname15)
       file.remove("b_all.txt") #removal of files with numbers of processed objects (buildings)
       cat("end of program 'plot_results_on_references.R'","\n")
-      break
-    } #end if (answ5 = "Y)
+      #end if (answ5 = "Y)
+    } else {
+      cat("end of program 'plot_results_on_references.R'","\n")
+      stop("end of program package 'buildenh'")
+    }
+    
   } #end if answ2 = "N"
 
   cat("end of program package 'buildenh' ","\n") 
-  #break
 } #end of cases=1,2,3,4
 
 #end of program 'plot_results_on_references.R'
