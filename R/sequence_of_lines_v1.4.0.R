@@ -84,7 +84,7 @@ if (Img_name == "ISPRS1" && proc_mode == "demo" ||
 } 
 
 if (Img_name == "ISPRS4" && proc_mode == "demo") {
-   meth <- 3
+   meth <- 1
 }
 
 if (proc_mode != "demo") {
@@ -630,7 +630,6 @@ if (sek == "bdr_follow") {
   
   b <- b_bin@.Data
   str(b)
-  plot(b)
   b_im <- as.im(b) #class image with other indexing
   plot(b_im)
   Z18 <- connected(b_im, background = 0, method="C") #connect=8 (default)
