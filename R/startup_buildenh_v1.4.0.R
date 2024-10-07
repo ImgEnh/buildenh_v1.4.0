@@ -59,9 +59,9 @@ setwd(home_dir)
 
 #select orthoimage (activate manually)
 #Img_name <- readline("type name of orthoimage: ") #line can be avoided when Img_name is selected
-Img_name <- "ISPRS1" #name of orthoimage to be processed (example2)
+#Img_name <- "ISPRS1" #name of orthoimage to be processed (example2)
 #Img_name <- "ISPRS7" #name of orthoimage to be processed (example1)
-#Img_name <- "ISPRS4" #name of orthoimage to be processed (example3)
+Img_name <- "ISPRS4" #name of orthoimage to be processed (example3)
 
 if (Img_name == "ISPRS1") { #example2
   ##setting of path- & file-name for original data:
