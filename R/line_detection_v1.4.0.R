@@ -1799,11 +1799,12 @@ if (cas == "4_long") {
 }
 
 if (cas == "100_all") {
-  print(B5_6)
-  n_B5_6 <- length(B5_6$lnr)
-  n_B5_6R4 <- length(B5_6R4$lnr)
-  B5_6 <- B5_6[-c((n_B5_6R4+1):n_B5_6),]
-  B5_6[1 : n_B5_6R4,] <- B5_6R4
+  # print(B5_6)
+  # n_B5_6 <- length(B5_6$lnr)
+  # n_B5_6R4 <- length(B5_6R4$lnr)
+  # B5_6 <- B5_6[-c((n_B5_6R4+1):n_B5_6),]
+  # B5_6[1 : n_B5_6R4,] <- B5_6R4
+  B5_6 <- B5_6R4 #new
 }
 
 if (cas == "100_all+nonortho") {
