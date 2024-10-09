@@ -283,14 +283,15 @@ kf2 <- L1[[3]]
 #
 
 # measurement of new points (results: x,y)
+#orig_y <- (-orig_y) #change to img-system (when 2. and more lines have to be determined)
 locator2() #measurement and marking of one pixel's position
 
 #determination of ortholines 
-detect_meas1() 
+detect_meas1() #ro-value may be negativ (watch small scale + window + line segments)
 
 #plot of detected line into enlarged orthoimage
 B5_4_ord #use of ref-line (lnr_ref)
-i=16 #index in B5_4_ord (value for i has to be changed!)
+i=12 #index in B5_4_ord (value for i has to be changed!)
 B5_4_ord[i,]
 cat("PC_nr=", B5_4_ord$lnr[i], "\n")
 y <- (-y) #adapt to math_system #img_system
@@ -310,11 +311,11 @@ B5_4_ord$ro_pixel[i]
 
 p2 <- round(x*cos(theta_math_arc) + y*sin(theta_math_arc)) #sign may be '+' or '-'
 b <- p2/sin(theta_math_arc)
-orig_y <- (-orig_y) #change to math-system
-
+#orig_y <- (-orig_y) #change to math-system
+orig_y_math <- (-orig_y) #change to math-system
 #calculation by intercept for image extract (math_system)
-b2 <- a*orig_x + b - orig_y #original
-#b2 <- +a*orig_x + b + orig_y 
+b2 <- a*orig_x + b - orig_y_math #original
+#b2 <- +a*orig_x + b + orig_y_math
 
 #change of parameter to image_system
 b2_img <- (-b2)
@@ -324,7 +325,7 @@ coef2 <- c(b2_img,a_img)
 
 # plot
 if (is.finite(a)) {
-  abline(coef2, col="blue", lty=1, lwd=2, asp=1)
+  abline(coef2, col="red", lty=1, lwd=2, asp=1)
 }  else {
   ro_l1 <- B5_4_ord$ro_pixel[i]
   ro_l2 <- ro_l1 + ro_1
