@@ -52,6 +52,8 @@ prj_title <- "ISPRS Semantic Labeling benchmark_result"
 #classification method: SVL_5, S
 #enhancement of buildings
 #pixel size on ground=0.283m
+
+
 ##########################################
 
 cat("project title is = ", prj_title,"\n")
