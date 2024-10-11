@@ -64,10 +64,50 @@ if (Img_name == "ISPRS1") {
 
 if (Img_name == "ISPRS4") { 
   
-  ##b6
+  #b12 (b1-part2)
+  #cas='100_all'
+  
+  if (bnr2 == 12 && p_pos == "cor_det") { 
+    B5_6
+    B5_6[14,] <- B5_4_ord[46,]
+    B5_6[15,] <- B5_4_ord[41,]
+    B5_6[16,] <- B5_4_ord[54,]
+    B5_6[17,] <- B5_4_ord[9,]
+    B5_6[18,] <- B5_4_ord[12,]
+    B5_6[19,] <- B5_4_ord[15,]
+    B5_6[20,] <- B5_4_ord[5,]
+    B5_6[21,] <- B5_4_ord[57,]
+    B5_6[22,] <- B5_4_ord[23,]
+    B5_6[1:22,8] <- 1
+    row.names(B5_6) <- 1 : length(B5_6$lnr)
+    B5_6 <- B5_6[-c(9,11),]
+    row.names(B5_6) <- 1 : length(B5_6$lnr)
+    B5_6
+    B5_6R4 <- B5_6
+    #row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+    #lnr_det5 <- B5_6R4$lnr #new
+  } #end b12 (b1-part2)
+  
+  #b9
+  #cas = "100_all"
+  
+  if (bnr2 == 9 && p_pos == "cor_det") { 
+    B5_6
+    B5_6 <- B5_6[-c(6,7),]
+    B5_6
+    B5_6R4 <- B5_6
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4[8,] <- B5_4_ord[35,]
+    B5_6R4[8,8] <- 1
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4[7,] <- B5_4_ord[37,]
+    B5_6R4[7,8] <- 1
+    B5_6R4
+  } #end b9
   
   #b61
-  #case='100_all'
+  #cas ="100_all"
   
   if (bnr2 == 61 && p_pos == "cor_det") { 
     B5_6
@@ -76,6 +116,7 @@ if (Img_name == "ISPRS4") {
     B5_6 <- B5_6[-3,]
     B5_6R4 <- B5_6
     row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    #B5_6R4[18,6] <- -28 
     B5_6R4
   } #end b61
   
