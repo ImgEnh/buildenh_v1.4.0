@@ -91,6 +91,42 @@ if (Img_name == "ISPRS1") {
 
 if (Img_name == "ISPRS4") {
   
+  #b12 (b1,"2parts_2")
+  #stop("manual action")
+  if (bnr2 == 12 && p_pos == "cor_pos") {  
+    #determine new position by 'support_line_detection.R', #6
+    #or with angle by 'support_sequence_of_lines.R', #9
+    b13_angle_df
+    b13_angle_df[9,1:4] <- c(432,NA,162,157) #lnr=432,midpoint is manually determined
+    b13_angle_df[10,1:4] <- c(110,NA,101,126) #lnr=110,midpoint is manually determined
+    b13_angle_df[13,1:4] <- c(26,NA,244,151) #lnr=26,midpoint is manually determined
+    b13_angle_df[14,1:4] <- c(37,NA,157,235) #lnr=37,midpoint is manually determined
+    b13_angle_df[15,1:4] <- c(429,NA,172,98) #lnr=429,midpoint is manually determined
+    b13_angle_df[16,1:4] <- c(569,NA,212,174) #lnr=569,midpoint is manually determined
+    b13_angle_df[17,1:4] <- c(872,NA,224,168) #lnr=872,midpoint is manually determined
+    b13_angle_df[18,1:4] <- c(296,NA,184,101) #lnr=344,midpoint is manually determined
+    b13_angle_df[19,1:4] <- c(311,NA,129,186) #lnr=311,midpoint is manually determined
+    b13_angle_df[20,1:4] <- c(70,NA,224,187) #lnr=70,midpoint is manually determined
+    b13_angle_df2 <- b13_angle_df
+    b13_angle_df2 
+  } #end b61 "cor_pos"
+  
+  
+  if (bnr2 == 12 && p_pos == "cor_img") {
+    plot(W$'3', col="white")  #black building
+    w = W$'3'
+  } #end b62 - "cor_img"
+  
+  #b9
+  if (bnr2 == 9 && p_pos == "cor_pos") {  
+    #determine new position by 'support_line_detection.R', #6
+    #or with angle by 'support_sequence_of_lines.R', #9
+    b13_angle_df2
+    b13_angle_df2[8,1:4] <- c(12,291.7,285,291) #lnr=12,midpoint is manually changed
+    b13_angle_df3 <- b13_angle_df2 
+    b13_angle_df3 
+  } #end b9 "cor_pos"
+  
   #b61
   if (bnr2 == 61 && p_pos == "cor_pos") {  
     #determine new position by 'support_line_detection.R', #6
