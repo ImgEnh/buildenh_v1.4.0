@@ -95,7 +95,7 @@ if (proc_mode != "demo") {
 sek <- switch(meth,"Mpts","Mpts+dist","bdr_follow") 
 
 #set up of matrix 'b13_angle_df' with corner point number,angle and coordinates
-PC_nr <- B5_6$lnr
+PC_nr <- B5_6R4$lnr #changed from B5_6 to B5_6R4
 n_x <- length(PC_nr)
 b13_angle <- matrix(nrow=n_x,ncol=4)
 b13_angle[,] <- 0
@@ -138,6 +138,7 @@ if (sek == "Mpts") {
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.5, col="orange")
 
   #generation of line-midpoints 
+  b13_angle_df
   b13_angle_df2 <- b13_angle_df
   n_x <- length(PC_nr)
   vec_y <- 1 : n_x
@@ -186,6 +187,7 @@ if (sek == "Mpts") {
   } #end if-else  
   
   b13_angle_df3
+  labels <- b13_angle_df3$nr_center
   #
   
   ##plot of line-centers
@@ -194,6 +196,7 @@ if (sek == "Mpts") {
        main=paste("b ",bnr2, sep=(""),collapse=NULL)) #large scale
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="cyan") #original pointcloud for building
   points(b13_angle_df3$x_centre,-b13_angle_df3$y_centre, asp=1, pch=20,col="black", cex=1.5)
+  text((b13_angle_df3$x_centre+2),(-b13_angle_df3$y_centre+2),labels, cex=1,col="red")
   #
   
   ##ordering of the angles which represent line segments
