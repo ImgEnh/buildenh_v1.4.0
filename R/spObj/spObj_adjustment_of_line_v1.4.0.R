@@ -20,4 +20,16 @@ if (Img_name == "ISPRS1") {
  #no corrections 
 } #end of ISPRS1
 
+##buildings of orthoimage ISPRS4
+
+#b9
+
+if (Img_name == "ISPRS4") {
+  
+  if(bnr2 == 9 && p_pos == "cor_adj_line") {
+    B6
+    B6[6,]<- c(467,125,64,15,125,64,1)
+  } 
+} #end of ISPRS4
+
 ##end of script 'spObj_adjustment_of_line_v1.4.0.R' 
