@@ -199,7 +199,7 @@ xc <- plotPar[1]
 yc <- plotPar[2]
 b13_angle_df3 <- b13_angle_df2
 b13_angle_df3 
-i2=4 #adapt point (row number in b13_angle_df3) 
+i2=8 #adapt point (row number in b13_angle_df3) 
 x_centre <- b13_angle_df3[i2,3] #to be transferred to spObj_sequence_of_lines_v1.1.R
 y_centre <- b13_angle_df3[i2,4] #to be transferred to spObj_sequence_of_lines_v1.1.R
 
