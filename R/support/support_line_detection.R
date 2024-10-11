@@ -291,7 +291,7 @@ detect_meas1() #ro-value may be negativ (watch small scale + window + line segme
 
 #plot of detected line into enlarged orthoimage
 B5_4_ord #use of ref-line (lnr_ref)
-i=12 #index in B5_4_ord (value for i has to be changed!)
+i=37 #index in B5_4_ord (value for i has to be changed!)
 B5_4_ord[i,]
 cat("PC_nr=", B5_4_ord$lnr[i], "\n")
 y <- (-y) #adapt to math_system #img_system
