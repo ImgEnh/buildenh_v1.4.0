@@ -353,6 +353,7 @@ if (proc_mode == "demo") {
 }
 
 if (answ4 == "N") {
+  B6
   p_pos <- "cor_adj_line" #correction of adjustment parameter
   setwd(home_dir2)
   source(paste("./spObj/spObj_adjustment_of_line_v",v_nr,".R",sep=""))
