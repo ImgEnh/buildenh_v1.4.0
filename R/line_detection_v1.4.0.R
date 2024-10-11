@@ -1481,7 +1481,7 @@ if (cas == "100_all") {
 } #end case="100_all"
 ###########################################################################
 
-##case: 100_all + addition of non-orthogonal lines 
+##cas: 100_all + addition of non-orthogonal lines 
 
 if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
   cat("define minimum size of line segment: 15 pixel (recommended) or 35 (alternativ)","\n")
@@ -1799,9 +1799,9 @@ if (cas == "4_long") {
 }
 
 if (cas == "100_all") {
-  # print(B5_6)
-  # n_B5_6 <- length(B5_6$lnr)
-  # n_B5_6R4 <- length(B5_6R4$lnr)
+  print(B5_6)
+  n_B5_6 <- length(B5_6$lnr)
+  n_B5_6R4 <- length(B5_6R4$lnr)
   # B5_6 <- B5_6[-c((n_B5_6R4+1):n_B5_6),]
   # B5_6[1 : n_B5_6R4,] <- B5_6R4
   B5_6 <- B5_6R4 #new
