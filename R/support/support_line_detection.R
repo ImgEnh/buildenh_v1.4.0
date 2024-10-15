@@ -256,9 +256,15 @@ for (i in vec) {
 # by measurement of one pixel in enlarged orthoimage 
 
 #display enlarged ortho_image and PC of building outline
-# if (orig_y < 0) {
-#   orig_y = 0
-# }
+
+if (orig_x < 0) { #solves problems at edges of orthoimage
+   orig_x = 0
+}
+
+if (orig_y < 0) {
+   orig_y = 0
+}
+
 img_uds <- img_ref[orig_x : wind_x, abs(orig_y) : wind_y,1:3]
 display(img_uds, method = "raster")
 #display(img_uds,method = "browser") #display enables zooming
@@ -270,28 +276,16 @@ points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y),
 #measure two control 2 points (left lower, right upper) and one checkpoint (middle)
 L1 <- trans_ortho() #
 
-#transformation parameter
-D <- matrix(nrow=2, ncol=2)
-D[1,1] <- L1[[1]][1,1]
-D[1,2] <- L1[[1]][1,2]
-D[2,1] <- L1[[1]][2,1]
-D[2,2] <- L1[[1]][2,2]
-a0 <- L1[[2]][1]
-b0 <- L1[[2]][2]
-tr_lat <- c(a0,b0)
-kf2 <- L1[[3]]
-#
-
 # measurement of new points (results: x,y)
 #orig_y <- (-orig_y) #change to img-system (when 2. and more lines have to be determined)
-locator2() #measurement and marking of one pixel's position
+locator2() #measurement and marking of one pixel's position, includes transformations-matrix
 
 #determination of ortholines 
 detect_meas1() #ro-value may be negativ (watch small scale + window + line segments)
 
 #plot of detected line into enlarged orthoimage
 B5_4_ord #use of ref-line (lnr_ref)
-i=37 #index in B5_4_ord (value for i has to be changed!)
+i=24 #index in B5_4_ord (value for i has to be changed!)
 B5_4_ord[i,]
 cat("PC_nr=", B5_4_ord$lnr[i], "\n")
 y <- (-y) #adapt to math_system #img_system
