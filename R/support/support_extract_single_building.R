@@ -11,6 +11,7 @@ cat("version_number= ",v_nr,"\n")
 #3: find number 'bnr2' by number 'bnr' and vice versa
 #4: generation of table with bnr/bnr2 columns
 #5: find bnr2 by bnr and vice versa by using the generated table 
+#6: separation of object
 ###########################################################################################
 
 #1: plot numbers (labels) of buildings (before and after applying a threshold)
@@ -151,6 +152,36 @@ cat("bnr= ", bnr,"\n")
 #
 
 #end of #5: find bnr2 by bnr and vice versa using a table
+
+## 6: separation of object
+#determination of pixels for separation
+
+
+#display enlarged ortho_image and PC of building outline
+
+# if (orig_x < 0) { #solves problems at edges of orthoimage
+#   orig_x = 0
+# }
+
+# if (orig_y < 0) {
+#   orig_y = 0
+# }
+
+img_uds <- img_ref[orig_x : wind_x, abs(orig_y) : wind_y,1:3]
+display(img_uds, method = "raster")
+#display(img_uds,method = "browser") #display enables zooming
+points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="yellow")
+points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), 
+       pch=20, asp=1, cex=0.3, col="green")
+
+#determination of transformation parameter by means of orthoimage (large scale)
+#measure two control 2 points (left lower, right upper) and one checkpoint (middle)
+L1 <- trans_ortho() #
+
+# measurement of new points (results: x,y)
+#orig_y <- (-orig_y) #change to img-system (when 2. and more lines have to be determined)
+locator2() #measurement and marking of one pixel's position, includes transformation-matrix
+#
 #########################################################################################################
 
 ##end of script 'support_extract_single_building.R'
