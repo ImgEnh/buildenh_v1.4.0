@@ -1440,11 +1440,14 @@ if (cas == "100_all") {
 
     cat("#","\n")
   } #end for-loop (large scale)
-  #stop("check data")
+  
   cat("detected lines are correct?" , "\n") #case: "100_all"
   answ <- readline("type Y or N: ")
   
+  B5_6
+  
   if (answ == "N") {
+    #stop("manual operation")
     p_pos <- "cor_det" #correction of detected lines for cas = "100_all" 
     setwd(home_dir2) 
     source(paste("./spObj/spObj_line_detection_v",v_nr,".R",sep = "")) #special object: correction of detected lines
@@ -1453,7 +1456,6 @@ if (cas == "100_all") {
     B5_6R4 <- B5_6
   } #end if-else
 
-  B5_6R4
   lnr_det5 <- B5_6R4$lnr
   lnr_det5
   
@@ -1799,12 +1801,8 @@ if (cas == "4_long") {
 }
 
 if (cas == "100_all") {
-  print(B5_6)
-  n_B5_6 <- length(B5_6$lnr)
   n_B5_6R4 <- length(B5_6R4$lnr)
-  # B5_6 <- B5_6[-c((n_B5_6R4+1):n_B5_6),]
-  # B5_6[1 : n_B5_6R4,] <- B5_6R4
-  B5_6 <- B5_6R4 #new
+  B5_6[1:n_B5_6R4,1:8] <- B5_6R4[1:n_B5_6R4,]
 }
 
 if (cas == "100_all+nonortho") {
