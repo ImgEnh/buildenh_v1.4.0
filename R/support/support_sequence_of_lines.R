@@ -30,31 +30,18 @@ if (orig_x < 0) { #solves problems at edges of orthoimage
 if (orig_y < 0) {
   orig_y = 0 
 }
-#
 
 display(img_uds, method = "raster")
 points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="red")
 points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), 
        pch=20, asp=1, cex=0.3, col="green")
 
-##manual measurement of 3 checkpoints (lower, upper, middle)
+##manual measurement of 3 checkpoints (lower, upper, middle) to determine scale
 L1 <- trans_ortho() 
-
-#derive transformation-matrix
-D <- matrix(nrow=2, ncol=2)
-D[1,1] <- L1[[1]][1,1]
-D[1,2] <- L1[[1]][1,2]
-D[2,1] <- L1[[1]][2,1]
-D[2,2] <- L1[[1]][2,2]
-a0 <- L1[[2]][1]
-b0 <- L1[[2]][2]
-tr_lat <- c(a0,b0)
-kf2 <- L1[[3]]
-#
 
 ## measurement of one new pixel which represents the center of line
 #results: x,y in image-system of orthoimage
-locator2() #measurement and marking of one pixel's position
+locator2() #measurement and marking of one pixel's position, includes calculation of transformation-matrix
 
 #end of script 1.
 ################################################################################
@@ -199,7 +186,7 @@ xc <- plotPar[1]
 yc <- plotPar[2]
 b13_angle_df3 <- b13_angle_df2
 b13_angle_df3 
-i2=8 #adapt point (row number in b13_angle_df3) 
+i2=7 #adapt point (row number in b13_angle_df3) 
 x_centre <- b13_angle_df3[i2,3] #to be transferred to spObj_sequence_of_lines_v1.1.R
 y_centre <- b13_angle_df3[i2,4] #to be transferred to spObj_sequence_of_lines_v1.1.R
 
