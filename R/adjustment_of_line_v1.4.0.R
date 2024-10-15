@@ -351,7 +351,7 @@ if (proc_mode == "demo") {
 } else {
   answ4 <- readline("type Y or N: ") #interaction required  
 }
-
+#stop("manual action")
 if (answ4 == "N") {
   B6
   p_pos <- "cor_adj_line" #correction of adjustment parameter
