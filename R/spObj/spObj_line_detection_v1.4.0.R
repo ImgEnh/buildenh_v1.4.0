@@ -89,23 +89,6 @@ if (Img_name == "ISPRS4") {
     #lnr_det5 <- B5_6R4$lnr #new
   } #end b12 (b1-part2)
   
-  #b9
-  #cas = "100_all"
-  
-  if (bnr2 == 9 && p_pos == "cor_det") { 
-    B5_6
-    B5_6 <- B5_6[-c(6,7),]
-    B5_6
-    B5_6R4 <- B5_6
-    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
-    B5_6R4[8,] <- B5_4_ord[35,]
-    B5_6R4[8,8] <- 1
-    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
-    B5_6R4[7,] <- B5_4_ord[37,]
-    B5_6R4[7,8] <- 1
-    B5_6R4
-  } #end b9
-  
   #b61
   #cas ="100_all"
   
@@ -135,6 +118,61 @@ if (Img_name == "ISPRS4") {
     row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
     B5_6R4
   } #end b62
+  
+  #b81
+  #cas = "100_all"
+  
+  if (bnr2 == 81 && p_pos == "cor_det") { 
+    B5_6
+    B5_6 <- B5_6[-c(7:10),]
+    B5_6
+    B5_6R4 <- B5_6
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+    B5_6R4[10,] <- B5_4_ord[10,]
+    B5_6R4[10,8] <- 1
+    B5_6R4
+  } #end b8
+  
+  #82
+  #cas = "100_all"
+  
+  if (bnr2 == 82 && p_pos == "cor_det") { 
+    #stop("manual operation")
+    B5_6
+    B5_6 <- B5_6[-c(8,13),]
+    B5_6
+    B5_6R4 <- B5_6
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+    B5_6R4[13,] <- B5_4_ord[41,] #164
+    B5_6R4[14,] <- B5_4_ord[24,] #289
+    B5_6R4[15,] <- B5_4_ord[6,] #2
+    B5_6R4[16,] <- B5_4_ord[14,] #1
+    B5_6R4[17,] <- B5_4_ord[14,] #1
+    B5_6R4[18,] <- B5_4_ord[14,] #1
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4[1:18,8] <- 1
+    B5_6R4
+  } #end b8
+  
+  #b9
+  #cas = "100_all"
+  
+  if (bnr2 == 9 && p_pos == "cor_det") { 
+    B5_6
+    B5_6 <- B5_6[-c(6,7),]
+    B5_6
+    B5_6R4 <- B5_6
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4[8,] <- B5_4_ord[35,]
+    B5_6R4[8,8] <- 1
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4[7,] <- B5_4_ord[37,]
+    B5_6R4[7,8] <- 1
+    B5_6R4
+  } #end b9
+  
 } #end of orthoimage "ISPRS4"
 
 ##end of script 'spObj_line_detection_v1.4.0.R'
