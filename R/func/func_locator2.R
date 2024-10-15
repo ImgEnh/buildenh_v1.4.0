@@ -6,6 +6,16 @@
 #GNU General Public License (GPL)
 
 locator2 <- function() {
+  D <- matrix(nrow=2, ncol=2)
+  D[1,1] <- L1[[1]][1,1]
+  D[1,2] <- L1[[1]][1,2]
+  D[2,1] <- L1[[1]][2,1]
+  D[2,2] <- L1[[1]][2,2]
+  a0 <- L1[[2]][1]
+  b0 <- L1[[2]][2]
+  tr_lat <- c(a0,b0)
+  kf2 <- L1[[3]]
+  #
   c9 <- locator(1) #standard function
   loc <- c(c9$x,c9$y)
   print(tr_lat)
