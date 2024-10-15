@@ -12,7 +12,7 @@ cat("version_number= ",v_nr,"\n")
 ###############################################################################
 
 ## start of program 'sequence_of_lines.R'
-
+#stop("manual operation")
 cat("start of program 'sequence_of_lines.R'","\n")
 setwd(home_dir)
 
@@ -156,11 +156,20 @@ if (sek == "Mpts") {
 
   ##plot of midpoints in graph
   r_max2 <- 1.1*r_max
+  labels <- b13_angle_df2$nr_center
   plot(xc,-yc, pch=3, cex=2, col="red", asp=1, xlim=c(xc - r_max2,xc + r_max2), ylim=c(-(yc + r_max2),-(yc - r_max2)),
-    main=paste("b ",bnr2, sep=(""),collapse=NULL)) #large scale
+       main=paste("b ",bnr2, sep=(""),collapse=NULL)) #large scale
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="cyan") # original pointcloud for building
-  points(b13_angle_df2$x_centre,-b13_angle_df2$y_centre, asp=1, pch=20,col="black", cex=1.5)
   #
+  n_b13_angle_df2 <- length(b13_angle_df2$nr_center)
+  vec4 <- 1 : n_b13_angle_df2
+  
+  for (i in vec4) {
+    browser() # if display point by point
+    cat("nr_center= ",b13_angle_df2$nr_center[i],"\n")
+    points(b13_angle_df2$x_centre[i],-b13_angle_df2$y_centre[i], asp=1, pch=20,col="black", cex=1.5)
+    text((b13_angle_df2$x_centre[i]+18),(-b13_angle_df2$y_centre[i]),labels[i], cex=1,col="red")
+  }
   
   #correction of midpoints which represent a line-segment
   answ <- readline("are the position of all midpoints correct? type Y or N: ") #interaction required
@@ -637,8 +646,8 @@ if (sek == "bdr_follow") {
   plot(b_im)
   Z18 <- connected(b_im, background = 0, method="C") #connect=8 (default)
   nc <- length(levels(Z18)) #nc=number of levels
-  W <- tiles(tess(image=Z18)) #separation of components
   cat("nc= ", nc, "\n")
+  W <- tiles(tess(image=Z18)) #separation of components
   
   if (nc == 2) { #stop("select data manually at script-line 647 in script 'sequence_of_line.R'")}
     plot(W$'2', col="white")  #black building
@@ -765,9 +774,9 @@ if (sek == "bdr_follow") {
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="cyan") # original pointcloud for building
 
   for (i in vec_y) {
-    #browser()
+    browser()
     cat("nr_center= ",b13_angle_df2$nr_center[i],"\n")
-    points(b13_angle_df2$x_centre[i],-b13_angle_df2$y_centre[i], asp=1, pch=20,col="red", cex=1.5)
+    points(b13_angle_df2$x_centre[i],-b13_angle_df2$y_centre[i], asp=1, pch=20,col="blue", cex=1.5)
   }
   
   #correction of midpoints which represent line segments
