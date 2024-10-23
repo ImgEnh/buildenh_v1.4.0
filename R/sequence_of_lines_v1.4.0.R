@@ -10,10 +10,9 @@ cat("version_number= ",v_nr,"\n")
 #author: Joachim Höhle
 #GNU General Public License (GPL)
 ###############################################################################
-
 ## start of program 'sequence_of_lines.R'
-#stop("manual operation")
 cat("start of program 'sequence_of_lines.R'","\n")
+#("step by step")
 setwd(home_dir)
 
 ##input
@@ -35,7 +34,7 @@ plotPar
 xc <- plotPar[1]
 yc <- plotPar[2]
 r_max <- plotPar[3]
-dy_window_plot <- plotPar[5]
+#dy_window_plot <- plotPar[5]
 #
 
 #input of pixel cloud (PC) of object
@@ -615,12 +614,14 @@ b13_angle_df2
 #####################################################################
 
 ##sequence of lines by "boundary following" 
+#stop("checking step by step - manual operation")
 
 if (sek == "bdr_follow") { 
   setwd(home_dir)
   
   if (part != "no_part") {
-    bnr2_orig <- substr(bnr2,1,2)
+    #bnr2_orig <- substr(bnr2,1,2)
+    bnr2_orig <- substr(bnr2,1,3)
   }
   
   bnr2_orig  <- as.integer(bnr2_orig)
@@ -631,6 +632,7 @@ if (sek == "bdr_follow") {
   b_bin <- b_new[,,1]
   print(b_bin)
   display(b_bin, "raster")
+  display(b_bin, "browser")
   plot(b_bin)
   
   if (Img_name == "ISPRS4") { #low-resolution image
@@ -688,7 +690,7 @@ if (sek == "bdr_follow") {
   margin_size_dy
   window_size_y <- 578 # specified value of square window (578 x 578 pixels)
   size_plotting_region_y <- (window_size_y - margin_size_dy)
-  size_plotting_region_y #y_dimension of the plotting region in derived image
+  size_plotting_region_y #y_dimension of the plotting region in derived image (img)
   #
   setwd(home_dir)
   
@@ -702,7 +704,8 @@ if (sek == "bdr_follow") {
   points(xc+r_max, yc-r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
   points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
   #
-  dy_window_plot <- abs(par("usr")[4] - par("usr")[3])
+  par("usr")
+  dy_window_plot <- abs(par("usr")[1] - par("usr")[2]) #after rotation: dx_window_plot
   dy_window_plot #y-dimension of the plotting region in graph
   f1<-paste("./data/",Img_name,"/param_b",bnr2,sep="") #change
   load(f1)
@@ -714,17 +717,17 @@ if (sek == "bdr_follow") {
   #check
   #dy_window_plot <- plotPar[5]
   
-  kf3 <- size_plotting_region_y/dy_window_plot #scale factor between image and plot
-  #check eventually by locator-measurements
+  kf3 <- size_plotting_region_y/dy_window_plot #scale factor between image (img) and plot
+  #kf3 may be checked in 'support_sequence_of_lines.R', script #9
   1/kf3
   window_size_x <- 578 #specified value
-  margin_size_x <- (par("mai")[2]+par("mai")[4])/pixel_size #image
+  margin_size_x <- (par("mai")[2]+par("mai")[4])/pixel_size #unit pixel
   x0_img <- (par("mai")[2]/pixel_size) + (window_size_x-margin_size_x)/2
-  y0_img <- par("mai")[3]/pixel_size+size_plotting_region_y/2
+  y0_img <- par("mai")[3]/pixel_size + size_plotting_region_y/2
 
   #derivation of origin (left top corner) of window for a building
-  x0 <- round(xc - x0_img/kf3) #x-coordinate of window origin
-  y0 <- round(yc - y0_img/kf3) #y-coordinate of window origin
+  x0 <- round(xc - x0_img/kf3) #x-coordinate of window origin [pixel]
+  y0 <- round(yc - y0_img/kf3) #y-coordinate of window origin [pixel]
 
   ##2D-transformation
   a0_bdr <- x0
@@ -767,6 +770,8 @@ if (sek == "bdr_follow") {
     b13_angle_df2[lnum,3] <- par_midp[[3]]
     b13_angle_df2[lnum,4] <- par_midp[[4]]
   } #end for-loop
+  
+  b13_angle_df2
 
   #plot of midpoints
   plot(xc,-yc, pch=3, cex=2, col="red", asp=1, xlim=c(xc - r_max2,xc + r_max2), ylim=c(-(yc + r_max2),-(yc - r_max2)),
@@ -774,14 +779,14 @@ if (sek == "bdr_follow") {
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="cyan") # original pointcloud for building
 
   for (i in vec_y) {
-    browser()
+    #browser()
     cat("nr_center= ",b13_angle_df2$nr_center[i],"\n")
     points(b13_angle_df2$x_centre[i],-b13_angle_df2$y_centre[i], asp=1, pch=20,col="blue", cex=1.5)
   }
   
-  #correction of midpoints which represent line segments
-  b13_angle_df <- b13_angle_df2
-  b13_angle_df 
+  b13_angle_df2 
+  
+  ##correction of midpoints which represent line segments
   #check of the positions of all midpoints
   
   if (Img_name == "ISPRS1" && proc_mode == "demo" ||
@@ -792,18 +797,26 @@ if (sek == "bdr_follow") {
   } else {
     if (Img_name == "ISPRS1" && proc_mode != "demo" || Img_name == "ISPRS7" && proc_mode != "demo" ||
         Img_name == "ISPRS4" && proc_mode != "demo" ) { 
-       answ <- readline("are the positions of all midpoints correct? type Y or N:  ") #manual input
+    answ <- readline("are the positions of all midpoints correct? type Y or N:  ") #manual input
     } 
   } #end if-else
   
-  if (substr(bnr2,2,2) == "1") { #point numbers <10, changed from substr(bnr2,3,3), 
+  #if (substr(bnr2,2,2) == "1") { #point numbers <10
+  if (substr(bnr2,3,3) == "1") { #point numbers >=10 
     part <- "2parts_1"
     bnr2_part <- bnr2
   }
 
-  if (substr(bnr2,2,2) == "2") { #point numbers <10, change for point numbers >9 to (bnr2,3,3)
+  #if (substr(bnr2,2,2) == "2") { #point numbers <10
+  if (substr(bnr2,3,3) == "2") { #point numbers >=10
     part <- "2parts_2"
      bnr2_part <- bnr2
+  }
+  
+  #if (substr(bnr2,2,2) == "3") { #point numbers <10
+  if (substr(bnr2,3,3) == "3") { #point numbers >=10
+    part <- "3parts_3"
+    bnr2_part <- bnr2
   }
 
   if (answ == "N") {
@@ -811,11 +824,11 @@ if (sek == "bdr_follow") {
     if (part == "2parts_1") {
       bnr2_part <- bnr2
       p_pos <- "cor_pos" #correction of position
-      b13_angle_df
+      b13_angle_df2
       setwd(home_dir2)
       source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) #sek="bdr_follow"
-      b13_angle_df2
-      sequence_seg2 <- b13_angle_df2$nr_center
+      b13_angle_df3
+      sequence_seg2 <- b13_angle_df3$nr_center
       sequence_seg2
     } 
     
@@ -827,6 +840,17 @@ if (sek == "bdr_follow") {
       b13_angle_df2
       sequence_seg2 <- b13_angle_df2$nr_center #new
       sequence_seg2 #new
+    }
+    
+    if (part == "3parts_3") {
+      bnr2_part <- bnr2
+      p_pos <- "cor_pos" #correction of position
+      b13_angle_df2
+      setwd(home_dir2)
+      source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) 
+      b13_angle_df3
+      sequence_seg2 <- b13_angle_df3$nr_center 
+      sequence_seg2 
     }
     
     if (part == "no_part" && proc_mode == "demo") { #new
@@ -851,6 +875,7 @@ if (sek == "bdr_follow") {
   proc_mode
   answ
   bnr2
+  b13_angle_df3
   
   if (answ == "N" && proc_mode == "obj_wise" && part == "no_part" | 
       answ == "N" && proc_mode == "demo" && part == "no_part") {
@@ -861,8 +886,8 @@ if (sek == "bdr_follow") {
       b13_angle_df2
   } #end if 
   
-  b13_angle_df2
-  sequence_seg2 <- b13_angle_df2$nr_center 
+  b13_angle_df3
+  sequence_seg2 <- b13_angle_df3$nr_center 
   
   #check plot
   #plot of PCs at large scale
@@ -873,7 +898,7 @@ if (sek == "bdr_follow") {
   plot(xc,-yc, pch=3, cex=2, col="blue", asp=1, xlim=c(xc - r_max2,xc + r_max2), ylim=c(-(yc + r_max2),-(yc - r_max2)),
   main=paste("b ",bnr2, sep=(""))) #large scale
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="black") # original pixel cloud for building
-  points(b13_angle_df2$x_centre,-b13_angle_df2$y_centre, asp=1, pch=20,col="brown", cex=1.5)
+  points(b13_angle_df3$x_centre,-b13_angle_df3$y_centre, asp=1, pch=20,col="brown", cex=1.5)
   #plot of PCs and checkpoints
   #plot(coords$x,coords$y,pch=16,cex=0.2,col="brown",asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2,yc-r_max2),xlab=NULL,ylab=NULL,ann=T,main=paste("b",bnr2),axes=TRUE)
   #plot(coords$x,coords$y,pch=16,cex=0.2,col="black",asp=1,xlim=c(1,1887),ylim=c(2557,1),xlab=NULL,ylab=NULL,ann=FALSE,main=paste("b",bnr2),axes=TRUE) #small scale
@@ -883,20 +908,20 @@ if (sek == "bdr_follow") {
   points(xc+r_max, -(yc-r_max), pch=16, cex=1.5, col="black", asp=1) #point for scaling
   points(xc, -yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
   
-  n2_midpts <- length(b13_angle_df2$nr_center)
+  n2_midpts <- length(b13_angle_df3$nr_center)
   
   #check of positions
   vec <- 1 : n2_midpts
   
   for (i in vec) { 
     readline("press 'enter' to display next midpoint ")
-    cat("index=", i, "point_number= ", b13_angle_df2$nr_center[i],"\n")
-    points(b13_angle_df2$x_centre[i],-b13_angle_df2$y_centre[i], asp=1, pch=20,col="green", cex=1.5)  
+    cat("index=", i, "point_number= ", b13_angle_df3$nr_center[i],"\n")
+    points(b13_angle_df3$x_centre[i],-b13_angle_df3$y_centre[i], asp=1, pch=20,col="green", cex=1.5)  
   }
   
   #transformation to im-system
-  b13_angle_df2
-  b_angle_df_seq_red <- b13_angle_df2
+  b13_angle_df3
+  b_angle_df_seq_red <- b13_angle_df3
   n_x <- nrow(b_angle_df_seq_red) 
   #
   midpts_trans <- matrix(nrow=n_x,ncol=3)
@@ -942,7 +967,7 @@ if (sek == "bdr_follow") {
   for (i in y4) {
     #browser()
     cat("midpoint_nr= ",midpoints[i,1],"\n")
-    points(midpoints[i,2], midpoints[i,3], pch=16, col="green", cex=1.0, asp=1)
+    points(midpoints[i,2], midpoints[i,3], pch=16, col="blue", cex=1.0, asp=1)
   }
 
   #search for line-centers in PC
@@ -956,11 +981,11 @@ if (sek == "bdr_follow") {
   #plot of PC
   for (i in y3) {
     #browser()
-    points(x_v[i], y_v[i], pch=20, col="red", cex=0.1, asp=1) #points from edge
+    points(x_v[i], y_v[i], pch=20, col="green", cex=0.1, asp=1) #points from edge
   }
   
   for (i in y3) {
-    #points(x_v[i], y_v[i], pch=".", col="blue", cex=0.1, asp=1) #points from edge
+    points(x_v[i], y_v[i], pch=".", col="blue", cex=0.1, asp=1) #points from edge
     for (j in y4) { #loop j
       X <- midpoints[j,2]
       Y <- midpoints[j,3]
@@ -1021,97 +1046,106 @@ if (sek == "bdr_follow") {
   
   cat ("sequence = ",sequence_seg, "\n")   
   
-  ##re-arrange matrix 'b13_angle_df2' to new sequence
-  b13_angle_df2
-  b13_angle_df3 <- b13_angle_df2
-  b13_angle_df3[,] <- 0
+  ##re-arrange matrix 'b13_angle_df4' to new sequence
+  b13_angle_df3
+  b13_angle_df4 <- b13_angle_df3
+  b13_angle_df4[,] <- 0
   sequence_seg
   vec2 <- 1 : length(sequence_seg) 
-  b13_angle_df3$nr_center <- sequence_seg
-  b13_angle_df3
+  b13_angle_df4$nr_center <- sequence_seg
+  b13_angle_df4
   vec2
-  b13_angle_df2[,5] <- "new"
-  names(b13_angle_df2)[5] <- "status"
-  n_10 <- length(b13_angle_df2$nr_center)
-  b13_angle_df2
+  b13_angle_df4[,5] <- "new"
+  names(b13_angle_df4)[5] <- "status"
+  n_10 <- length(b13_angle_df4$nr_center)
+  b13_angle_df4
   
   for (n1 in vec2) {
     i=1
     
     while (i <= n_10) { 
-      if (b13_angle_df3[n1,1] == b13_angle_df2[i,1] && b13_angle_df2[i,5] != "done") {
-        b13_angle_df3[n1,2:4] <- b13_angle_df2[i,2:4]
-        b13_angle_df2[i,5] <- "done"
+      if (b13_angle_df4[n1,1] == b13_angle_df3[i,1] && b13_angle_df4[i,5] != "done") { #point 1 2x
+        b13_angle_df4[n1,2:4] <- b13_angle_df3[i,2:4]
+        b13_angle_df4[i,5] <- "done"
         cat("n1= ",n1,"i= ",i, "\n")
         break
       } 
       i <- i+1
     }
   } #end of for-loop
-  b13_angle_df3
+  b13_angle_df4
   
   #plot of two points for the determination of direction of sequence
   plot(xc,-yc, pch=3, cex=2, col="blue", asp=1, xlim=c(xc - r_max2,xc + r_max2), ylim=c(-(yc + r_max2),-(yc - r_max2)),
        main=paste("b ",bnr2, sep=(""))) #large scale
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="black") # original pixel cloud for building
-  points(b13_angle_df3$x_centre[1],-b13_angle_df3$y_centre[1], asp=1, pch=20,col="red", cex=1.5)
-  points(b13_angle_df3$x_centre[2],-b13_angle_df3$y_centre[2], asp=1, pch=20,col="blue", cex=1.5)
+  points(b13_angle_df4$x_centre[1],-b13_angle_df4$y_centre[1], asp=1, pch=20,col="red", cex=1.5)
+  points(b13_angle_df4$x_centre[2],-b13_angle_df4$y_centre[2], asp=1, pch=20,col="green", cex=1.5)
+  #
   
   #plot of all points 
-
   for (n1 in vec2) {
     readline("press 'enter' to display next point ")
-    print(b13_angle_df3$nr_center[n1])
-    points(b13_angle_df3$x_centre[n1],-b13_angle_df3$y_centre[n1], asp=1, pch=20,col="red", cex=1.5)
+    print(b13_angle_df4$nr_center[n1])
+    points(b13_angle_df4$x_centre[n1],-b13_angle_df4$y_centre[n1], asp=1, pch=20,col="red", cex=1.5)
   }
+  
+  #interchange of two points with same number
+  #type the indices of the number
+
+  # if (sequence_seg[1] == sequence_seg[5]) {
+  #   store <- b13_angle_df4[1,]
+  #   b13_angle_df4[1,] <- b13_angle_df4[5,]
+  #   b13_angle_df4[5,] <- store
+  # }
   
   #change of direction in sequence
-  sequence_seg_rev <- rep(NA,n_seq)
-  b13_angle_df3
-  dx_seq <- (b13_angle_df3$x_centre[1]-b13_angle_df3$x_centre[2])
-  
-  if (dx_seq < 0) {
-    sequence_seg_rev <- changeDir(sequence_seg) #function call for change of direction in sequence
-    sequence_seg_rev #reversed sequence
-    sequence_seg <- sequence_seg_rev
-  }
+  # sequence_seg_rev <- rep(NA,n_seq)
+  # b13_angle_df4
+  # dx_seq <- (b13_angle_df4$x_centre[1]-b13_angle_df4$x_centre[2])
+  # 
+  # if (dx_seq < 0) {
+  #   sequence_seg_rev <- changeDir(sequence_seg) #function call for change of direction in sequence
+  #   sequence_seg_rev #reversed sequence
+  #   sequence_seg <- sequence_seg_rev
+  # }
   
   sequence_seg
   
   ##re-arrange matrix 'b13_angle_df3' to new sequence
-  b13_angle_df3
-  b13_angle_df4 <- b13_angle_df3
-  b13_angle_df4[,] <- 0
+  b13_angle_df4
+  b13_angle_df5 <- b13_angle_df4
+  b13_angle_df5[,] <- 0
   sequence_seg
   vec2 <- 1 : length(sequence_seg)
-  b13_angle_df4$nr_center <- sequence_seg
+  b13_angle_df5$nr_center <- sequence_seg
+  b13_angle_df5
+  b13_angle_df4[,5] <- "new"
+  names(b13_angle_df4)[5] <- "status"
+  n_10 <- length(b13_angle_df4$nr_center)
   b13_angle_df4
-  b13_angle_df3[,5] <- "new"
-  names(b13_angle_df3)[5] <- "status"
-  n_10 <- length(b13_angle_df3$nr_center)
-  b13_angle_df3
 
   for (n1 in vec2) {
     i=1
 
     while (i <= n_10) {
-      if (b13_angle_df4[n1,1] == b13_angle_df3[i,1] && b13_angle_df3[i,5] != "done") {
-         b13_angle_df4[n1,2:4] <- b13_angle_df3[i,2:4]
-         b13_angle_df3[i,5] <- "done"
+      if (b13_angle_df5[n1,1] == b13_angle_df4[i,1] && b13_angle_df4[i,5] != "done") {
+         b13_angle_df5[n1,2:4] <- b13_angle_df4[i,2:4]
+         b13_angle_df4[i,5] <- "done"
          cat("n1= ",n1,"i= ",i, "\n")
          break
       }
       i <- i+1
     } #end loop i
   } #end of for-loop
-  b13_angle_df4
+  b13_angle_df5
   
   #plot of midpts
-  b13_angle_df4
+  b13_angle_df5
   plot(xc,-yc, pch=3, cex=2, col="blue", asp=1, xlim=c(xc - r_max2,xc + r_max2), ylim=c(-(yc + r_max2),-(yc - r_max2)),
        main=paste("b ",bnr2, sep=(""))) #large scale
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="black") # original pixel cloud for building
-  points(b13_angle_df4$x_centre,-b13_angle_df4$y_centre, asp=1, pch=20,col="green", cex=1.5)
+  points(b13_angle_df5$x_centre,-b13_angle_df5$y_centre, asp=1, pch=20,col="green", cex=1.5)
 } #end sek = "bdr_follow" 
 
 #end of route 'bdr-follow'
@@ -1129,7 +1163,7 @@ if (sek == "Mpts+dist") {
 } #end if
 
 if (sek == "bdr_follow") {
-  PC_nr <- b13_angle_df4$nr_center
+  PC_nr <- b13_angle_df5$nr_center
 } #end if
 
 PC_nr #solution for sequence of lines (PC)
