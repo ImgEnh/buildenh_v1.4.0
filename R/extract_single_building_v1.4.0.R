@@ -14,7 +14,7 @@ setwd(home_dir)
 
 ##selection of processing mode
 cat("select mode of processing? - demo: 1, obj_wise: 2, auto: 3","\n") 
-answ <- readline("mode of processing? - type 1, 2, or 3: ") #processing mode
+answ <- readline("mode of processing? - type 1 or 2 or 3: ") #processing mode
 
 if (answ == "1" && Img_name == "ISPRS7") { #processing of one example
   proc_mode <- "demo" #object b18 (ISPRS7)
@@ -56,7 +56,7 @@ if (proc_mode == "auto") {
 
 cat("processing mode= ", proc_mode,"\n")
 
-if (substr(bnr2,3,3) == "1" || substr(bnr2,3,3) == "2") {
+if (substr(bnr2,3,3) == "1" || substr(bnr2,3,3) == "2" || substr(bnr2,3,3) == "3") {
     bnr2_part <- bnr2
 } else {
     bnr2_orig <- bnr2
@@ -68,7 +68,7 @@ if (substr(bnr2,3,3) == "1" || substr(bnr2,3,3) == "2") {
 
 cat("label of building to be extracted= ", bnr2,"\n")
 
-if (part == "2parts_1" || part == "2parts_2") { 
+if (part == "2parts_1" || part == "2parts_2" || part == "3parts_3") { 
   bnr2 <- as.numeric(substr(bnr2,1,2))
   bnr2_orig <- bnr2
 } #end if
@@ -239,7 +239,7 @@ dy_window_plot <- abs(par("usr")[3] - par("usr")[4]) #range of window
 ##output plot parameter
 setwd(home_dir)
 plotPar[5] <- dy_window_plot
-plorPar_orig <- plotPar
+plotPar_orig <- plotPar
 f1 <- paste("./data/",Img_name,"/param_b",bnr2,".txt",sep="") #change
 write.table(plotPar,file=f1)
 f2 <- paste("./data/",Img_name,"/param_b",bnr2,sep="")
@@ -253,12 +253,12 @@ display(b_new8, method="raster")
 #
 
 ##partition of object?
-cat("partition of object? - no parts: 0, two parts: 1 (first object) or 2 (second object)","\n")
+cat("partition of object? - no parts: 0, two parts: 1 (first object) or 2 (second object) or 3 (third object)","\n")
 
 if (proc_mode == "demo") {
   k_part = "0"
 } else {
-  k_part <- readline("type partition-type= ") #when object must be parted -> type 1 or 2  
+  k_part <- readline("type partition-type= ") #when object must be parted -> type 1 or 2 or 3 
 }
 
 if (k_part == "0") { #no partition of object
@@ -273,7 +273,11 @@ if (k_part == "2") { #second part
   part <- "2parts_2"
 }
 
-if (part == "2parts_1" || part == "2parts_2") {
+if (k_part == "3") { #third part
+  part <- "3parts_3"
+}
+
+if (part == "2parts_1" || part == "2parts_2" || part == "3parts_3") {
   bnr2_part <- bnr2
   bnr2 <- as.numeric(substr(bnr2,1,2))
   bnr2_orig <- bnr2
