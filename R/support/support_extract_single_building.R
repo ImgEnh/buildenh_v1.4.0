@@ -159,13 +159,13 @@ cat("bnr= ", bnr,"\n")
 
 #display enlarged ortho_image and PC of building outline
 
-# if (orig_x < 0) { #solves problems at edges of orthoimage
-#   orig_x = 0
-# }
+if (orig_x < 0) { #solves problems at edges of orthoimage
+   orig_x = 0
+}
 
-# if (orig_y < 0) {
-#   orig_y = 0
-# }
+if (orig_y < 0) {
+   orig_y = 0
+}
 
 img_uds <- img_ref[orig_x : wind_x, abs(orig_y) : wind_y,1:3]
 display(img_uds, method = "raster")
