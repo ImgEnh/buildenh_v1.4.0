@@ -92,7 +92,7 @@ if (Img_name == "ISPRS1") {
 if (Img_name == "ISPRS4") {
   
   #b12 (b1,"2parts_2")
-  #stop("manual action")
+  
   if (bnr2 == 12 && p_pos == "cor_pos") {  
     #determine new position by 'support_line_detection.R', #6
     #or with angle by 'support_sequence_of_lines.R', #9
@@ -195,6 +195,81 @@ if (Img_name == "ISPRS4") {
     b13_angle_df3 <- b13_angle_df2 
     b13_angle_df3 
   } #end b9 "cor_pos"
+  
+  #b101
+  #cas = "bdr_f"  
+  
+  # if (bnr2 == 101 && p_pos == "cor_img") { #filled area is not the object
+  #   plot(W$'3', col="white")  #black building
+  #   w = W$'3'
+  # } #end b101 - "cor_img"
+  
+  # if (bnr2 == 101 && p_pos == "cor_pos") { 
+  #   #stop("stop-manual operation")
+  #   b13_angle_df2
+  #   b13_angle_df2[3,1:4] <- c(617,NA,80,370) #lnr=617,midpoint is manually changed
+  #   b13_angle_df2[5,1:4] <- c(10,NA,142,252) #lnr=10,midpoint is manually changed
+  #   b13_angle_df2[7,1:4] <- c(35,NA,66,310) #lnr=35,midpoint is manually changed
+  #   b13_angle_df2[9,1:4] <- c(296,NA,51,230) #lnr=296,midpoint is manually changed
+  #   b13_angle_df2[10,1:4] <- c(26,NA,62,332) #lnr=26,midpoint is manually changed
+  #   b13_angle_df2[11,1:4] <- c(178,NA,363,307) #lnr=178,midpoint is manually changed
+  #   b13_angle_df2[12,1:4] <- c(104,NA,62,431) #lnr=104,midpoint is manually changed
+  #   b13_angle_df2[13,1:4] <- c(179,NA,88,364) #lnr=179,midpoint is manually changed
+  #   b13_angle_df2[14,1:4] <- c(288,NA,84,384) #lnr=288,midpoint is manually changed
+  #   b13_angle_df3 <- b13_angle_df2 
+  #   b13_angle_df3 
+  # } #end b101 - "cor_pos"
+  
+  if (bnr2 == 102 && p_pos == "cor_img") { #filled area is not the object
+    plot(W$'3', col="white")  #black building
+    w = W$'3'
+  } #end b102 - "cor_img"
+  
+  if (bnr2 == 102 && p_pos == "cor_pos") { 
+    stop("stop-manual operation")
+    # b13_angle_df2
+    # b13_angle_df2[3,1:4] <- c(617,NA,80,370) #lnr=617,midpoint is manually changed
+    # b13_angle_df2[5,1:4] <- c(10,NA,142,252) #lnr=10,midpoint is manually changed
+    # b13_angle_df2[7,1:4] <- c(35,NA,66,310) #lnr=35,midpoint is manually changed
+    # b13_angle_df2[9,1:4] <- c(296,NA,51,230) #lnr=296,midpoint is manually changed
+    # b13_angle_df2[10,1:4] <- c(26,NA,62,332) #lnr=26,midpoint is manually changed
+    # b13_angle_df2[11,1:4] <- c(178,NA,363,307) #lnr=178,midpoint is manually changed
+    # b13_angle_df2[12,1:4] <- c(104,NA,62,431) #lnr=104,midpoint is manually changed
+    # b13_angle_df2[13,1:4] <- c(179,NA,88,364) #lnr=179,midpoint is manually changed
+    # b13_angle_df2[14,1:4] <- c(288,NA,84,384) #lnr=288,midpoint is manually changed
+    # b13_angle_df3 <- b13_angle_df2 
+    # b13_angle_df3 
+  } #end b102 - "cor_pos"
+  
+  if (bnr2 == 103 && p_pos == "cor_img") { #filled area is not the object
+    plot(W$'3', col="white")  #black building
+    w = W$'3'
+  } #end b102 - "cor_img"
+  
+  if (bnr2 == 103 && p_pos == "cor_pos") {  
+    #stop("manual operation - add position")
+    b13_angle_df2
+    b13_angle_df3 <- b13_angle_df2
+    b13_angle_df3[11,1:4] <- c(255,NA,254,486) #lnr=255,midpoint is manually changed
+    b13_angle_df3[12,1:4] <- c(1,NA,216,490) #lnr=1b,midpoint is manually changed
+    b13_angle_df3[2,1:4] <- c(83,NA,277,469) #lnr=83,midpoint is manually changed
+    b13_angle_df3
+  } #end b103 - "cor_pos"
+  
+  ##points with same number?
+  
+  # if (sequence_seg[1] == sequence_seg[5]) { 
+  #   store <- b13_angle_df4[1,]
+  #   b13_angle_df4[1,] <- b13_angle_df4[5,]
+  #   b13_angle_df4[5,] <- store 
+  # }
+  
+  # if (bnr2 == 103 && p_pos == "cor_sek") {  
+  #   sequence_seg2 <- c(1,110,83,255,1,47,8,212,5,54,327,19)
+  # } #end b103 - "cor_sek"
+  
+  
+  
 } #end of ISPRS4
   
 
