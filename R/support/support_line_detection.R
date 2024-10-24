@@ -285,10 +285,10 @@ detect_meas1() #ro-value may be negativ (watch small scale + window + line segme
 
 #plot of detected line into enlarged orthoimage
 B5_4_ord #use of ref-line (lnr_ref)
-i=24 #index in B5_4_ord (value for i has to be changed!)
+i=33 #index in B5_4_ord (value for i has to be changed, observe theta_angle)
 B5_4_ord[i,]
 cat("PC_nr=", B5_4_ord$lnr[i], "\n")
-y <- (-y) #adapt to math_system #img_system
+y <- (-y) #adapt to math_system 
 
 #coordinates
 x
@@ -304,6 +304,7 @@ cat("a= ",a,"\n")
 B5_4_ord$ro_pixel[i]
 
 p2 <- round(x*cos(theta_math_arc) + y*sin(theta_math_arc)) #sign may be '+' or '-'
+#p2 <- -p2
 b <- p2/sin(theta_math_arc)
 #orig_y <- (-orig_y) #change to math-system
 orig_y_math <- (-orig_y) #change to math-system
