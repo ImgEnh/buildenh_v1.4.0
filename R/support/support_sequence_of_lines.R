@@ -16,6 +16,7 @@ cat("version_number= ",v_nr,"\n")
 ## 7.determination of scale
 ## 8.calculation of new center of object
 ## 9.correction of line-midpoint-position and calculation of angle
+## 10.determination of scale factor between image and plot
 ################################################################################
 
 ## 1. digitize and plot center of line 
@@ -194,8 +195,33 @@ y_centre <- b13_angle_df3[i2,4] #to be transferred to spObj_sequence_of_lines_v1
 alpha <- det_of_angle(x_centre,y_centre) #call of function
 b13_angle_df3$alpha[i2] <- alpha #correction
 b13_angle_df3
-
 #end of script 9. 
+###############################################################################
+
+##10.determination of scale factor between image and plot
+#locator-measurements in plot and img
+#use of scaling points
+
+#plot (bNA)
+sy <- locator(2) #measure 2 checkpoints in y-direction
+d_sy <- abs(sy$y[1]-sy$y[2])
+#
+
+#img (out_poly)
+rx <- locator(2) #measure 2 checkpoints in x-direction
+d_rx <- abs(rx$x[1]-rx$x[2])
+#
+
+kf4<- d_rx/d_sy
+dif <- abs(kf4 - kf3)
+dif
+if (dif >= 0.0002) {
+cat("difference in scale= ",dif,"\n")
+kf3 <- kf4
+}
+
+#end of 10. scale-checking
+
 ################################################################################
 
 # end of supplementing scripts for program 'sequence of lines'
