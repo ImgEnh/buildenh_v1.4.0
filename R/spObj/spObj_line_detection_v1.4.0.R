@@ -173,6 +173,54 @@ if (Img_name == "ISPRS4") {
     B5_6R4
   } #end b9
   
+  #b101
+  #cas = "100_all"
+  
+  if (bnr2 == 101 && p_pos == "cor_det") { 
+    #stop("check number of lines")
+    B5_6
+    B5_6 <- B5_6[-c(1,3,10,11,12),] #75,21,188,941,580
+    B5_6
+    B5_6R4 <- B5_6
+    B5_6R4
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4[9,] <- B5_4_ord[5,] #296
+    B5_6R4[10,] <- B5_4_ord[27,] #26
+    B5_6R4[11,] <- B5_4_ord[45,] #178
+    B5_6R4[12,] <- B5_4_ord[47,] #104
+    B5_6R4[13,] <- B5_4_ord[48,] #179
+    B5_6R4[14,] <- B5_4_ord[55,] #288
+    B5_6R4[1:14,8] <- 1
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+  } #end b101
+  
+  if (bnr2 == 102 && p_pos == "cor_det") { 
+    B5_6
+    B5_6 <- B5_6[-c(2,3,6),] #707,#449,#639
+    B5_6
+    B5_6R4 <- B5_6
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4[1:4,8] <- 1
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+  } #end b102
+  
+  if (bnr2 == 103 && p_pos == "cor_det") { 
+    B5_6
+    B5_6 <- B5_6[-c(8,11,12),] #429,#700,#934
+    B5_6
+    B5_6R4 <- B5_6
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+    B5_6R4[11,] <- B5_4_ord[47,] #1b
+    B5_6R4[12,] <- B5_4_ord[33,] #255
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4[1:12,8] <- 1
+    B5_6R4
+  } #end b103
+  
+  
 } #end of orthoimage "ISPRS4"
 
 ##end of script 'spObj_line_detection_v1.4.0.R'
