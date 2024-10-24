@@ -34,7 +34,7 @@ length(pc2$row)
 nrow<-length(pc2$col)
 
 ##input plot-parameter
-f1<-paste0("./data/",Img_name,"/param_b", bnr2, sep = "", collapse = NULL)
+f1<-paste0("./data/",Img_name,"/param_b", bnr2, sep = "", collapse = NULL) 
 load(f1)
 xc <- plotPar[1]
 yc <- plotPar[2]
