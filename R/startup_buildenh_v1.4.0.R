@@ -84,7 +84,6 @@ if (Img_name == "ISPRS7") { #example1
   OrgImgFilename <- "top_mosaic_09cm_area7.tif"  #pixel size=0.09m
   OrgGtsPathname <- paste(home_dir,"/data",sep = "")
   OrgGtsFilename <- "gts_top_mosaic_09cm_area7.tif" #pixel size on ground=0.09m
-  #GSD=Ground Sampling Distance
 } #end of image7
 
 if (Img_name == "ISPRS4") { #your orthoimage
