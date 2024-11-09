@@ -220,6 +220,43 @@ if (Img_name == "ISPRS4") {
     B5_6R4
   } #end b103
   
+  #b161
+  #cas = "100_all+nonortho"
+  
+  if (bnr2 == 161 && p_pos == "cor_det") { 
+    #stop("check of lines")
+    B5_6
+    B5_6 <- B5_6[-c(3,4,5,8,9,10,11,12),] #105,71,83,133,823,1118,342,247
+    B5_6
+    B5_6R4 <- B5_6
+    B5_6R4
+    row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    # n_10 <- length(B5_6R4$lnr)
+    # B5_6R4[1:n_10,8] <- 1
+    # B5_6R4[n_10+1,] <- B5_6[,] #303 #non_ortho line
+    # B5_6R4[n_10+2,] <- B5_6[,] #1159 #non_ortho line
+    # B5_6R4[n_10+3,] <- B5_6[,] #1203 #non_ortho line
+    # B5_6R4[n10 :(n_10+3),8] <- 0
+    # row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+    B5_6R4
+  } #end b101
+  
+  
+  #
+  
+  #b20
+  #cas = "100_all"
+  
+  # if (bnr2 == 20 && p_pos == "cor_det") { 
+  #   #stop("check number of lines")
+  #   B5_6
+  #   B5_6 <- B5_6[-c(6),] #369
+  #   B5_6
+  #   B5_6R4 <- B5_6
+  #   B5_6R4
+  #   row.names(B5_6R4) <- 1 : length(B5_6R4$lnr)
+  #   B5_6R4
+  # } #end b20 
   
 } #end of orthoimage "ISPRS4"
 
