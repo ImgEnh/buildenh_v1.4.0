@@ -170,7 +170,7 @@ if (orig_y < 0) {
 img_uds <- img_ref[orig_x : wind_x, abs(orig_y) : wind_y,1:3]
 display(img_uds, method = "raster")
 #display(img_uds,method = "browser") #display enables zooming
-points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="yellow")
+points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="red")
 points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), 
        pch=20, asp=1, cex=0.3, col="green")
 
