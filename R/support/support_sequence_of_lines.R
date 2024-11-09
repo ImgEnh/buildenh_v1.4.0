@@ -11,7 +11,7 @@ cat("version_number= ",v_nr,"\n")
 ## 4.histograms of line-length (n_pixel)
 ## 5.calculation of ro-value from image coordinates (x,y) and 
 #   line orientation (theta_appr) 
-## 6.plot of single line pixel cluster (PC) representing a line 
+## 6.plot of single pixel cluster (PC) representing a line 
 #   segment in small or large scale
 ## 7.determination of scale
 ## 8.calculation of new center of object
@@ -22,7 +22,7 @@ cat("version_number= ",v_nr,"\n")
 ## 1. digitize and plot center of line 
 #display enlarged ortho_image and plot of PC of building outline
 
-img_uds <- img_ref[orig_x:wind_x,orig_y:wind_y,1:3]
+#img_uds <- img_ref[orig_x:wind_x,orig_y:wind_y,1:3]
 #
 if (orig_x < 0) { #solves problems at edges of orthoimage
   orig_x = 0
@@ -31,6 +31,8 @@ if (orig_x < 0) { #solves problems at edges of orthoimage
 if (orig_y < 0) {
   orig_y = 0 
 }
+
+img_uds <- img_ref[orig_x:wind_x,orig_y:wind_y,1:3]
 
 display(img_uds, method = "raster")
 points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="red")
@@ -50,7 +52,7 @@ locator2() #measurement and marking of one pixel's position, includes calculatio
 ## 2. plot a pixel cluster (PC) which represents a line segment
 
 PC_number <- readline("type number of PC: ")
-as.integer(PC_number)
+PC_number <- as.integer(PC_number)
 plot_PC(PC_number) #call of function
 
 #end of script 2.
@@ -97,7 +99,7 @@ ro3 #[pixel]
 
 #data (to be changed)
 Img_name
-lnr <- 2 #to be adapted
+lnr <- 928 #to be adapted
 
 #plot
 PC_seg_P_nP <- plot_PC_2scales(lnr) #call of function
