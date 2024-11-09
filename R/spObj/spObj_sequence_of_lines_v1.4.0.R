@@ -268,6 +268,32 @@ if (Img_name == "ISPRS4") {
   #   sequence_seg2 <- c(1,110,83,255,1,47,8,212,5,54,327,19)
   # } #end b103 - "cor_sek"
   
+  #b161
+  
+  if (bnr2 == 161 && p_pos == "cor_img") { #filled area is not the object
+    plot(W$'3', col="white")  #black building
+    w = W$'3'
+  } #end b161 - "cor_img"
+  
+  if (bnr2 == 161 && p_pos == "cor_pos") {  
+    #stop("manual operation - add position")
+    #determine position by 'support_sequence_of_lines.R' #1
+    b13_angle_df2
+    b13_angle_df3 <- b13_angle_df2
+    b13_angle_df3[2,1:4] <- c(79,NA,85,552) #lnr=79,midpoint is manually changed
+    b13_angle_df3[7,1:4] <- c(4,NA,43,587) #lnr=4,midpoint is manually changed
+    b13_angle_df3[9,1:4] <- c(128,NA,141,557) #lnr=128,midpoint is manually changed
+    b13_angle_df3[10,1:4] <- c(928,NA,125,669) #lnr=1203,midpoint is manually changed
+    b13_angle_df3[11,1:4] <- c(303,NA,121,645) #lnr=303,midpoint is manually changed
+    b13_angle_df3[12,1:4] <- c(137,NA,67,578) #lnr=137,midpoint is manually changed
+    b13_angle_df3[13,1:4] <- c(433,NA,97,587) #lnr=600,midpoint is manually changed
+    b13_angle_df3
+  } #end b161 - "cor_pos"
+  
+  
+  
+  
+  
   
   
 } #end of ISPRS4
