@@ -32,10 +32,10 @@ trans_ortho <- function() {
   c7 <- locator(1) #check point (center of object )
   #
   #calculation of transformation-parameter (plane)
-  dX <- x2 - x1
-  dY <- y2 - y1
-  dx <- c2$x - c1$x
-  dy <- c2$y - c1$y
+  dX <- abs(x2 - x1)
+  dY <- abs(y2 - y1)
+  dx <- abs(c2$x - c1$x)
+  dy <- abs(c2$y - c1$y)
   N <- dx^2 + dy^2
   #
   a1 <- (dx*dX + dy*dY)/N
