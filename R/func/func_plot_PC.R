@@ -7,12 +7,15 @@
 ##GNU General Public License (GPL)
 
 plot_PC <- function(PC_number) { 
-  n <- PC_number #number of PC (to be changed)
+  n <- as.integer(PC_number) #number of PC (to be changed)
   setwd(home_dir)
   fname=paste("./data/",Img_name,"/b",bnr2,"_",n,".txt", sep="")
   P <- read.table(fname, col.names=c("idx","x","y")) #point cloud
+  points(P[,2] - orig_x, P[,3] - orig_y, pch=20, asp=3, cex=0.2, col="blue")
   P_red <- reduce_pointset(P)
-  points(P_red[,2] - orig_x, P_red[,3] - orig_y, pch=20, asp=3, cex=0.2, col="red")
+  points((P_red[,2] - orig_x), (P_red[,3] - orig_y), pch=20, asp=3, cex=0.2, col="red")
+  #small scale
+  #points(P[,2], P[,3], pch=20, asp=3, cex=0.5, col="white")
 } #end function plot_PC(PC_number)
 
 ##end of script 'func_plot_PC.R'
