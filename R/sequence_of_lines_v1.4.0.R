@@ -12,7 +12,7 @@ cat("version_number= ",v_nr,"\n")
 ###############################################################################
 ## start of program 'sequence_of_lines.R'
 cat("start of program 'sequence_of_lines.R'","\n")
-#("step by step")
+#stop("step by step")
 setwd(home_dir)
 
 ##input
@@ -94,7 +94,9 @@ if (proc_mode != "demo") {
 sek <- switch(meth,"Mpts","Mpts+dist","bdr_follow") 
 
 #set up of matrix 'b13_angle_df' with corner point number,angle and coordinates
-PC_nr <- B5_6R4$lnr #changed from B5_6 to B5_6R4
+
+#change to common type
+PC_nr <- B5_6$lnr 
 n_x <- length(PC_nr)
 b13_angle <- matrix(nrow=n_x,ncol=4)
 b13_angle[,] <- 0
@@ -162,12 +164,13 @@ if (sek == "Mpts") {
   #
   n_b13_angle_df2 <- length(b13_angle_df2$nr_center)
   vec4 <- 1 : n_b13_angle_df2
+  nr_dpx <<- round(r_max2/5) #displacement of number in x-direction
   
   for (i in vec4) {
     browser() # if display point by point
     cat("nr_center= ",b13_angle_df2$nr_center[i],"\n")
     points(b13_angle_df2$x_centre[i],-b13_angle_df2$y_centre[i], asp=1, pch=20,col="black", cex=1.5)
-    text((b13_angle_df2$x_centre[i]+18),(-b13_angle_df2$y_centre[i]),labels[i], cex=1,col="red")
+    text((b13_angle_df2$x_centre[i]+nr_dpx),(-b13_angle_df2$y_centre[i]),labels[i], cex=1,col="red")
   }
   
   #correction of midpoints which represent a line-segment
@@ -517,10 +520,10 @@ b13_angle_df2
   cat("ordered line numbers:",PC_nr,"\n")
   #
   #plot of extreme user coordinates (y)
-  x=xc; y=-44.976
-  points(x, y, pch=3, asp=1, cex=1.5, col="green")
-  x=xc; y=-235.827
-  points(x, y, pch=3, asp=1, cex=1.5, col="green")
+  x=par("usr")[2]; y=par("usr")[3]
+  points(x, y, pch=3, asp=1, cex=3, col="red")
+  x=par("usr")[2]; y=par("usr")[4]
+  points(x, y, pch=3, asp=1, cex=3, col="red")
   
   #loop for reading all pixel clusters (PCs)
   k=1
@@ -705,20 +708,21 @@ if (sek == "bdr_follow") {
   points(xc, yc, pch = 3, cex=1.5, col = "red", asp=1) #centre of PC
   #
   par("usr")
-  dy_window_plot <- abs(par("usr")[1] - par("usr")[2]) #after rotation: dx_window_plot
+  dy_window_plot <- abs(par("usr")[3] - par("usr")[4]) 
   dy_window_plot #y-dimension of the plotting region in graph
-  f1<-paste("./data/",Img_name,"/param_b",bnr2,sep="") #change
-  load(f1)
-  plotPar #original(non-partitioned) object
+  # f1<-paste("./data/",Img_name,"/param_b",bnr2,sep="") #change
+  # load(f1)
+  # plotPar #original(non-partitioned) object
   xc <- plotPar[1]
   yc <- plotPar[2]
   r_max <- plotPar[3]
   
   #check
   #dy_window_plot <- plotPar[5]
-  
+  dy_window_plot
   kf3 <- size_plotting_region_y/dy_window_plot #scale factor between image (img) and plot
   #kf3 may be checked in 'support_sequence_of_lines.R', script #9
+  #kf3=1.7758 #determined manually
   1/kf3
   window_size_x <- 578 #specified value
   margin_size_x <- (par("mai")[2]+par("mai")[4])/pixel_size #unit pixel
@@ -779,7 +783,7 @@ if (sek == "bdr_follow") {
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="cyan") # original pointcloud for building
 
   for (i in vec_y) {
-    #browser()
+    browser()
     cat("nr_center= ",b13_angle_df2$nr_center[i],"\n")
     points(b13_angle_df2$x_centre[i],-b13_angle_df2$y_centre[i], asp=1, pch=20,col="blue", cex=1.5)
   }
@@ -1035,6 +1039,7 @@ if (sek == "bdr_follow") {
   
   ##check of the identified points 
   if (n_seq != n_midpts) {
+    stop("check n_seq and n_midpts")
     cat("sequence is not correctly detected -> correct sequence manually","\n") #use 'spObj_sequence_of_line'
     p_pos <- "cor_sek" 
     setwd(home_dir2)
