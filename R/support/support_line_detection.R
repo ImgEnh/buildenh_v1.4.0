@@ -206,7 +206,7 @@ vec <- 1 : length(B0[,1])
 
 for (i in vec) {
   
-  if (B0[i,2] == theta_ind && B0[i,3] == 1003) { #B0[i,3] (ro_ind) must  be adapted
+  if (B0[i,2] == theta_ind && B0[i,3] == 374) { #B0[i,3] (ro_ind) must  be adapted
     cat("i= ", i,"\n")
     print(B0[i, ])
     ct <- ct + 1
@@ -274,7 +274,7 @@ points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y),
 
 #determination of transformation parameter by means of orthoimage (large scale)
 #measure two control 2 points (left lower, right upper) and one checkpoint (middle)
-L1 <- trans_ortho() #
+L1 <- trans_ortho() 
 
 # measurement of new points (results: x,y)
 #orig_y <- (-orig_y) #change to img-system (when 2. and more lines have to be determined)
@@ -289,10 +289,6 @@ i=33 #index in B5_4_ord (value for i has to be changed, observe theta_angle)
 B5_4_ord[i,]
 cat("PC_nr=", B5_4_ord$lnr[i], "\n")
 y <- (-y) #adapt to math_system 
-
-#coordinates
-x
-y
 
 #angles
 theta_img <- B5_4_ord$theta_angle[i]
@@ -310,7 +306,6 @@ b <- p2/sin(theta_math_arc)
 orig_y_math <- (-orig_y) #change to math-system
 #calculation by intercept for image extract (math_system)
 b2 <- a*orig_x + b - orig_y_math #original
-#b2 <- +a*orig_x + b + orig_y_math
 
 #change of parameter to image_system
 b2_img <- (-b2)
@@ -422,8 +417,12 @@ cat("case= ", cas, "\n")
 ## 8. determination of line number (lnr) 
 #by means of theta_index and ro_index
 #using orthoimage (small and large scale)
-
-img_uds <- img_ref[orig_x : wind_x,orig_y:wind_y,1:3]
+display(img_ref,method = "raster")
+points(xc,yc,pch=3, asp=1, cex=1.3, col="red")
+points(as.integer(pc3$col), as.integer(pc3$row), 
+       pch=20, asp=1, cex=0.3, col="green")
+#
+img_uds <- img_ref[orig_x : wind_x, orig_y : wind_y, 1:3]
 display(img_uds, method = "raster")
 #display(img_uds,method = "browser") #display enables zooming
 points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="red")
@@ -458,14 +457,17 @@ loc1 <- c(c10$x[1],c10$y[1]) #first point
 loc2 <- c(c10$x[2],c10$y[2]) #second point
 print(tr_lat)
 print(D)
+
 #transformation to image-system (small scale)
 pts11 <- tr_lat + D%*%loc1 #first point
 pts12 <- tr_lat + D%*%loc2 #second point
 
-x11 <- pts11[1,1] #x of first point
-y11 <- pts11[2,1] #y of first point
+#first point
+x11 <- pts11[1,1] #x-coordinate
+y11 <- pts11[2,1] #y-coordinate
 x <<- x11
 y <<- y11
+
 #coordinates of first point, small scale
 cat("x_coordinate= ",x,sep = "","\n") 
 cat("y_coordinate= ",y,sep = "","\n")
@@ -480,13 +482,19 @@ x <<- x12
 y <<- y12
 cat("x_coordinate= ",x,sep = "","\n") #small scale
 cat("y_coordinate= ",y,sep = "","\n") #small scale
+
 #plot of second point in uds
 points(x-orig_x,y-orig_y,pch=3, asp =1, cex=1,asp=1, col="red") #large scale
-#mean between the two points
+
+#mean of the two points
 x <- (x11+x12)/2
 y <- (y11+y12)/2
+
 #plot of mean point in uds 
-points(x-orig_x,y-orig_y,pch=3, asp =1, cex=1,asp=1, col="blue") #large scale
+points(x-orig_x,y-orig_y,pch=3, asp =1, cex=2,asp=1, col="white") #large scale
+
+#plot of mean point in small scale image 
+points(x,y,pch=3, asp =1, cex=2,asp=1, col="red") #small scale
 
 #
 alpha_meas <- atan2((y12 - y11),(x12 - x11)) * omega #  required range: -90 ... 85 degrees?
@@ -494,16 +502,13 @@ alpha_math <- (-alpha_meas) #change to math-system
 theta_math <- alpha_math + 90
 theta_math_arc <- theta_math/omega
 
-x
-y
-#theta_img_appr = (theta_ind - 1) * theta_step #check table 
+theta_img_appr = (theta_ind - 1) * theta_step #check table 
 #theta_math_appr = 180 - theta_img 
 
 y <- -y #change to math_system
 ro_math <- x*cos(theta_math_arc) + y*sin(theta_math_arc)
 ro_math # [pixel]
 b <- ro_math/sin(theta_math_arc) #watch sign
-
 
 #plot in small scale
 b_img <- (-b) #change to img_system
@@ -562,13 +567,10 @@ ro_img <- (-ro_math) #change of sign for ro_math? (manual correction!)
 ro_ind <- round((ro_img - ro_1)/ro_step) + 1
 cat("ro_index= ", ro_ind, "\n")
 
-
-theta_ind
-ro_ind
-
 head(B0) #calculated with theta_img and image-system (col,row)
 vec <- 1 : length(B0[,1])
 length(B0[,1])
+
 for (i in vec) {
   
   if (B0[i,2] == theta_ind && B0[i,4] >= n_pix*k) {
@@ -577,47 +579,78 @@ for (i in vec) {
   
 } 
 
-##
+n_pix
 ro_pixel <- ro_step * (ro_ind - 1) + ro_1
 ro_pixel
-
 theta_ind
 
-head(B4)
+B4[1,]
 vec <- 1 : length(B4[,1])
   
 for (i in vec) {
     
-  if (B4[i,2] == theta_ind && B4[i,7] >= n_pix) {
+  if (B4[i,2] == theta_ind && B4[i,3] == ro_ind && B4[i,7] >= n_pix) {
       print(B4[i, ])
   }
   
-  if (B4[i,2] == theta_ind && B4[i,6] == ro_pixel) {
+}
+
+for (i in vec) {
+  
+  if (B4[i,2] == theta_ind && B4[i,3] == ro_ind) {
     print(B4[i, ])
+  }
+  
+}
+
+for (i in vec) {
+  
+  if (B4[i,2] == theta_ind && B4[i,6] == ro_pixel) {
     cat("lnr= ", B4[i,1], "\n")
   }
   
   if (B4[i,2] == theta_ind && B4[i,6] == (-ro_pixel)) {
-    print(B4[i, ])
     cat("lnr= ", B4[i,1], "\n")
   }
   
   if (B4[i,2] == theta_ind && B4[i,3] == ro_ind) {
-    print(B4[i, ])
     cat("lnr= ", B4[i,1], "\n")
   }
   
 } #end for-loop 
 
+#example
+P_128 <- PC_segment_4(128) #generation of point clusters (PC) of one line segment
+P_128
+PC_number <- readline("type number of PC: ")
+PC_number <- as.integer(PC_number)
+plot_PC(PC_number) #call of function
+head(P)
+vec4 <- 1: length(P[,1])
 #end search of line numbers with theta_index & ro_index
+
+#
+for (i in vec4) {
+  xk <- P[i,2]
+  yk <- P[i,3]
+  pts1 <- c(xk,yk)
+  pts1
+  tr_lat <- as.integer(tr_lat)
+  tr_lat
+  (pts1-tr_lat)
+  loc1 <- (pts1-tr_lat)%*%t(D)
+  x <- loc1[1,1]
+  y <- loc1[1,2]
+  points(as.integer(x), as.integer(y),pch=20,asp=1,cex=0.3, col="red") #large scale
+}
 ###############################################################################
 
 ## 9. calculation of ro_ind using theta_index and one measured point
 
 #input
-theta_ind=1 #change value
-x=1375 #point (mean, img_system)
-y=2240 #point (mean, img_system) check!
+theta_ind=8 #change value
+x=141 #point (mean, img_system)
+y=555 #point (mean, img_system) check!
 
 theta_img = (theta_ind - 1) * theta_step 
 theta_math = 180 - theta_img
@@ -643,14 +676,15 @@ points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y),
        pch=20, asp=1, cex=0.3, col="green")
 
 B #all lines after Hought trans
-i=248 #index in B (value for i must be adapted)
-i=as.integer(i)
+i=37 #index in B (value for i must be adapted)
+#i=as.integer(i)
 B[i,]
 cat("PC_nr=", i, "\n")
 theta_img <- (B[i,1] - 1) * theta_step
 
 #
 lnr <- i #number of point cloud (PC)
+lnr
 PC_seg_P_nP <- PC_segment_4(lnr)
 P <- PC_seg_P_nP[[1]] 
 n_P <- PC_seg_P_nP[[2]]
