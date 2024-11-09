@@ -427,6 +427,7 @@ if (kf < 1) {
 }
 #end of calculation of the scale factor 'kf'
 
+#stop("check of H_para")
 wd <- 10 #width of building [pixels] (alternative: 15) #changed from 10 to n_pix
 B22 <- subset(B0, round(B0[,4]/kf) >= wd) # minimum length of side, assumed with 15 pixel (=1.4m for ISPRS data)
 n1 <- length(B22[,1])
@@ -443,8 +444,8 @@ vec <- 1 : n1
 #transformation
 for(i in vec) {
   H_para <- trans_H_res(B22,theta_step,ro_step,ro_1,kf) 
-  theta_index <- H_para[1,]
-  ro_index <- H_para[2,]
+  theta_index <- H_para[1,] #is theta_ind?
+  ro_index <- H_para[2,] #is ro_ind?
   N <- H_para[3,]
   theta_angle <- H_para[4,]
   ro_pixel <- H_para[5,]
@@ -695,7 +696,7 @@ if (wind_y > img_y_max) {
 }
 
 ## display enlarged ortho-image and PC of building-outline
-img_uds <- img_ref[orig_x:wind_x,orig_y:wind_y,1:3]
+img_uds <- img_ref[orig_x:wind_x, orig_y:wind_y, 1:3]
 display(img_uds,method = "raster")
 #display(img_uds,method = "browser") #enables zooming
 points(xc-orig_x,yc-orig_y,pch=3, asp=1, cex=1.3, col="red")
@@ -1120,10 +1121,11 @@ if (cas == "4_long") {
   #n_pix <- 94 #length of segment (8.5m) alternative
   
   cat("define minimum size of line segment: 35 pixel (recommended) 
-      or 35, 56, 25, 78, 94 (alternatives)","\n")
+      or 11, 18, 25, 56, 78, 94 (alternatives)","\n")
   n_pix <- readline("type minimum size of line - if demo - type 35: ") #manual input (n_pix = n_pixel[m]/pixelsize[m])
   n_pix <- as.integer(n_pix)
-  cat("n_pix=",n_pix,"pixels","\n")
+  n_meter <-round(n_pix * pixel_size2,1)
+  cat("n_pix=",n_pix,"pixels","or", n_meter, "meter","\n")
   wd <- n_pix
   k14 <- length(B5_4$lnr)
   B5_4b <- B5_4
@@ -1451,12 +1453,13 @@ if (cas == "100_all") {
     p_pos <- "cor_det" #correction of detected lines for cas = "100_all" 
     setwd(home_dir2) 
     source(paste("./spObj/spObj_line_detection_v",v_nr,".R",sep = "")) #special object: correction of detected lines
-    B5_6R4
+    B5_6R4 
   } else {
     B5_6R4 <- B5_6
   } #end if-else
 
   lnr_det5 <- B5_6R4$lnr
+  
   lnr_det5
   
   ## derivation of PCs and plotting of detected line segments
@@ -1470,7 +1473,7 @@ if (cas == "100_all") {
     cat("error - even number of points is required","\n")
   }
   
-  B5_6R4
+  B5_6R4 
   lnr_det5
   
   #parameter for the determination of sequence of lines
@@ -1626,8 +1629,9 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
     #end of check-plot
     
     #loop for plotting approximate lines
+    
     for (n1 in vec3) {
-      #browser()
+      browser()
       cat("PC_nr=", B5_6$lnr[n1], "\n")
       theta_angle <- B5_6$theta_angle[n1]
       theta_math <- (180 - theta_angle) #theta of oriented line
@@ -1669,11 +1673,12 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
         p_pos <- "cor_det"
         setwd(home_dir2)
         source(paste("./spObj/spObj_line_detection_v",v_nr,".R",sep = ""))
-        lnr_det5 
+        lnr_det5 <- B5_6R4$lnr
     } #end if
     
   } #end if (all proc_modes)
   
+  lnr_det5
   length(lnr_det5)
   n_nonortholines2
   n_ortholines2
@@ -1798,11 +1803,13 @@ if (cas == "extr_wd") {
 
 if (cas == "4_long") {
   B5_6 <- B5_4e_4long2
+  
 }
 
 if (cas == "100_all") {
   n_B5_6R4 <- length(B5_6R4$lnr)
   B5_6[1:n_B5_6R4,1:8] <- B5_6R4[1:n_B5_6R4,]
+  B5_6
 }
 
 if (cas == "100_all+nonortho") {
