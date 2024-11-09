@@ -291,7 +291,7 @@ if(part != "no_part" && p_pos == "cor_sep") {
 }
 
 ##output of file with PC-coordinates (required in program 'line_detection.R')
-coords
+coords[1,]
 coords2 <- subset(coords, select=c(x,y))
 head(coords2)
 N1 <- length(coords$x)
