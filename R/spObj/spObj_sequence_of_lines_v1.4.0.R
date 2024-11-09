@@ -283,10 +283,10 @@ if (Img_name == "ISPRS4") {
     b13_angle_df3[2,1:4] <- c(79,NA,85,552) #lnr=79,midpoint is manually changed
     b13_angle_df3[7,1:4] <- c(4,NA,43,587) #lnr=4,midpoint is manually changed
     b13_angle_df3[9,1:4] <- c(128,NA,141,557) #lnr=128,midpoint is manually changed
-    b13_angle_df3[10,1:4] <- c(928,NA,125,669) #lnr=1203,midpoint is manually changed
+    b13_angle_df3[10,1:4] <- c(928,NA,125,669) #lnr=928,midpoint is manually changed
     b13_angle_df3[11,1:4] <- c(303,NA,121,645) #lnr=303,midpoint is manually changed
     b13_angle_df3[12,1:4] <- c(137,NA,67,578) #lnr=137,midpoint is manually changed
-    b13_angle_df3[13,1:4] <- c(433,NA,97,587) #lnr=600,midpoint is manually changed
+    b13_angle_df3[13,1:4] <- c(433,NA,97,587) #lnr=433,midpoint is manually changed
     b13_angle_df3
   } #end b161 - "cor_pos"
   
