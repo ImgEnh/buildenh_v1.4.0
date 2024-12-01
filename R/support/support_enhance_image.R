@@ -1,13 +1,13 @@
 ## name of script: support_enhance_image.R
 cat("version_number= ",v_nr,"\n")
-## purpose: scaling of ortho-images
+## purpose: scaling of orthoimages
 ## required for images "ISPRS1", "ISPRS7", "ISPRS4" (examples for learning)
 ## instruction: run all programs in "demo" mode before using 'support_enhance_image.R'
 ## author: Joachim Höhle
 ## GNU General Public License (GPL)
 
 ##contents:
-# 1: checking of scale
+# 1: checking of image scale
 # 2: scaling of image (simple and affine)
 # 3: cutting out of net-image
 # 4: affine scaling with manual measurement in browser
