@@ -24,3 +24,5 @@ hist_lin_len <- function() {
 } #end of function 'hist_lin_len'
 
 ##end of script 'func_hist_lin_len.R'
+
+################################################################################
