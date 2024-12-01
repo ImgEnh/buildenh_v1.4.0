@@ -21,3 +21,5 @@ trans_H_res <- function(B1,theta_step1,ro_step1,ro11,k1) {
 
 #end of script 'func_trans_H_res.R'
 
+################################################################################
+
