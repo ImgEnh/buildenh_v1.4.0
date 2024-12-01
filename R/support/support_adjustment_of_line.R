@@ -6,9 +6,9 @@ cat("version_number= ",v_nr,"\n")
 
 ## contents:
 
-# 1.adjustment of all lines stored in matrix 'B6_seq' 
-# 2.adjustment of four calculated lines with theta_ref and alpha_ref + weighted mean
-# 3.adjustment of selected reference line
+## 1.adjustment of all lines stored in matrix 'B6_seq' 
+## 2.adjustment of four calculated lines with theta_ref and alpha_ref + weighted mean
+## 3.adjustment of selected reference line
 ################################################################################
 
 ## 1.adjustment of all lines stored in matrix 'B6_seq'
@@ -53,7 +53,7 @@ for (i in y2) {
 
 ################################################################################
 
-## 2.adjustment of four calculated lines with theta_ref and alpha_ref + weighted mean
+## 2.adjustment of four calculated lines with theta_ref and alpha_ref+weighted mean
 #to be used for object types "extr_wd" and "4_long" only
 
 points_all <- seq(4)
