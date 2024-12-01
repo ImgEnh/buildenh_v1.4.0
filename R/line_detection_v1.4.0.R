@@ -2,8 +2,9 @@
 cat("version_number= ",v_nr,"\n") 
 #description: separation of pixel clusters (PC) representing line segments 
 #detecting of lines representing the selected object
-#examples: ISPRS dataset 'Vaihingen', orthoimages #1, #7, #4
+#examples: ISPRS dataset 'Vaihingen', orthoimages #1, #7, #4 (results of ISPRS labeling benchmark)
 #instruction: check the ro-range and the main direction of object
+#instruction: select 'fix ro-range: ro_rg=3' to process faster (see line 254 of script)
 #the minimum lengths of the lines are defined by a default value (n_pix) 
 #the default value (n_pix) may be adapted to the existing objects of the orthoimage
 #use 'Zoom' for evaluation of position
@@ -22,7 +23,7 @@ omega=180/pi #factor to convert from radiant to degree
 k=1.64 #approximate scale factor for length of line segment (empirically determined for ISPRS7 and ISPRS4)
 options(digits=8)
 
-##input
+##input of point cluster (PC) of line segment
 setwd(home_dir)
 bnr2
 f1=paste("./data/",Img_name,"/idxy_LCM_b",bnr2,".csv",sep="")
@@ -49,9 +50,9 @@ min(pc2$col)
 min(pc2$row)
 
 ##plot of origin, center of coordinates system and 
-
 #point cluster of extracted building (small scale, complete area)
-#plot in small scale (image #7)
+#plot in small scale (orthoimages #7,#1,#4)
+
 x = 0; y = 0 #origo
 
 if (Img_name == "ISPRS7") {
@@ -107,7 +108,7 @@ theta <- seq(0,175, by=theta_step) #theta = theta_img
 n_theta <- length(theta)
 #
 
-#cat("manual input required","\n")
+#cat("manual input is required","\n")
 
 ##select a ro_range (ro_rg)
 
@@ -120,30 +121,31 @@ ro_rg=3: range with -Dis_max...Dis_max (default ISPRS1) ")
 #setting of ro_range
 if (Img_name == "ISPRS1" && proc_mode == "demo") {
   ro_rg = 3
-} else {
-  if (Img_name == "ISPRS1") {
-    ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
-    ro_rg <- as.integer(ro_rg)
-  }  
-}
+} #else {
+#   if (Img_name == "ISPRS1") {
+#     ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
+#     ro_rg <- as.integer(ro_rg)
+#   }
+#}
 
 if (Img_name == "ISPRS7" && proc_mode == "demo") {
   ro_rg = 1
-} else {
-  if (Img_name == "ISPRS7") {
-    ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
-    ro_rg <- as.integer(ro_rg)
-  }  
-}
+} #else {
+#   if (Img_name == "ISPRS7") {
+#     ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
+#     ro_rg <- as.integer(ro_rg)
+#   }  
+# }
 
 if (Img_name == "ISPRS4" && proc_mode == "demo") {
   ro_rg = 3
-} else {
-  if (Img_name == "ISPRS4") {
-    ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
-    ro_rg <- as.integer(ro_rg)
-  }  
-}
+} #else {
+#   if (Img_name == "ISPRS4") {
+#     ro_rg <- readline("select ro_range: ") #type 1 or 2 or 3
+#     ro_rg <- as.integer(ro_rg)
+#   }  
+# }
+ro_rg = 3 #option: fix selection
 
 cat("selected ro-range =", ro_rg,"\n")
 
@@ -639,7 +641,8 @@ while (i < k13) {
   i <- i + 1
   if (B4$theta_angle[i] == theta_ref && B4$n_pixel[i] >= lol || 
       B4$theta_angle[i] == alph_ref && B4$n_pixel[i] >= lol) {
-    B5_2[k1,] <- c(B4$lnr[i],B4$theta_index[i], B4$ro_index[i], B4$n[i], B4$theta_angle[i],B4$ro_pixel[i],B4$n_pixel[i])
+    B5_2[k1,] <- c(B4$lnr[i],B4$theta_index[i], B4$ro_index[i], B4$n[i], 
+      B4$theta_angle[i],B4$ro_pixel[i],B4$n_pixel[i])
     k1 <- k1 + 1
   }
 } #end of loop while
@@ -1326,7 +1329,7 @@ if (cas == "4_long") {
   if (answ3 =="N") {
     B5_4e_4long
     setwd(home_dir2)
-    p_pos <- "cor_det" #correction of detected lines for "cas="4_long"
+    p_pos <- "cor_det" #correction of detected lines for "case="4_long"
     source(paste("./spObj/spObj_line_detection_v",v_nr,".R",sep=""))
     B5_4e_4long2
   } else {
@@ -1539,7 +1542,7 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
       proc_mode == "auto" ||
       proc_mode == "obj_wise") {
     
-    vec <- 1 : 10 #max 9 additional lines
+    vec <- 1 : 20 #max 19 additional lines
     n_nonortholines2 <- 0
 
     for (i in vec) {
@@ -1552,9 +1555,9 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
         cat("if demo -> type 3 RETURN, 4 RETURN, 0 RETURN", "\n")
       } 
       
-      if (Img_name == "ISPRS1") {
-        cat("if demo -> type 1 RETURN, 24 RETURN, 0 RETURN", "\n")
-      }
+      # if (Img_name == "ISPRS4") {
+      #   cat("if demo -> type 1 RETURN, 24 RETURN, 0 RETURN", "\n") #update
+      # }
 
       add_nr <- readline("type the label of an additional non-orthogonal line= ") #manual input at the console
       add_nr <- as.integer(add_nr)
@@ -1632,6 +1635,8 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
     
     for (n1 in vec3) {
       browser()
+      display(img_uds, method = "raster")
+      points((pc3$col - orig_x),(pc3$row - orig_y), pch='.', asp=1, cex=2, col = "green")
       cat("PC_nr=", B5_6$lnr[n1], "\n")
       theta_angle <- B5_6$theta_angle[n1]
       theta_math <- (180 - theta_angle) #theta of oriented line
@@ -1664,7 +1669,7 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
       cat("#","\n")
     } #end for-loop (large scale)
     
-    cat("are the lines correctly identified?","\n") #cas="100_all+nonortho"
+    cat("are the lines correctly identified?","\n") #case="100_all+nonortho"
     cat("if demo -> type: N","\n")
     answ <- readline("type: Y or N: ")
     
@@ -1672,7 +1677,8 @@ if (cas == "100_all+nonortho") { #solution for lines parallel to ref line
         lnr_det3 <- B5_6$lnr
         p_pos <- "cor_det"
         setwd(home_dir2)
-        source(paste("./spObj/spObj_line_detection_v",v_nr,".R",sep = ""))
+        source(paste("./spObj/spObj_line_detection_v",v_nr,".R",sep = "")) #case: 100_all + addition of non-orthogonal lines 
+        B5_6R4
         lnr_det5 <- B5_6R4$lnr
     } #end if
     
@@ -1983,7 +1989,7 @@ points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y), pch=20, asp=1, ce
 # loop
 len
 for (n1 in len) {
-  #browser()
+  browser()
   cat("PC_nr=", B5_6$lnr[n1], "\n")
   theta_angle <- B5_6$theta_angle[n1]
   theta_math <- (180 - theta_angle) #theta of oriented line
@@ -2059,7 +2065,8 @@ plot(x,-y, pch=3, cex=2, col="red", asp=1,
 points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.5, col="orange")
 cat("line numbers (not in correct sequence):","\n")
 print(PC_nr)
-palette2 <- c("brown", "red", "gray",  "darkgreen", "blue", "magenta", "black", "cyan")
+palette2 <- c("brown","red","gray","darkgreen","blue","magenta","black","cyan",
+              "brown","red","gray","darkgreen","blue", "magenta", "black", "cyan","brown","red")
 setwd(home_dir)
 k=1
 
@@ -2067,7 +2074,7 @@ k=1
 for (i in PC_nr){
   lnr <- i
   cat("lnr=",lnr,"\n")
-  #browser()
+  browser() #to be removed
   fname=paste("./data/",Img_name,"/b",bnr2,"_",lnr,".txt", sep="")
   P0 <- read.table(fname, col.names=c("idx","x","y"))
   nrow <- nrow(P0)
