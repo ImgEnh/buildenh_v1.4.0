@@ -1,5 +1,5 @@
 ##name of script: func_fe.R
-##purpose: autometic selection of object-type (extr_wd,4_long,100_all,100_all+nonortho)
+##purpose: automatic selection of object-type ("extr_wd","4_long","100_all","100_all+nonortho")
 #used in: line_detection.R
 ##arguments:
 #wd2: length of line 
@@ -19,3 +19,5 @@ fe <- function(wd2,ces2,nonortho) {
 } #end of function 'fe'
 
 #end of script 'func_fe.R
+
+################################################################################
