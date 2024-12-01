@@ -28,3 +28,5 @@ design_mat <- function(m,phi) {
 } # end of function 'design_mat(m,phi)'
 
 #end of script 'func_design_mat.R'
+
+################################################################################
