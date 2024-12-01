@@ -31,3 +31,5 @@ locator2 <- function() {
 } #end of function locator2
 
 #end of script 'func_locator2.R'
+
+################################################################################
