@@ -1,21 +1,21 @@
 ## name of script: support_intersect_corner_points.R
 cat("version_number= ",v_nr,"\n")
 ## purpose: generation of theta average, intersection of two lines
-##instruction: process first using mode 'demo'
+##instruction: process first using by mode 'demo'
 ##author: Joachim Höhle
 ##GNU General Public License (GPL)
 
 ##contents:
 
-#1: test of theta average (theta_av)
-#2: interactive generation of theta average
-#3: automated solution for theta average
-#4: manual generation of theta average
-#5: intersection of two lines
-#6: calculation of line-segment lengths
+## 1.test of theta average (theta_av)
+## 2.interactive generation of theta average
+## 3.automated solution for theta average
+## 4.manual generation of theta average
+## 5.intersection of two lines
+## 6.calculation of line-segment lengths
 ################################################################################
 
-#1: test of theta average
+## 1.test of theta average
 setwd(home_dir)
 options(digits=7)
 thr_theta_av2 <- 10 #threshold [degrees]
@@ -34,7 +34,7 @@ if (abs(theta_av$x[1] - theta_ref) > thr_theta_av2 ) { #threshold theta_ref_appr
 ################################################################################
 
 
-#2: interactive generation of theta average 
+## 2.interactive generation of theta average 
 # weighted average of theta-angle (theta_av)
 
 #data: ortholines of b11 (ISPRS1)
@@ -49,7 +49,7 @@ cat("theta_average= ",theta_average,"degrees","\n")
 ################################################################################
 
 
-#3: automated solution for theta average
+## 3.automated solution for theta average
 #example b11 (ISPRS1)
 
 setwd(home_dir)
@@ -157,10 +157,10 @@ if (bnr2 == 18) { #line number must be adopted
 cat("theta_average2= ",theta_average2,"degrees","\n")
 
 #end of script #3
-#####################################################################
+################################################################################
 
 
-#4: manual generation of theta average
+## 4.manual generation of theta average
 
 #input
 
@@ -179,7 +179,7 @@ theta_average <- w_av(ang1,len1)
 ###############################################################################
 
 
-#5: intersection of two lines
+## 5.intersection of two lines
 #instruction: change values for other examples
 
 #data
@@ -201,7 +201,7 @@ y <- (-1/tan(theta_1_arc)) * x + ro_1 / sin(theta_1_arc)
 ################################################################################
 
 
-#6: calculation of line-segment-lengths
+## 6.calculation of line-segment-lengths
 #instruction: change paths
 
 #call of function
@@ -239,7 +239,6 @@ for (n in y4) {
 
 #result
 print(distance)
-#
 
 #end script #6. 
 ################################################################################
