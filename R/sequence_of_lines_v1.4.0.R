@@ -186,6 +186,11 @@ if (sek == "Mpts") {
     bnr2_part <- bnr2
   }
   
+  if (substr(bnr2,3,3) == "3") {
+    part <- "3parts_3"
+    bnr2_part <- bnr2
+  }
+  
   if (answ == "N" && proc_mode == "obj_wise" || answ == "N" && proc_mode == "demo") {
     cat("bnr2= ", bnr2,"\n")
     p_pos <- "cor_pos" #correction of position in sek="Mpts",
@@ -528,6 +533,7 @@ b13_angle_df2
   #loop for reading all pixel clusters (PCs)
   k=1
   for (i in PC_nr) {
+    #browser()
     lnr=i
     setwd(home_dir)
     fname=paste("./data/",Img_name,"/b",bnr2,"_",lnr,".txt", sep="")
@@ -783,7 +789,7 @@ if (sek == "bdr_follow") {
   points(pc3$col, -pc3$row, pch=20, asp=1, cex=0.3, col="cyan") # original pointcloud for building
 
   for (i in vec_y) {
-    browser()
+    #browser()
     cat("nr_center= ",b13_angle_df2$nr_center[i],"\n")
     points(b13_angle_df2$x_centre[i],-b13_angle_df2$y_centre[i], asp=1, pch=20,col="blue", cex=1.5)
   }
@@ -796,13 +802,14 @@ if (sek == "bdr_follow") {
   if (Img_name == "ISPRS1" && proc_mode == "demo" ||
       Img_name == "ISPRS7" && proc_mode == "demo" ||
       Img_name == "ISPRS4" && proc_mode == "demo" ) {
-      #cat("if demo -> answer is: N", "\n")
-      answ = "N"
+      answ = "Y" 
   } else {
+    
     if (Img_name == "ISPRS1" && proc_mode != "demo" || Img_name == "ISPRS7" && proc_mode != "demo" ||
         Img_name == "ISPRS4" && proc_mode != "demo" ) { 
     answ <- readline("are the positions of all midpoints correct? type Y or N:  ") #manual input
     } 
+    
   } #end if-else
   
   #if (substr(bnr2,2,2) == "1") { #point numbers <10
@@ -841,8 +848,8 @@ if (sek == "bdr_follow") {
       p_pos <- "cor_pos" #correction of position
       setwd(home_dir2)
       source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) 
-      b13_angle_df2
-      sequence_seg2 <- b13_angle_df2$nr_center #new
+      b13_angle_df3
+      sequence_seg2 <- b13_angle_df3$nr_center #new
       sequence_seg2 #new
     }
     
@@ -857,23 +864,25 @@ if (sek == "bdr_follow") {
       sequence_seg2 
     }
     
-    if (part == "no_part" && proc_mode == "demo") { #new
+    if (part == "no_part") { 
       bnr2_part <- bnr2
       p_pos <- "cor_pos" #correction of position
       setwd(home_dir2)
       source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) 
       b13_angle_df2
       sequence_seg2 <- b13_angle_df2$nr_center 
-      sequence_seg2 #new
+      sequence_seg2 
     }
     
+  } else {
     
-  } else { #if answ=Y
-    b13_angle_df2 <- b13_angle_df
-    sequence_seg2 <- b13_angle_df2$nr_center #new
+      if (answ == "Y") { 
+        b13_angle_df
+        b13_angle_df2 <- b13_angle_df
+        sequence_seg2 <- b13_angle_df2$nr_center
+      }
+    
   } #end if-else
-  
-  #end if (answ == "N" && part != "no_part")
 
   sequence_seg2
   proc_mode
@@ -888,6 +897,7 @@ if (sek == "bdr_follow") {
       b13_angle_df
       source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) #sek="bdr_follow"
       b13_angle_df2
+      b13_angle_df3 <- b13_angle_df2 
   } #end if 
   
   b13_angle_df3
@@ -923,7 +933,7 @@ if (sek == "bdr_follow") {
     points(b13_angle_df3$x_centre[i],-b13_angle_df3$y_centre[i], asp=1, pch=20,col="green", cex=1.5)  
   }
   
-  #transformation to im-system
+  #transformation to img-system
   b13_angle_df3
   b_angle_df_seq_red <- b13_angle_df3
   n_x <- nrow(b_angle_df_seq_red) 
@@ -1095,25 +1105,16 @@ if (sek == "bdr_follow") {
     points(b13_angle_df4$x_centre[n1],-b13_angle_df4$y_centre[n1], asp=1, pch=20,col="red", cex=1.5)
   }
   
-  #interchange of two points with same number
-  #type the indices of the number
-
-  # if (sequence_seg[1] == sequence_seg[5]) {
-  #   store <- b13_angle_df4[1,]
-  #   b13_angle_df4[1,] <- b13_angle_df4[5,]
-  #   b13_angle_df4[5,] <- store
-  # }
-  
   #change of direction in sequence
-  # sequence_seg_rev <- rep(NA,n_seq)
-  # b13_angle_df4
-  # dx_seq <- (b13_angle_df4$x_centre[1]-b13_angle_df4$x_centre[2])
-  # 
-  # if (dx_seq < 0) {
-  #   sequence_seg_rev <- changeDir(sequence_seg) #function call for change of direction in sequence
-  #   sequence_seg_rev #reversed sequence
-  #   sequence_seg <- sequence_seg_rev
-  # }
+  sequence_seg_rev <- rep(NA,n_seq)
+  b13_angle_df4
+  dx_seq <- (b13_angle_df4$x_centre[1]-b13_angle_df4$x_centre[2])
+
+  if (dx_seq < 0) {
+    sequence_seg_rev <- changeDir(sequence_seg) #function call for change of direction in sequence
+    sequence_seg_rev #reversed sequence
+    sequence_seg <- sequence_seg_rev
+  }
   
   sequence_seg
   
@@ -1143,6 +1144,7 @@ if (sek == "bdr_follow") {
       i <- i+1
     } #end loop i
   } #end of for-loop
+  
   b13_angle_df5
   
   #plot of midpts
@@ -1173,7 +1175,6 @@ if (sek == "bdr_follow") {
 
 PC_nr #solution for sequence of lines (PC)
 
-
 ##output
 f4 <- paste("./data/",Img_name,"/b",bnr2,"_PC_nr.txt",sep="")
 setwd(home_dir)
@@ -1189,7 +1190,6 @@ for (i in vec2) {
 }
 
 all_PC
-#
 cat("end of 'sequence of lines.R' - continue with 'adjustment_of_line.R' ","\n")
 cat("####################################################################","\n")
 setwd(home_dir2)
