@@ -1,6 +1,5 @@
 ##script name: func_rectang_lines.R
-#purpose: detecting lines which are parallel/orthogonal 
-#         to main orientation
+#purpose: detecting lines which are parallel or orthogonal to main orientation
 #used in: line_detection.R
 #author: Joachim Höhle
 #GNU General Public License (GPL)
@@ -505,3 +504,5 @@ rectang_lines <- function() {
 } #end of function 'rectang_lines()'
 
 #end of script 'func_rectang_lines.R
+
+################################################################################
