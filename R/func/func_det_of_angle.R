@@ -11,7 +11,7 @@ det_of_angle <- function(corner_x,corner_y) {
   cat("dy= ", (corner_y-yc), "\n")
   cat("dx= ", (corner_x-xc), "\n")
   
-  #alternative solution (to be tested)
+  #alternative solutions
   #if ((corner_y-yc)<0) {alph=alph+180} 
   #if ((corner_x-xc)<0) {alph=alph-180}
   
@@ -26,3 +26,5 @@ det_of_angle <- function(corner_x,corner_y) {
 } #end of function 'det_of_angle'
 
 #end of script "func_det_of_angle.R"
+
+################################################################################
