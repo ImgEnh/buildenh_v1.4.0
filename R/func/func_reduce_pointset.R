@@ -28,3 +28,5 @@ reduce_pointset <- function(P) {
 } #end of function "reduce_pointset(P)"
 
 #end of script 'func_reduce_pointset.R'
+
+################################################################################
