@@ -47,11 +47,12 @@ if (Img_name == "ISPRS7") {
 } #end of ISPRS7
 ################################################################################
 
-
 ##buildings of orthoimage ISPRS1
 
 if (Img_name == "ISPRS1") { 
   #no correction
 } #end of orthoimage ISPRS1
+
+################################################################################
 
 ##end of script' spObj_adjustment_of_corner_coordinates_v1.4.0.R' 
