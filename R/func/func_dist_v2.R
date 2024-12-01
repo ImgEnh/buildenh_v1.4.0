@@ -23,3 +23,5 @@ dist_v2 <- function(i, all_PC) { #calculation of vector with distances
 } #end function
 
 #end of script "func_dist_v2.R"
+
+################################################################################
