@@ -24,3 +24,5 @@ w_av <- function(ang,len) {
 } #end of function 'w_av(ang,len)'
 
 #end of script 'func_w_av.R
+
+################################################################################
