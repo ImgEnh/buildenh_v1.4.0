@@ -10,9 +10,11 @@ new_centre_auto <- function() {
   yc_new2 <- mean(b13_angle_df$y_centre)
   coo2 <- c(xc_new2, yc_new2)
   cat("new coordinates2:", "xc = ",  coo2[1], "yc = ", coo2[2], "\n")
-  points(xc_new2, -yc_new2, asp=1, pch=3, cex=3,col="green") #plot in small scale image 
+  points(xc_new2, -yc_new2, asp=1, pch=3, cex=3,col="green") #plot in small-scale image 
   return(coo2)
 } #end of function 'new_centre_auto()'
 
 #end of script 'func_new_centre_auto.R
+
+################################################################################
 
