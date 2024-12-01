@@ -13,7 +13,7 @@ cat("version_number= ",v_nr,"\n")
 cat("start of program 'enhance_image.R' ", "\n")
 cat("Image name: ",Img_name,"\n")
 
-##parameters: size of brush [pixels]
+##parameters:size of brush [pixels]
 #pixel_size2=0.09 # pixel size on the ground in [m] #orthoimage #1, #7
 pixel_size2=0.283 # pixel size on the ground in [m] #orthoimage #4
 size <- 5 #used in makeBrush
@@ -104,7 +104,7 @@ setwd(home_dir2)
 #stop("stop")
 source(paste("extract_single_building_v",v_nr,".R",sep=""))
 #end of 'enhance_image'
-#########################################################################################
+################################################################################
 
 
 
