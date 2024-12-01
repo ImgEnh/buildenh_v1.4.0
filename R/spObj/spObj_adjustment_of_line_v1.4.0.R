@@ -13,12 +13,15 @@ if (Img_name == "ISPRS7") {
   #no correction
 } #end of ISPRS7
 
+###
 
 ##buildings of orthoimage ISPRS1
 
 if (Img_name == "ISPRS1") {
  #no corrections 
 } #end of ISPRS1
+
+###
 
 ##buildings of orthoimage ISPRS4
 
@@ -28,8 +31,8 @@ if (Img_name == "ISPRS4") {
   
   if(bnr2 == 81 && p_pos == "cor_adj_line") {
     B6
-    B6[7,]<- c(140,       125,      -35,      40, 125,  -35,        2)
-    B6[10,]<- c(515,        35,      585,      22,  35, 585,        2)
+    B6[7,]<- c(140,125,-35,40,125,-35,2)
+    B6[10,]<- c(515,35,585,22,35,585,2)
   } 
   
   if(bnr2 == 9 && p_pos == "cor_adj_line") {
