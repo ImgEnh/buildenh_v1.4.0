@@ -44,12 +44,12 @@ L1 <- trans_ortho()
 
 ## measurement of one new pixel which represents the center of line
 #results: x,y in image-system of orthoimage
-locator2() #measurement and marking of one pixel's position, includes calculation of transformation-matrix
+locator2() #measurement and plotting of one pixel's position, includes calculation of transformation-matrix
 
 #end of script 1.
 ################################################################################
 
-## 2. plot a pixel cluster (PC) which represents a line segment
+## 2.plot a pixel cluster (PC) which represents a line segment
 
 PC_number <- readline("type number of PC: ")
 PC_number <- as.integer(PC_number)
@@ -58,7 +58,7 @@ plot_PC(PC_number) #call of function
 #end of script 2.
 ################################################################################
 
-## 3. plot all pixel clusters (PCs) of one object onto orthoimage in small scale
+## 3.plot all pixel clusters (PCs) of one object onto orthoimage in small scale
 
 #data
 Img_name
@@ -71,7 +71,7 @@ plot_PC_all() #call of function
 #end of script 3.
 ################################################################################
 
-## 4. histograms of line-length (n_pixel)
+## 4.histograms of line-length (n_pixel)
 #for object-types "extr_wd", "4_long", "100_all" only 
 
 hist_lin_len() #call of function
@@ -189,7 +189,7 @@ xc <- plotPar[1]
 yc <- plotPar[2]
 b13_angle_df3 <- b13_angle_df2
 b13_angle_df3 
-i2=7 #adapt point (row number in b13_angle_df3) 
+i2=10 #adapt point (row number in b13_angle_df3) 
 x_centre <- b13_angle_df3[i2,3] #to be transferred to spObj_sequence_of_lines_v1.1.R
 y_centre <- b13_angle_df3[i2,4] #to be transferred to spObj_sequence_of_lines_v1.1.R
 
@@ -200,7 +200,7 @@ b13_angle_df3
 #end of script 9. 
 ###############################################################################
 
-##10.determination of scale factor between image and plot
+## 10.determination of scale factor between image and plot
 #locator-measurements in plot and img
 #use of scaling points
 
