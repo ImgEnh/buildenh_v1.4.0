@@ -7,14 +7,15 @@ cat("version_number= ",v_nr,"\n")
 
 ## contents:
 
-# 1.check of classification and enhancement in enlarged orthoimage
-# 2.check result in enlarged ground truth (GT) image
-# 3.plot building onto graph
-# 4.plot outlines with vertices & line-numbers onto enlarged orthoimage
-# 5.plot of all processed buildings onto graph, orthoimage and GT
-# 6.plot of a selected corner onto orthoimage (small scale) 
-# 7.measurement of unmarked check point in zoomed orthoimage
-# 8.measurement of check points in zoomed reference map
+## 1.check of classification and enhancement in enlarged orthoimage
+## 2.check result in enlarged Ground Truth (GT) image
+## 3.plot building onto graph
+## 4.plot outlines with vertices & line-numbers onto enlarged orthoimage
+## 5.plot of all processed buildings onto graph, orthoimage and GT
+## 6.plot of a selected corners onto orthoimage (small scale) 
+## 7.measurement of unmarked check point in zoomed orthoimage
+## 8.measurement of check points in zoomed reference map
+## 9.plotting of building outlines by means of orthoimage
 
 ################################################################################
 
@@ -92,7 +93,7 @@ while(i < k1) {
 
 #end of script #1 (check of classification and enhancement by enlarged orthoimage)
 
-###############################################################################
+################################################################################
 
 
 ## 2.check result in enlarged ground truth (GT)
@@ -119,7 +120,7 @@ while(i < k2) {
         asp=1, type="l", lwd=3, lty=1)
 }
 
-#end of script #2 (check result in enlarged ground truth (GT) image)
+#end of script ## 2.check result in enlarged ground truth (GT) image
 ################################################################################
 
 
@@ -148,10 +149,10 @@ while(i < k3) {
   lines(b, col="black", asp=1, type="l", lwd=2, lty=1)
 } #end while
 
-## end of script #3 (plot of building onto graph)
-###############################################################
+## end of script ## 3. plot of building onto graph
+################################################################################
 
-#4: plot of outline with vertices & line-numbers onto enlarged orthoimage
+## 4.plot of outline with vertices & line-numbers onto enlarged orthoimage
 
 display(img_uds,method = "raster")
 n_x <- length(PC_nr)
@@ -191,7 +192,7 @@ for (i in vec_y) {
 cat("table with line-pairs,vertex/corner-number,coordinates(x,y)","\n")
 print(intsec_linepair_vertex_coord2)
 
-## end of script #4 (plot of outline with vertices & line-numbers onto enlarged orthoimage)
+## end of script ## 4. plot of outline with vertices & line-numbers onto enlarged orthoimage
 
 ################################################################################
 
@@ -208,7 +209,7 @@ print(intsec_linepair_vertex_coord2)
 
 #example 3: orthoimage #ISPRS4
 #Img_name ="ISPRS4"
-#objects/buildings: 3,41,42,61,62
+#objects/buildings: 3,41,42,61,62,12,7,9,81,82,101,102,103,13,20,51,52,18,21,22,23,161,162,163,17
 
 ##plot of all buildings onto graph
 setwd(home_dir)
@@ -368,7 +369,7 @@ for (k in b_all_nr) {
 ##end of script 5 
 ################################################################################
 
-#6: plot of a selected corner on orthoimage (small scale)
+## 6.plot of a selected corner on orthoimage (small scale)
 # to be used for checking of geometric accuracy
 setwd(OrgImgPathname)
 img_ref <- readImage(OrgImgFilename)
@@ -405,7 +406,7 @@ c10 <- locator(1) #standard function of locator
 c10
 #
 
-## plot of a selected corner on orthoimage (large scale)
+## plot of a selected corner onto orthoimage (large scale)
 #display enlarged ortho_image and plot of PC of building outline
 img_uds <- img_ref[orig_x:wind_x,orig_y:wind_y,1:3]
 #
@@ -449,10 +450,10 @@ i=2 #to be adapted
 points(b$Points_x[i]-orig_x,-(b$Points_y[i]-orig_y), pch=20, asp=1, cex=1.5, col="blue")
 cat("building_nr= ", bnr2, "corner_nr= ",b$nr[i], "x= ", b$Points_x[i], "y= ", -b$Points_y[i], "\n")
 
-#end of #6: plot of a selected corner onto orthoimage (small scale)
+#end of ## 6.plot of a selected corner onto orthoimage (small scale)
 #################################################################################
 
-#7: measurement of unmarked check point in zoomed orthoimage
+## 7.measurement of unmarked check point in zoomed orthoimage
 setwd(OrgImgPathname)
 img_ref <- readImage(OrgImgFilename)
 display(img_ref, method = "browser")
@@ -462,7 +463,7 @@ display(img_ref, method = "browser")
 #end of #7: measurement of unmarked check point onto enlarged orthoimage
 ################################################################################
 
-### 8.measurement of check points in zoomed reference map & output of map
+## 8.measurement of check points in zoomed reference map & output of map
 setwd(OrgGtsPathname)
 map_ref <- readImage(OrgGtsFilename)
 display(map_ref, method = "browser")
@@ -478,7 +479,38 @@ display(map_ref_extr2,method = "browser")
 f="C:/Users/Joachim/R_programs/tests/LVA_Halle/data/DTK10/4130NW_col_extr2.tif"
 writeImage(map_ref_extr2,file=f)
 
-#end of script #8: measurement of check points in zoomed reference map
+#end of script ## 8.measurement of check points in zoomed reference map
+################################################################################
+
+## 9.checking of building outlines by means of orthoimage
+setwd(OrgImgPathname)
+img_ref <- readImage(OrgImgFilename)
+img_x_max <- dim(img_ref)[1]
+img_y_max <- dim(img_ref)[2]
+display(img_ref,method = "raster")
+setwd(home_dir)
+
+#read all lines
+
+#ISPRS4
+vec1 <- c(3,41,42,61,62,12,7,9,81,82,101,102,103,13,20,151,152,18,21,22,23,161,162,163,17)
+length(vec1)
+
+for (i in vec1) {
+  browser()
+  bnr2=i
+  cat("bnr2= ", i, "\n")
+  f1=paste("./data/",Img_name,"/idxy_LCM_b",bnr2,".csv",sep="")
+  pc2<-read.table(f1, header=TRUE) #land cover map
+  head(pc2)
+  names(pc2)[1]<-"col"
+  names(pc2)[2]<-"row"
+  length(pc2$row)
+  nrow<-length(pc2$col)
+  points(pc2$col, pc2$row, pch=20, asp=1, cex=0.2, col="white")
+} #end for-loop
+
+#end of script ## 9.plotting of building outlines by means of orthoimage
 ################################################################################
 
 ##end of supplementing software to script 'plot_results_on_references.R'
