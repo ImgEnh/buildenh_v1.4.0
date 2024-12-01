@@ -6,15 +6,15 @@ cat("version_number= ",v_nr,"\n")
 
 ##contents:
 
-#1: plot numbers (labels) of all buildings (before and after applying a threshold)
-#2: plot number of one building (before and after applying a threshold)
-#3: find number 'bnr2' by number 'bnr' and vice versa
-#4: generation of table with bnr/bnr2 columns
-#5: find bnr2 by bnr and vice versa by using the generated table 
-#6: separation of object
+## 1. plot numbers (labels) of all buildings (before and after applying a threshold)
+## 2. plot number of one building (before and after applying a threshold)
+## 3. find number 'bnr2' by number 'bnr' and vice versa
+## 4.generation of table with bnr/bnr2 columns
+## 5. find bnr2 by bnr and vice versa by using the generated table 
+## 6. separation of object
 ###########################################################################################
 
-#1: plot numbers (labels) of buildings (before and after applying a threshold)
+## 1. plot numbers (labels) of buildings (before and after applying a threshold)
 #numbering without area thresholding: object label is 'bnr'
 #use proper image under 'Plots'  (apply arrows: <- or -> )
 
@@ -67,10 +67,10 @@ yc <- shap2_A_red3[i,9]
 text(xc,yc,i,cex=1.2,col="red")
 #
 
-#end of #2: plot the number of one object (building) 
+#end of ## 2. plot the number of one object (building) 
 ###############################################################################################################
 
-#3: find number 'bnr2' by number 'bnr' and vice versa
+## 3. find number 'bnr2' by number 'bnr' and vice versa
 bnr=18 #type building number, here b18
 cat("bnr=", bnr, "\n")
 
@@ -85,10 +85,10 @@ for (n in y1) {
   
 } #end for-loop
 
-#end of #3: find number 'bnr2' by number 'bnr' and vice versa
+#end of ## 3. find number 'bnr2' by number 'bnr' and vice versa
 ##############################################################################################################
 
-#4: generation of table with bnr/bnr2 columns
+## 4. generation of table with bnr/bnr2 columns
 
 names(shap2_A_red3) <- c("bnr2","area","perimeter","radius.mean","radius.sd","radius.min",
                        "radius.max","cx","cy","alpha_arc")
@@ -117,7 +117,7 @@ obj_nrs #table bnr/bnr2
 #end of #4: generation of table with bnr/bnr2 columns
 ###############################################################################
 
-#5: find bnr2 by bnr and vice versa using the table derived in #4.
+## 5. find bnr2 by bnr and vice versa using the table derived in #4.
 
 answ <- readline("type bnr: ")
 bnr <- as.integer(answ)
@@ -151,7 +151,7 @@ for (i in y1) {
 cat("bnr= ", bnr,"\n")
 #
 
-#end of #5: find bnr2 by bnr and vice versa using a table
+#end of ## 5. find bnr2 by bnr and vice versa using a table
 
 ## 6: separation of object
 #determination of pixels for separation
@@ -181,7 +181,7 @@ L1 <- trans_ortho() #
 # measurement of new points (results: x,y)
 #orig_y <- (-orig_y) #change to img-system (when 2. and more lines have to be determined)
 locator2() #measurement and marking of one pixel's position, includes transformation-matrix
-#
+#end of ## 5.
 #########################################################################################################
 
 ##end of script 'support_extract_single_building.R'
