@@ -12,3 +12,5 @@ loadLib_op <- function() { #required R-packages
 } #end of function 'loadLib_op()'
 
 #end of script 'func_loadLib_op.R
+
+################################################################################
