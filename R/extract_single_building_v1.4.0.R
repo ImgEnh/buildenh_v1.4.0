@@ -2,9 +2,8 @@
 cat("version_number= ",v_nr,"\n")
 ##description: extraction of one object (building)  
 #from image "building"-theme of generated land cover map
-#orthoimage: ISPRS data "Vaihingen" of areas: #1, #7, #4
-##instruction: use 'plot of building numbers' 
-#producible in 'support_extract_single_building'
+#orthoimage: ISPRS data "Vaihingen" of areas: #1, #7, #4 (result of ISPRS labeling Benchmark)
+##instruction: use 'plot of building numbers' in 'support_extract_single_building'
 ##author: Joachim Höhle
 ##GNU General Public License (GPL)
 cat("###########################################################################","\n")
@@ -84,7 +83,7 @@ setwd(home_dir)
 LCM_enh_b=readImage(paste("./data/",Img_name,"/images/LCM_cart_enh_b3_scaled_2.jpg",sep = "")) #classification by DT, scaled affine
 display(LCM_enh_b, method="browser") #use for checking of image
 display(LCM_enh_b, method="raster") #optional
-#LCM_enh_b <- 1 - LCM_enh_b #change to negative 
+#LCM_enh_b <- 1 - LCM_enh_b #option: change to negative 
 
 ##enhancement of raster image
 LCM_enh_b_t <- thresh(LCM_enh_b,2,2,0.01) #thresholding -> white outlines
@@ -151,7 +150,7 @@ omega=180/pi
 alpha <- shap2_A_red3[bnr2,10]*omega # approximate orientation angle of object
 r_max <- shap2_A_red3[bnr2,7]
 
-##write.table plot-parameters of building
+##plot-parameters of building
 plotPar <- c(xc,yc,r_max,alpha)
 plotPar_orig <- plotPar
 plotPar_orig
@@ -177,7 +176,6 @@ for (i in y1) {
 } #end for i
 
 obj_nrs #list with bnr/bnr2 to be used in conversion bnr2<-bnr (and vice versa)
-#
 
 ##find 'bnr' by 'bnr2'
 cat("bnr2= ", bnr2,"\n")
@@ -204,6 +202,7 @@ coords <- coords[coords$is_bnr == 1,] #removal of pixels which do not have the l
 
 #plot of PC and checkpoints
 r_max2 <- round(1.1*r_max)
+#r_max2 <- round(1.3*r_max) #new
 plot(coords$x,coords$y,pch=16,cex=0.2,col="black",asp=1,xlim=c(xc-r_max2,xc+r_max2),ylim=c(yc+r_max2,yc-r_max2),xlab=NULL,ylab=NULL,ann=T,main=paste("b",bnr2),axes=TRUE)
 #plot(coords$x,coords$y,pch=16,cex=0.2,col="black",asp=1,xlim=c(1,1887),ylim=c(2557,1),xlab=NULL,ylab=NULL,ann=FALSE,main=paste("b",bnr2),axes=TRUE) #small scale
 points(xc+r_max, yc+r_max, pch=16, cex=1.5, col="black", asp=1) #point for scaling
@@ -283,7 +282,6 @@ if (part == "2parts_1" || part == "2parts_2" || part == "3parts_3") {
   bnr2_orig <- bnr2
   p_pos <- "cor_sep"
 }
-#
 
 if(part != "no_part" && p_pos == "cor_sep") {
   setwd(home_dir2)
