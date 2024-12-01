@@ -18,3 +18,5 @@ mean_line <- function(ln_num) {
 } #end of function
 
 #end of script 'func_mean_line.R'
+
+################################################################################
