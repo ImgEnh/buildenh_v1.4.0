@@ -22,3 +22,5 @@ dist_v <- function(npx,b_angle_df_seq,refj) {
 } #end of function
 
 #end of script 'func_dist_v.R'
+
+################################################################################
