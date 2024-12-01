@@ -29,4 +29,18 @@ if (Img_name == "ISPRS1") {
 } #end ISPRS1
 
 ################################################################################
+
+if (Img_name == "ISPRS4") { 
+  
+  #b163
+  if (bnr2 == 163 && p_pos == "cor_theta_av2") { 
+    theta_average2 <- w_av(ang2,len2) #call of function
+    theta_av2_mod <- theta_average2
+    theta_av2_mod 
+  } #end if
+  
+} #end ISPRS1
+
+################################################################################
+
 ## end of spObj_intersect_corner_points_v1.4.0.R
