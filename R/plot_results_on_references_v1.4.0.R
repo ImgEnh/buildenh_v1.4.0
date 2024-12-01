@@ -1,4 +1,4 @@
-##plot of results on references (orthoimage,ground truth)
+##plot of results on references (orthoimage,Ground Truth)
 ##plot of results on graph
 ##name of script: plot_results_on_references.R
 cat("version_number= ",v_nr,"\n")
@@ -295,6 +295,8 @@ if (cas == "extr_wd" || cas == "4_long" || cas == "100_all" || cas == "100_all+n
 } #end of cases=1,2,3,4
 
 #end of program 'plot_results_on_references.R'
+################################################################################
+
 ##end of package 'buildenh'
 ################################################################################
 
