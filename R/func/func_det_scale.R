@@ -25,3 +25,5 @@ det_scale <- function() {
 } #end of function 'det_scale'
 
 ##end of script 'func_det_scale.R'
+
+################################################################################
