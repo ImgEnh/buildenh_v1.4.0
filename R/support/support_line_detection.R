@@ -15,7 +15,7 @@
 ## 6.interactive detection of rectangular lines by measurement of one pixel in enlarged image
 ## 7.estimation of object type (cas)
 ## 8.determination of line number (lnr) by theta_index and ro_index
-## 9.calculation of ro_ind using theta_index and measured point
+## 9.calculation of ro_ind using theta_index and one measured point
 ## 10.plot of detected non-ortho-line onto enlarged orthoimage
 ################################################################################
 
@@ -57,7 +57,7 @@ ro_rg <- 3
 save(theta_step, ro_step, ro, ro_1, n_theta, n_ro, ro_rg, file=paste("./data/",Img_name,"/H_par",sep=""))
 #continue at line 232 in 'line_detection.R'
 
-#end of script #1
+#end of script ## 1.
 ######################################################################################################
 
 ## 2. manual determination of line-orientation 
@@ -216,7 +216,7 @@ for (i in vec) {
 
 cat("counts= ",ct,"\n")
 
-#end of script #3.
+#end of script ## 3.
 ################################################################################################
 
 ## 4. determination of approximate line orientation (theta_appr) from angle (alpha_math)
@@ -226,7 +226,7 @@ theta_appr <- alpha_img + 90
 theta_appr_index <- round(theta_appr/theta_step) + 1
 theta_appr_index
 
-#end of script #4
+#end of script ## 4.
 ###########################################################################################################
 
 ## 5.search of lines with 'theta_appr + 90' and 'theta_appr - 90'
@@ -249,10 +249,10 @@ for (i in vec) {
 
 #note: there should exist at least two lines with theta_appr_index and theta_appr_index +- 90 degrees
 
-#end of script #5
+#end of script ## 5.
 ###########################################################################################################
 
-## 6: interactive detection of orthogonal lines 
+## 6. interactive detection of orthogonal lines 
 # by measurement of one pixel in enlarged orthoimage 
 
 #display enlarged ortho_image and PC of building outline
@@ -326,7 +326,7 @@ if (is.finite(a)) {
 #end of script 6
 #########################################################################################################
 
-## 7. estimation of object type (cas)
+## 7. estimation of object type (case)
 
 n_longest_lines <- 8 #number of longest lines after Hough trans (default)
 x1 <- B4$theta_index[1 : n_longest_lines]
@@ -411,10 +411,10 @@ ty <- readline("type object type= ") #manual input
 ty <- as.integer(ty)
 cas <- switch(ty,"extr_wd", "4_long", "100_all", "100_all+nonortho")
 cat("case= ", cas, "\n")
-#end of script #7. 
+#end of script ## 7. 
 #######################################################################
 
-## 8. determination of line number (lnr) 
+## 8.determination of line number (lnr) 
 #by means of theta_index and ro_index
 #using orthoimage (small and large scale)
 display(img_ref,method = "raster")
@@ -473,6 +473,7 @@ cat("x_coordinate= ",x,sep = "","\n")
 cat("y_coordinate= ",y,sep = "","\n")
 
 #plot of first point in uds
+points(x,y,pch=3, asp =1, cex=3,asp=1, col="red") #large scale
 points(x-orig_x,y-orig_y,pch=3, asp =1, cex=1,asp=1, col="red") #large scale
 
 #second point
@@ -487,25 +488,27 @@ cat("y_coordinate= ",y,sep = "","\n") #small scale
 points(x-orig_x,y-orig_y,pch=3, asp =1, cex=1,asp=1, col="red") #large scale
 
 #mean of the two points
-x <- (x11+x12)/2
-y <- (y11+y12)/2
-
+x <- round((x11+x12)/2)
+x
+y <- round((y11+y12)/2)
+y
 #plot of mean point in uds 
 points(x-orig_x,y-orig_y,pch=3, asp =1, cex=2,asp=1, col="white") #large scale
 
 #plot of mean point in small scale image 
-points(x,y,pch=3, asp =1, cex=2,asp=1, col="red") #small scale
+#points(x,y,pch=3, asp =1, cex=2,asp=1, col="blue") #small scale
 
 #
-alpha_meas <- atan2((y12 - y11),(x12 - x11)) * omega #  required range: -90 ... 85 degrees?
+alpha_meas <- atan2((y12 - y11),(x12 - x11)) * omega 
+alpha_meas #required range: -90 ... +85 degrees?
 alpha_math <- (-alpha_meas) #change to math-system
 theta_math <- alpha_math + 90
 theta_math_arc <- theta_math/omega
 
-theta_img_appr = (theta_ind - 1) * theta_step #check table 
+#theta_img_appr = (theta_ind - 1) * theta_step #check table 
 #theta_math_appr = 180 - theta_img 
 
-y <- -y #change to math_system
+y <- (-y) #change to math_system
 ro_math <- x*cos(theta_math_arc) + y*sin(theta_math_arc)
 ro_math # [pixel]
 b <- ro_math/sin(theta_math_arc) #watch sign
@@ -538,7 +541,7 @@ coef2 <- c(b2_img,a_img)
 # plot in large scale
 
 if (is.finite(a_img)) {
-  abline(coef2, col="blue", lty=1, lwd=2, asp=1)
+  abline(coef2, col="red", lty=1, lwd=2, asp=1)
 }  else {
   ro_l1 <- B2$ro_pixel[lnr]
   ro_l2 <- ro_l1 + ro_1
@@ -555,7 +558,7 @@ if (theta_img < 0) {
   theta_img <- theta_img + 180
 }
 
-theta_ind <- round(theta_img/theta_step) + 1
+theta_ind <- round(theta_img/theta_step + 1)
 cat("theta_ind= ", theta_ind, "\n")
 
 if (theta_ind > 36) {
@@ -563,17 +566,22 @@ if (theta_ind > 36) {
   theta_ind <- theta_ind - 36
 }
 
+theta_ind 
+
 ro_img <- (-ro_math) #change of sign for ro_math? (manual correction!)
-ro_ind <- round((ro_img - ro_1)/ro_step) + 1
+#ro_img <- ro_math #no change of sign for ro_math? (manual correction!)
+ro_ind <- round((ro_img - ro_1)/ro_step + 1)
 cat("ro_index= ", ro_ind, "\n")
 
 head(B0) #calculated with theta_img and image-system (col,row)
 vec <- 1 : length(B0[,1])
 length(B0[,1])
+n_pix_appr <- round(n_pix*k)
 
 for (i in vec) {
   
-  if (B0[i,2] == theta_ind && B0[i,4] >= n_pix*k) {
+  #if (B0[i,2] == theta_ind && B0[i,4] >= n_pix_appr) {
+  if (B0[i,2] == theta_ind && B0[i,4] >= round(n_pix*kf2)) { #standard
     print(B0[i, ])
   }
   
@@ -583,8 +591,10 @@ n_pix
 ro_pixel <- ro_step * (ro_ind - 1) + ro_1
 ro_pixel
 theta_ind
-
+ro_ind
+#
 B4[1,]
+B4
 vec <- 1 : length(B4[,1])
   
 for (i in vec) {
@@ -619,38 +629,24 @@ for (i in vec) {
   
 } #end for-loop 
 
-#example
-P_128 <- PC_segment_4(128) #generation of point clusters (PC) of one line segment
-P_128
+#check of PC
 PC_number <- readline("type number of PC: ")
 PC_number <- as.integer(PC_number)
-plot_PC(PC_number) #call of function
+B[PC_number,]
+P <- PC_segment_4(PC_number) #generation of point clusters (PC) of one line segment
+P
+plot_PC(PC_number) #call of function, P_red with col="blue"
 head(P)
-vec4 <- 1: length(P[,1])
 #end search of line numbers with theta_index & ro_index
-
-#
-for (i in vec4) {
-  xk <- P[i,2]
-  yk <- P[i,3]
-  pts1 <- c(xk,yk)
-  pts1
-  tr_lat <- as.integer(tr_lat)
-  tr_lat
-  (pts1-tr_lat)
-  loc1 <- (pts1-tr_lat)%*%t(D)
-  x <- loc1[1,1]
-  y <- loc1[1,2]
-  points(as.integer(x), as.integer(y),pch=20,asp=1,cex=0.3, col="red") #large scale
-}
 ###############################################################################
 
 ## 9. calculation of ro_ind using theta_index and one measured point
 
 #input
-theta_ind=8 #change value
-x=141 #point (mean, img_system)
-y=555 #point (mean, img_system) check!
+theta_ind=10 #change value
+x=273#point (mean, img_system)
+y=740 #point (mean, img_system) check!
+points(x-orig_x,y-orig_y,pch=3, asp =1, cex=2,asp=1, col="blue") #large scale
 
 theta_img = (theta_ind - 1) * theta_step 
 theta_math = 180 - theta_img
@@ -659,7 +655,8 @@ y <- -y #change to math_system
 y
 ro_math <- round(x*cos(theta_math_arc) + y*sin(theta_math_arc))
 ro_math 
-ro_ind <- round((-ro_math - ro_1)/ro_step + 1)
+ro_ind <- round((-ro_math - ro_1)/ro_step + 1) #test
+#ro_ind <- round((ro_math - ro_1)/ro_step + 1)
 cat("ro_index= ", ro_ind, "\n")
 
 #end of 9.
@@ -676,7 +673,7 @@ points(as.integer(pc3$col-orig_x), as.integer(pc3$row-orig_y),
        pch=20, asp=1, cex=0.3, col="green")
 
 B #all lines after Hought trans
-i=37 #index in B (value for i must be adapted)
+i=22 #index in B (value for i must be adapted)
 #i=as.integer(i)
 B[i,]
 cat("PC_nr=", i, "\n")
@@ -684,7 +681,6 @@ theta_img <- (B[i,1] - 1) * theta_step
 
 #
 lnr <- i #number of point cloud (PC)
-lnr
 PC_seg_P_nP <- PC_segment_4(lnr)
 P <- PC_seg_P_nP[[1]] 
 n_P <- PC_seg_P_nP[[2]]
@@ -706,6 +702,7 @@ y_m <- mean(P_red[,3])
 y_m_math <- (-y_m) #adapt to math-system
 x <- round(x_m)
 y <- round(y_m)
+points(x,y, pch=20, asp=1, cex=1.5, col="blue") #point in small scale 
 points(x-orig_x,y-orig_y, pch=20, asp=1, cex=1.5, col="blue") #point 
 
 #angles
@@ -727,19 +724,22 @@ b2 <- a * orig_x + b - orig_y_math
 b2_img <- (-b2)
 a_img <- (-a)
 coef2 <- c(b2_img,a_img)
+#coef3 <- c(-b,-a) #small scale
 
 #plot of line
 if (is.finite(a)) {
-  abline(coef2, col="red", lty=1, lwd=2, asp=1)
+  #abline(coef3, col="red", lty=1, lwd=2, asp=1) #small scale
+  abline(coef2, col="red", lty=1, lwd=2, asp=1) #large scale
 }  else {
   ro_l1 <- B5_4_ord$ro_pixel[i]
   ro_l2 <- ro_l1 + ro_1
   ro_l3 <- round(ro_l2 - orig_x)
+  lines(c(ro_l2,ro_l2),c(0, (wind_y)),col="red")
   lines(c(ro_l3,ro_l3),c(0, (wind_y-orig_y)),col="red")
 } #end if-else
 
-#end of script #10
-#############################################################################################################
+#end of script ## 10.
+################################################################################
 
 
 ##end of support_line_detection.R
