@@ -10,3 +10,4 @@ corner_name <- function(nPC1,nPC2){
 } #end of function 'corner_name'
 
 #end of script 'func_corner_name.R'
+################################################################################
