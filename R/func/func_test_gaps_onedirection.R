@@ -33,3 +33,5 @@ test_gaps_onedirection <- function(hist) {
 
 #end of script 'func_test_gaps_onedirection.R'
 
+################################################################################
+
