@@ -133,12 +133,13 @@ answ <- readline("Is the position of all midpoints correct? ")
 
 if (answ == "N") {
   midpoints
-  n_RepPoint <- 8 #row number (index) of midpoint to be corrected (in b13_angle_df), must be changed
+  n_RepPoint <- 3 #row number (index) of midpoint to be corrected (in b13_angle_df), must be changed
   n_RepPoint <- as.integer(n_RepPoint)
   b13_angle_df$nr_center <- midpoints[,1]
   b13_angle_df
   PC_nr #check index of line in 'PC_nr'
-  n_RepPoint2 <- 7 #index of midpoint to be corrected (in 'all_PC' and 'PC_nr')
+  n_RepPoint2 <- 3
+  #index of midpoint to be corrected (in 'all_PC' and 'PC_nr')
   all_PC[[n_RepPoint2]]
   r_dist <- dist_v2(n_RepPoint2, all_PC) #call of function 
   #         function is contained in 'func_loadLib_jh.R'
