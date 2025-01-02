@@ -15,7 +15,7 @@ cat("version_number= ",v_nr,"\n")
 ## 6.plot of a selected corners onto orthoimage (small scale) 
 ## 7.measurement of unmarked check point in zoomed orthoimage
 ## 8.measurement of check points in zoomed reference map
-## 9.plotting of building outlines by means of orthoimage
+## 9.plotting of not-enhanced building outlines by means of orthoimage
 
 ################################################################################
 
@@ -374,9 +374,11 @@ for (k in b_all_nr) {
 setwd(OrgImgPathname)
 img_ref <- readImage(OrgImgFilename)
 display(img_ref, method = "raster")
+b_all_nr
 
 #loop
 for (k in b_all_nr) {
+  browser()
   cat("k=", k, "\n")
   bnr2 <- k
   fname12 <- paste("./results/",Img_name,"/b",bnr2,"_coord_adj_plot.txt",sep="")
@@ -391,11 +393,23 @@ for (k in b_all_nr) {
         type="l", lwd=2, lty=1)
   
   #plot corner i in all b
-  i=2 #to be changed
-  points(b$Points_x[i],-b$Points_y[i], pch=20, asp=1, cex=1.5, col="yellow")
-  cat("building_nr= ", bnr2, "corner_nr= ",b$nr[i], "x= ", b$Points_x[i], "y= ", -b$Points_y[i], "\n")
+  n_points <- length(b$nr)
+  i=1 #plot one corner
+  points(b$Points_x[i],-b$Points_y[i], pch=20, asp=1, cex=1.5, col="red")
+  cat("building_nr= ", bnr2, "corner_nr= ",b$nr[i], "x= ", round(b$Points_x[i]), "y= ", round(-b$Points_y[i]), "\n")
 } #end loop
 #
+
+#plot all corners
+n_points <- length(b$nr)
+vec5 <- 1 : (n_points - 1)
+
+for (i in vec5) {
+  browser()
+  points(b$Points_x[i],-b$Points_y[i], pch=20, asp=1, cex=1.5, col="green")
+  cat("building_nr= ", bnr2, "corner_nr= ",b$nr[i], "x= ", round(b$Points_x[i]), "y= ", round(-b$Points_y[i]), "\n") 
+}
+
 
 #measurement of a single point in orthoimage
 setwd(OrgImgPathname)
@@ -482,7 +496,7 @@ writeImage(map_ref_extr2,file=f)
 #end of script ## 8.measurement of check points in zoomed reference map
 ################################################################################
 
-## 9.checking of building outlines by means of orthoimage
+## 9.plotting of not-enhanced building outlines by means of orthoimage
 setwd(OrgImgPathname)
 img_ref <- readImage(OrgImgFilename)
 img_x_max <- dim(img_ref)[1]
@@ -510,7 +524,7 @@ for (i in vec1) {
   points(pc2$col, pc2$row, pch=20, asp=1, cex=0.2, col="white")
 } #end for-loop
 
-#end of script ## 9.plotting of building outlines by means of orthoimage
+#end of script 'plotting of not-enhanced building outlines by means of orthoimage'
 ################################################################################
 
 ##end of supplementing software to script 'plot_results_on_references.R'
