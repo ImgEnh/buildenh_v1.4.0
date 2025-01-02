@@ -12,7 +12,7 @@ cat("version_number= ",v_nr,"\n")
 ###############################################################################
 ## start of program 'sequence_of_lines.R'
 cat("start of program 'sequence_of_lines.R'","\n")
-#stop("step by step")
+#stop("proceed step by step")
 setwd(home_dir)
 
 ##input
@@ -626,6 +626,7 @@ b13_angle_df2
 #stop("checking step by step - manual operation")
 
 if (sek == "bdr_follow") { 
+  #stop("proceed line by line")
   setwd(home_dir)
   
   if (part != "no_part") {
@@ -641,12 +642,12 @@ if (sek == "bdr_follow") {
   b_bin <- b_new[,,1]
   print(b_bin)
   display(b_bin, "raster")
-  display(b_bin, "browser")
+  #display(b_bin, "browser")
   plot(b_bin)
   
   if (Img_name == "ISPRS4") { #low-resolution image
     kern=makeBrush(5,shape="diamond")
-    b_bin_erode <- erode(b_bin)
+    b_bin_erode <- erode(b_bin, kern) 
     b_bin <- b_bin_erode
     str(b_bin)
   }
@@ -807,7 +808,9 @@ if (sek == "bdr_follow") {
     
     if (Img_name == "ISPRS1" && proc_mode != "demo" || Img_name == "ISPRS7" && proc_mode != "demo" ||
         Img_name == "ISPRS4" && proc_mode != "demo" ) { 
-    answ <- readline("are the positions of all midpoints correct? type Y or N:  ") #manual input
+      
+        answ <- readline("are the positions of all midpoints correct? type Y or N:  ") #manual input
+        
     } 
     
   } #end if-else
@@ -859,20 +862,20 @@ if (sek == "bdr_follow") {
       b13_angle_df2
       setwd(home_dir2)
       source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) 
-      b13_angle_df3
+      b13_angle_df2
       sequence_seg2 <- b13_angle_df3$nr_center 
       sequence_seg2 
     }
     
-    if (part == "no_part") { 
-      bnr2_part <- bnr2
-      p_pos <- "cor_pos" #correction of position
-      setwd(home_dir2)
-      source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) 
-      b13_angle_df2
-      sequence_seg2 <- b13_angle_df2$nr_center 
-      sequence_seg2 
-    }
+    # if (part == "no_part") { 
+    #   bnr2_part <- bnr2
+    #   p_pos <- "cor_pos" #correction of position
+    #   setwd(home_dir2)
+    #   source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) 
+    #   b13_angle_df2
+    #   sequence_seg2 <- b13_angle_df2$nr_center 
+    #   sequence_seg2 
+    # }
     
   } else {
     
@@ -884,20 +887,20 @@ if (sek == "bdr_follow") {
     
   } #end if-else
 
-  sequence_seg2
+  #sequence_seg2
   proc_mode
   answ
   bnr2
-  b13_angle_df3
+  b13_angle_df2
   
-  if (answ == "N" && proc_mode == "obj_wise" && part == "no_part" | 
+  if (answ == "N" && proc_mode == "obj_wise" && part == "no_part" || 
       answ == "N" && proc_mode == "demo" && part == "no_part") {
       p_pos <- "cor_pos" #correction of position
       setwd(home_dir2)
-      b13_angle_df
-      source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) #sek="bdr_follow"
       b13_angle_df2
-      b13_angle_df3 <- b13_angle_df2 
+      source(paste("./spObj/spObj_sequence_of_lines_v",v_nr,".R",sep="")) #sek="bdr_follow"
+      b13_angle_df3
+      #b13_angle_df3 <- b13_angle_df2 
   } #end if 
   
   b13_angle_df3
