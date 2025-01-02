@@ -31,6 +31,7 @@ setwd(OrgClassResPathname)
 LCM_b <-readImage(OrgClassResFilename)
 #LCM_img <-readImage(OrgClassResFilename) #new
 display(LCM_b) #display 
+display(LCM_b, "raster") #display 
 str(LCM_b) #new
 LCM_b@.Data
 #display(LCM_b) #display by "Viewer"
@@ -52,7 +53,7 @@ LCMdilaterode_t_f_lab <-  bwlabel(LCMdilaterode_t_f) #segmentation by labeling
 cat('Number of buildings=',max(LCMdilaterode_t_f_lab),'\n')
 sh=computeFeatures.shape(LCMdilaterode_t_f_lab) #compute of area and radius
 area_threshold #threshold for size of area, in pixels
-sh_area<-subset(sh,sh[,1] < area_threshold) #calculate objects smaller than s.area=3086 pixel
+sh_area<-subset(sh,sh[,1] < area_threshold) #calculate objects smaller than s.area
 nrow(sh_area)
 n_rem <- as.integer(row.names(sh_area))
 LCM_cart_enh_building <- rmObjects(LCMdilaterode_t_f_lab,n_rem)
