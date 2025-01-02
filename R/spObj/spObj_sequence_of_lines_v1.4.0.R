@@ -88,6 +88,7 @@ if (Img_name == "ISPRS1") {
 
 
 ##orthoimage ISPRS4
+#Gerke_SVL5
 
 if (Img_name == "ISPRS4") {
   
@@ -282,6 +283,26 @@ if (Img_name == "ISPRS4") {
     b13_angle_df3[10,1:4] <- c(24,301,318,756) #lnr=24,midpoint is manually determined
     b13_angle_df3
   } #end b162 - "cor_pos"
+  
+  #b17
+  
+  if (bnr2 == 17 && p_pos == "cor_img") { #filled area is not the object
+    
+    plot(W$'2', col="white")  #black building
+    w = W$'2'
+    
+  } #end b17 - "cor_img"
+  
+  if (bnr2 == 17 && p_pos == "cor_pos") {  
+    #stop("manual operation - add position")
+    #determine position by 'support_sequence_of_lines.R' #1
+    b13_angle_df2
+    b13_angle_df3 <- b13_angle_df2
+    b13_angle_df3[3,1:4] <- c(194,NA,319,528) #lnr=194,midpoint is manually determined
+    b13_angle_df3
+  } #end b162 - "cor_pos"
+  
+  
   
   ###
   
